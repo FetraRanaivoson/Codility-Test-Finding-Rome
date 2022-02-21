@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "9UBSGK0gVPjQDmfmBMcNro6ZRZzxWVJe+/MibnROA+JHBTkgIwH34wFiVzHOtbD3ARzTVEp9TYJ8D4GPLohN8w==",
+  "dgSpecHash": "7XqlW6pA5KuWN6oWQq7WDMTV+wre/c2Qq1p7BhzBrU8onHWVRygC74RqXLeAJc35mMhNybRwWGMdzTyR16DVsw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Administrator\\source\\repos\\ConsoleApp1\\ConsoleApp1\\RomeFinding.csproj",
+  "projectFilePath": "C:\\Users\\Administrator\\source\\repos\\Codility-Test-Finding-Rome\\ConsoleApp1\\RomeFinding.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

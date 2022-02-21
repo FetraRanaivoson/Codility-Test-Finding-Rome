@@ -108,8 +108,15 @@ namespace RomeFinding
     {
         static void Main(string[] args)
         {
-            int[] A = new int[3] { 1, 2, 3 };
-            int[] B = new int[3] { 0, 0, 0 };
+            // Test 1
+            //int[] A = new int[3] { 1, 2, 3 };
+            //int[] B = new int[3] { 0, 0, 0 };
+
+            // Test 2
+            int[] A = new int[5] { 0, 1, 2, 4, 5 };
+            int[] B = new int[5] { 2, 3, 3, 3, 2 };
+
+
             Console.WriteLine("Rome city is: " + Solution(A, B));
         }
 
