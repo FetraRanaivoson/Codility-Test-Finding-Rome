@@ -17,7 +17,7 @@ namespace RomeFinding
         /// <summary>
         /// This city's list of connections
         /// </summary>
-        public List<int> connections = new List<int>();
+        public List<City> connections = new List<City>();
 
         /// <summary>
         /// Constructor of a city
@@ -32,9 +32,9 @@ namespace RomeFinding
         /// </summary>
         public void AddConnection(City newConnection)
         {
-            if (!connections.Contains(newConnection.cityID))
+            if (!connections.Contains(newConnection))
             {
-                connections.Add(newConnection.cityID);
+                connections.Add(newConnection);
             }
         }
 
@@ -54,7 +54,7 @@ namespace RomeFinding
             Console.WriteLine("Connected cities: ");
             for (int i = 0; i < connections.Count; i++)
             {
-                Console.Write(connections[i] + ", ");
+                Console.Write(connections[i].cityID + ", ");
             }
             Console.WriteLine("");
         }
@@ -161,7 +161,6 @@ namespace RomeFinding
 
             int maxPath = A.Length;
 
-
             if (allCityPairs.Count == A.Length)
             {
                 for (int k = 0; k < A.Length; k++)
@@ -179,7 +178,43 @@ namespace RomeFinding
                     }
                 }
             }
+
             return romeCity;
+        }
+
+        public bool IsRome(City city, List<CityPair> allCityPairs)
+        {
+            // Everytime checking a city, put all city pairs into this temp pair so that we can remove 
+            List<CityPair> tempCityPairs = allCityPairs;
+
+            for (int i = 0; i < city.connections.Count; i++)
+            {
+                // If the neighbours' number of connection is 1, that means that the only connection for that neighbour is 1: direct access
+                if(city.connections[i].connections.Count == 1)
+                {
+                    //tempCityPairs.Remove(city.connections[i])
+                }
+
+                // Else we need to check all the neighbour if we can indireclty access
+                if(city.connections[i].connections.Count > 1) { }
+                {
+                    for (int k = 0; k < city.connections[i].connections.Count; k++)
+                    {
+                        if(city.connections[i].connections[k].connections.Count == 1)
+                        {
+
+                        }
+                        if (city.connections[i].connections[k].connections.Count > 1) { }
+                        {
+
+                        }
+                }
+                //City cityToTest = city.connections[i];
+
+                // For each of these steps, remove what we saw from the temp cityPair
+                // If the temp city pair count == 0, that means we can go to the current city from any cities
+            }
+            return false;
         }
     }
 }

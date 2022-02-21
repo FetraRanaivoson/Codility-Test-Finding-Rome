@@ -1,0 +1,16 @@
+C:\Users\Administrator\source\repos\Codility-Test-Finding-Rome\BinaryGap\bin\Debug\net5.0\BinaryGap.exe
+C:\Users\Administrator\source\repos\Codility-Test-Finding-Rome\BinaryGap\bin\Debug\net5.0\BinaryGap.deps.json
+C:\Users\Administrator\source\repos\Codility-Test-Finding-Rome\BinaryGap\bin\Debug\net5.0\BinaryGap.runtimeconfig.json
+C:\Users\Administrator\source\repos\Codility-Test-Finding-Rome\BinaryGap\bin\Debug\net5.0\BinaryGap.runtimeconfig.dev.json
+C:\Users\Administrator\source\repos\Codility-Test-Finding-Rome\BinaryGap\bin\Debug\net5.0\BinaryGap.dll
+C:\Users\Administrator\source\repos\Codility-Test-Finding-Rome\BinaryGap\bin\Debug\net5.0\ref\BinaryGap.dll
+C:\Users\Administrator\source\repos\Codility-Test-Finding-Rome\BinaryGap\bin\Debug\net5.0\BinaryGap.pdb
+C:\Users\Administrator\source\repos\Codility-Test-Finding-Rome\BinaryGap\obj\Debug\net5.0\BinaryGap.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Administrator\source\repos\Codility-Test-Finding-Rome\BinaryGap\obj\Debug\net5.0\BinaryGap.AssemblyInfoInputs.cache
+C:\Users\Administrator\source\repos\Codility-Test-Finding-Rome\BinaryGap\obj\Debug\net5.0\BinaryGap.AssemblyInfo.cs
+C:\Users\Administrator\source\repos\Codility-Test-Finding-Rome\BinaryGap\obj\Debug\net5.0\BinaryGap.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\source\repos\Codility-Test-Finding-Rome\BinaryGap\obj\Debug\net5.0\BinaryGap.dll
+C:\Users\Administrator\source\repos\Codility-Test-Finding-Rome\BinaryGap\obj\Debug\net5.0\ref\BinaryGap.dll
+C:\Users\Administrator\source\repos\Codility-Test-Finding-Rome\BinaryGap\obj\Debug\net5.0\BinaryGap.pdb
+C:\Users\Administrator\source\repos\Codility-Test-Finding-Rome\BinaryGap\obj\Debug\net5.0\BinaryGap.genruntimeconfig.cache
+C:\Users\Administrator\source\repos\Codility-Test-Finding-Rome\BinaryGap\obj\Debug\net5.0\BinaryGap.csproj.AssemblyReference.cache
