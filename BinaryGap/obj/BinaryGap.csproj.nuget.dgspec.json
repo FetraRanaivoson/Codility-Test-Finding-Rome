@@ -1,25 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Administrator\\source\\repos\\Codility-Test-Finding-Rome\\BinaryGap\\BinaryGap.csproj": {}
+    "E:\\ISI\\COURS\\Codility-Tests-Practices\\BinaryGap\\BinaryGap.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Administrator\\source\\repos\\Codility-Test-Finding-Rome\\BinaryGap\\BinaryGap.csproj": {
+    "E:\\ISI\\COURS\\Codility-Tests-Practices\\BinaryGap\\BinaryGap.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Administrator\\source\\repos\\Codility-Test-Finding-Rome\\BinaryGap\\BinaryGap.csproj",
+        "projectUniqueName": "E:\\ISI\\COURS\\Codility-Tests-Practices\\BinaryGap\\BinaryGap.csproj",
         "projectName": "BinaryGap",
-        "projectPath": "C:\\Users\\Administrator\\source\\repos\\Codility-Test-Finding-Rome\\BinaryGap\\BinaryGap.csproj",
-        "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Administrator\\source\\repos\\Codility-Test-Finding-Rome\\BinaryGap\\obj\\",
+        "projectPath": "E:\\ISI\\COURS\\Codility-Tests-Practices\\BinaryGap\\BinaryGap.csproj",
+        "packagesPath": "C:\\Users\\MON PC\\.nuget\\packages\\",
+        "outputPath": "E:\\ISI\\COURS\\Codility-Tests-Practices\\BinaryGap\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\MON PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -59,7 +54,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
         }
       }
     }
