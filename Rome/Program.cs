@@ -200,7 +200,7 @@ namespace RomeFinding
                 {
                     for (int k = 0; k < city.connections[i].connections.Count; k++)
                     {
-                        if(city.connections[i].connections[k].connections.Count == 1)
+                        if (city.connections[i].connections[k].connections.Count == 1)
                         {
 
                         }
@@ -208,11 +208,13 @@ namespace RomeFinding
                         {
 
                         }
+                    }
                 }
-                //City cityToTest = city.connections[i];
+                    //City cityToTest = city.connections[i];
 
-                // For each of these steps, remove what we saw from the temp cityPair
-                // If the temp city pair count == 0, that means we can go to the current city from any cities
+                    // For each of these steps, remove what we saw from the temp cityPair
+                    // If the temp city pair count == 0, that means we can go to the current city from any cities
+                    
             }
             return false;
         }
