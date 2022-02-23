@@ -60,6 +60,7 @@ namespace RomeFinding
         }
     }
 
+    /*
     /// <summary>
     /// The city pair class
     /// </summary>
@@ -102,8 +103,9 @@ namespace RomeFinding
         {
             Console.WriteLine("(" + cityA.cityID + "," + cityB.cityID + ")");
         }
-
     }
+    */
+
     class Program
     {
         static void Main(string[] args)
@@ -116,7 +118,6 @@ namespace RomeFinding
             int[] A = new int[5] { 0, 1, 2, 4, 5 };
             int[] B = new int[5] { 2, 3, 3, 3, 2 };
 
-
             Console.WriteLine("Rome city is: " + Solution(A, B));
         }
 
@@ -125,98 +126,134 @@ namespace RomeFinding
         /// </summary>
         public static int Solution(int[] A, int[] B)
         {
+            // The Rome city represented by its ID. -1= no Rome city found
             int romeCity = -1;
 
-            List<CityPair> allCityPairs = new List<CityPair>();
-            for (int j = 0; j < A.Length; j++)
+            // Create the city objects for A and B
+            City[] citiesA = new City[A.Length];
+            City[] citiesB = new City[B.Length];
+            for (int i = 0; i < citiesA.Length; i++)
             {
-                CityPair newCityPair = new CityPair(new City(A[j]), new City(B[j]));
-                newCityPair.Display();
-                allCityPairs.Add(newCityPair);
+                // Add to the list and pass their ID(= city name)
+                citiesA[i] = new City(A[i]);
+            }
+            for (int i = 0; i < citiesB.Length; i++)
+            {
+                // Add to the list and pass their ID(= city name)
+                citiesB[i] = new City(B[i]);
+            }
 
+            // Establish the connections
+            for (int i = 0; i < A.Length; i++)
+            {
+                citiesA[i].AddConnection(citiesB[i]);
+                citiesB[i].AddConnection(citiesA[i]);
+            }
 
-                if (allCityPairs.Count == A.Length)
+            // Join the cities arrays for easier to loop later
+            City[] cities = new City[citiesA.Length + citiesB.Length];
+            citiesA.CopyTo(cities, 0);
+            citiesB.CopyTo(cities, citiesA.Length);
+            //foreach (var item in cities)
+            //{
+            //    Console.WriteLine(item.cityID);
+            //}
+
+            // We will increment this variable if we found that we can go from a specific city to another city
+            // If throughout that iteration, this variable value is the size of the citites - 1 (combined), 
+            // Then that city is Rome.
+            int path = 0;
+
+            // What we are going to test here is the number of path for each city to the other cities 
+            // (including their connections)
+            for (int start = 0; start < cities.Length; start++)
+            {
+                // Always initialize the path count to 0 because we are about to test another city
+                path = 0;
+
+                //Register the current city id
+                int currentCityID = cities[start].cityID;
+
+                // Now loop for all the other cities except the current city
+                for (int indexTarget = 0; indexTarget < cities.Length; indexTarget++)
                 {
-                    for (int col = 0; col < A.Length; col++)
+                    if(start != indexTarget)
                     {
-                        for (int index = 0; index < allCityPairs.Count; index++)
+                        foreach (City startConnection in cities[start].connections)
                         {
-                            if (col != index)
+                            // Check direct connection
+                            if (startConnection.cityID == cities[indexTarget].cityID)
                             {
-                                if (allCityPairs[col].cityA.cityID == allCityPairs[index].cityA.cityID)
-                                    allCityPairs[col].cityA.AddConnection(allCityPairs[index].cityA); //not city B
-                                if (allCityPairs[col].cityA.cityID == allCityPairs[index].cityB.cityID)
-                                    allCityPairs[col].cityA.AddConnection(allCityPairs[index].cityA); //not city A
-
-                                if (allCityPairs[col].cityB.cityID == allCityPairs[index].cityA.cityID)
-                                    allCityPairs[col].cityB.AddConnection(allCityPairs[index].cityB); //not city A
-                                if (allCityPairs[col].cityB.cityID == allCityPairs[index].cityB.cityID)
-                                    allCityPairs[col].cityB.AddConnection(allCityPairs[index].cityA); //not city B
+                                path++;
                             }
-                        }
+
+                            // Check indirect connection
+                            else
+                            {
+                                foreach (var otherCity in cities)
+                                {
+                                    if (otherCity.cityID != cities[start].cityID && otherCity.cityID != cities[indexTarget].cityID)
+                                    {
+                                                            // start     //intermediate city  //target
+                                        if (ThereIsPathFrom(cities[start], otherCity, cities[indexTarget]))
+                                        {
+                                            path++;
+                                        }
+                                    }
+                                }
+                                
+                            }
+                        }                 
                     }
                 }
-            }
-            Console.WriteLine("=============================================");
-
-            int maxPath = A.Length;
-
-            if (allCityPairs.Count == A.Length)
-            {
-                for (int k = 0; k < A.Length; k++)
+                if (start == cities.Length - 1 && path == cities.Length - 1)
                 {
-                    for (int l = 0; l < 2; l++)
-                    {
-                        Console.WriteLine(allCityPairs[k].cities[l].cityID + "'s connection count = " + allCityPairs[k].cities[l].ConnectionCount());
-                        allCityPairs[k].cities[l].DisplayConnectedCity();
-                        Console.WriteLine("=============================================");
-
-                        if(allCityPairs[k].cities[l].ConnectionCount() == maxPath)
-                        {
-                            romeCity = allCityPairs[k].cities[l].cityID;
-                        }
-                    }
+                    romeCity = currentCityID;
+                    break;
                 }
             }
+
+           
+
 
             return romeCity;
         }
 
-        public bool IsRome(City city, List<CityPair> allCityPairs)
-        {
-            // Everytime checking a city, put all city pairs into this temp pair so that we can remove 
-            List<CityPair> tempCityPairs = allCityPairs;
+        //public bool IsRome(City city, List<CityPair> allCityPairs)
+        //{
+        //    // Everytime checking a city, put all city pairs into this temp pair so that we can remove 
+        //    List<CityPair> tempCityPairs = allCityPairs;
 
-            for (int i = 0; i < city.connections.Count; i++)
-            {
-                // If the neighbours' number of connection is 1, that means that the only connection for that neighbour is 1: direct access
-                if(city.connections[i].connections.Count == 1)
-                {
-                    //tempCityPairs.Remove(city.connections[i])
-                }
+        //    for (int i = 0; i < city.connections.Count; i++)
+        //    {
+        //        // If the neighbours' number of connection is 1, that means that the only connection for that neighbour is 1: direct access
+        //        if(city.connections[i].connections.Count == 1)
+        //        {
+        //            //tempCityPairs.Remove(city.connections[i])
+        //        }
 
-                // Else we need to check all the neighbour if we can indireclty access
-                if(city.connections[i].connections.Count > 1) { }
-                {
-                    for (int k = 0; k < city.connections[i].connections.Count; k++)
-                    {
-                        if (city.connections[i].connections[k].connections.Count == 1)
-                        {
+        //        // Else we need to check all the neighbour if we can indireclty access
+        //        if(city.connections[i].connections.Count > 1) { }
+        //        {
+        //            for (int k = 0; k < city.connections[i].connections.Count; k++)
+        //            {
+        //                if (city.connections[i].connections[k].connections.Count == 1)
+        //                {
 
-                        }
-                        if (city.connections[i].connections[k].connections.Count > 1) { }
-                        {
+        //                }
+        //                if (city.connections[i].connections[k].connections.Count > 1) { }
+        //                {
 
-                        }
-                    }
-                }
-                    //City cityToTest = city.connections[i];
+        //                }
+        //            }
+        //        }
+        //            //City cityToTest = city.connections[i];
 
-                    // For each of these steps, remove what we saw from the temp cityPair
-                    // If the temp city pair count == 0, that means we can go to the current city from any cities
+        //            // For each of these steps, remove what we saw from the temp cityPair
+        //            // If the temp city pair count == 0, that means we can go to the current city from any cities
                     
-            }
-            return false;
-        }
+        //    }
+        //    return false;
+        //}
     }
 }
