@@ -166,94 +166,79 @@ namespace RomeFinding
 
             // What we are going to test here is the number of path for each city to the other cities 
             // (including their connections)
-            for (int start = 0; start < cities.Length; start++)
+            for (int startIndex = 0; startIndex < cities.Length; startIndex++)
             {
                 // Always initialize the path count to 0 because we are about to test another city
                 path = 0;
 
                 //Register the current city id
-                int currentCityID = cities[start].cityID;
+                int currentCityID = cities[startIndex].cityID;
 
                 // Now loop for all the other cities except the current city
                 for (int indexTarget = 0; indexTarget < cities.Length; indexTarget++)
                 {
-                    if(start != indexTarget)
-                    {
-                        foreach (City startConnection in cities[start].connections)
-                        {
-                            // Check direct connection
-                            if (startConnection.cityID == cities[indexTarget].cityID)
-                            {
-                                path++;
-                            }
+                    bool shouldStopTestingTarget = false;
 
-                            // Check indirect connection
-                            else
+                    if (startIndex != indexTarget)
+                    {
+                        //foreach (City startConnection in cities[start].connections)
+                        //{
+                        // Check direct connection
+                        if (cities[startIndex].connections[0].cityID == cities[indexTarget].cityID)
+                        {
+                            path++;
+                        }
+
+                        // Check indirect connection
+                        
+                        else
+                        {
+                            City cityIntermediate = cities[startIndex].connections[0];
+                            foreach (var otherCity in cities)
                             {
-                                foreach (var otherCity in cities)
+                                //      Do not test the city intermediate itself         nor         the start city (where we started)          nor    the target city itself
+                                if (otherCity.cityID != cityIntermediate.cityID && otherCity.cityID != cities[startIndex].cityID && otherCity.cityID != cities[indexTarget].cityID)
                                 {
-                                    if (otherCity.cityID != cities[start].cityID && otherCity.cityID != cities[indexTarget].cityID)
+                                    // if the other city has a connection with the intermediate city (the city linked to the start city)
+                                    if (otherCity.connections[0].cityID == cityIntermediate.connections[0].cityID)
                                     {
-                                                            // start     //intermediate city  //target
-                                        if (ThereIsPathFrom(cities[start], otherCity, cities[indexTarget]))
+                                                            // trio: other --------> Target <---------- start
+                                        if (ThereIsPathFrom(otherCity, cities[indexTarget]))
                                         {
                                             path++;
                                         }
+                                        else
+                                        {
+                                            // There's no need to check the other paths because there's no path passing to this city (otherCity) via the intermediate city
+                                            shouldStopTestingTarget = true;
+                                            break;
+                                        }
                                     }
                                 }
-                                
+
                             }
-                        }                 
+                        }
+                        //}                 
+                    }
+                    if(shouldStopTestingTarget)
+                    {
+                        break;
                     }
                 }
-                if (start == cities.Length - 1 && path == cities.Length - 1)
+                if (startIndex == cities.Length - 1 && path == cities.Length - 1)
                 {
                     romeCity = currentCityID;
                     break;
                 }
             }
 
-           
-
-
             return romeCity;
         }
 
-        //public bool IsRome(City city, List<CityPair> allCityPairs)
-        //{
-        //    // Everytime checking a city, put all city pairs into this temp pair so that we can remove 
-        //    List<CityPair> tempCityPairs = allCityPairs;
+        private static bool ThereIsPathFrom(City intermediate, City target)
+        {
+            return intermediate.connections[0].cityID == target.connections[0].cityID;
+        }
 
-        //    for (int i = 0; i < city.connections.Count; i++)
-        //    {
-        //        // If the neighbours' number of connection is 1, that means that the only connection for that neighbour is 1: direct access
-        //        if(city.connections[i].connections.Count == 1)
-        //        {
-        //            //tempCityPairs.Remove(city.connections[i])
-        //        }
-
-        //        // Else we need to check all the neighbour if we can indireclty access
-        //        if(city.connections[i].connections.Count > 1) { }
-        //        {
-        //            for (int k = 0; k < city.connections[i].connections.Count; k++)
-        //            {
-        //                if (city.connections[i].connections[k].connections.Count == 1)
-        //                {
-
-        //                }
-        //                if (city.connections[i].connections[k].connections.Count > 1) { }
-        //                {
-
-        //                }
-        //            }
-        //        }
-        //            //City cityToTest = city.connections[i];
-
-        //            // For each of these steps, remove what we saw from the temp cityPair
-        //            // If the temp city pair count == 0, that means we can go to the current city from any cities
-                    
-        //    }
-        //    return false;
-        //}
     }
 }
