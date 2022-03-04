@@ -7,7 +7,17 @@ namespace Reverse_String
         static void Main(string[] args)
         {
             string text = "Hello, my name is Fetra. I am a game developer";
-            Console.WriteLine(Reverse(text));
+            //Console.WriteLine(Reverse(text));
+            Console.WriteLine(Reverse2(text));
+           
+        }
+
+        static string Reverse2(string text)
+        {
+            char[] reversed = text.ToCharArray();
+            Array.Reverse(reversed);
+            return string.Join("", reversed);
+            //return string.Join("", text.Split(""));
         }
 
         static string Reverse(string text)
