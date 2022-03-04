@@ -34,7 +34,7 @@ namespace Merge_Sorted_Arrays
             {
                 for (int test = 0; test < mergedArray.Length; test++)
                 {
-                    if (mergedArray[i]< mergedArray[test])
+                    if (mergedArray[i] < mergedArray[test])
                     {
                         int temp = mergedArray[test];
                         mergedArray[test] = mergedArray[i];

@@ -36,14 +36,16 @@ namespace CyclicRotation
             }
 
             Console.Write("[");
-            for (int i = 0; i < A.Length; i++)
-            {
-                if (i != A.Length - 1)
-                    Console.Write(A[i] + ", ");
-                else
-                    Console.Write(A[i]);
-            }
+            //for (int i = 0; i < A.Length; i++)
+            //{
+            //    if (i != A.Length - 1)
+            //        Console.Write(A[i] + ", ");
+            //    else
+            //        Console.Write(A[i]);
+            //}
+            Console.Write(string.Join(", ", A));
             Console.WriteLine("]");
+            
 
             return A;
         }
