@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rome", "Rome\Rome.csproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CyclicRotation", "CyclicRotation\CyclicRotation.csproj", "{E17CC837-855F-438C-8818-F01FECC4B9DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeComplexity-FrogJump", "TimeComplexity-FrogJump\TimeComplexity-FrogJump.csproj", "{9A046337-5E75-4934-B600-1017059483DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeComplexity-FrogJump", "TimeComplexity-FrogJump\TimeComplexity-FrogJump.csproj", "{9A046337-5E75-4934-B600-1017059483DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reverse-String", "Reverse-String\Reverse-String.csproj", "{AD5000F5-C5F1-494B-9294-614EF956BBAB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{9A046337-5E75-4934-B600-1017059483DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A046337-5E75-4934-B600-1017059483DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A046337-5E75-4934-B600-1017059483DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD5000F5-C5F1-494B-9294-614EF956BBAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD5000F5-C5F1-494B-9294-614EF956BBAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD5000F5-C5F1-494B-9294-614EF956BBAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD5000F5-C5F1-494B-9294-614EF956BBAB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
