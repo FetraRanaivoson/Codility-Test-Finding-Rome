@@ -14,7 +14,7 @@ namespace Reverse_String
 
         static string Reverse2(string text)
         {
-            char[] reversed = text.ToCharArray();
+            char[] reversed = text.ToCharArray(); 
             Array.Reverse(reversed);
             return string.Join("", reversed);
             //return string.Join("", text.Split(""));
