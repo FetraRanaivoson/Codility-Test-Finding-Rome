@@ -30,6 +30,18 @@ namespace First_Recurring_Character
             //}
             // ==> O(N^2): expensive if we increase the array's elements
 
+            //  0- Found a more naive simple solution I didn't think about
+            //for (int i = 0; i < array.Length; i++)
+            //{
+            //    for (int j = i+1; j < array.Length; j++)
+            //    {
+            //        if(array[i] == array[j])
+            //        {
+            //            return array[i];
+            //        }
+            //    }
+            //} //  ==> O(N^2)
+
 
             //  2- The second solution is to add a hash table for each element we iterate of
             //  If throughout the iteration O(N), we find out that the key already exists then that means
@@ -42,6 +54,7 @@ namespace First_Recurring_Character
             for (int i = 0; i < array.Length; i++) // O(N)
             {
                 if (hashtable.ContainsKey(array[i])){ // O(1)
+
                     return array[i];
                 }
                 hashtable.Add(array[i], array[i]); // O(1)
