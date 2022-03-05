@@ -9,6 +9,7 @@ namespace First_Recurring_Character
         static void Main(string[] args)
         {
             int[] array = new int[] { 2, 5, 1, 2, 3, 5, 1, 2, 4 };
+            //int[] array = new int[] { 2, 5, 5, 2, 3, 5, 1, 2, 4 }; // edge case test for the very simple naive solution
 
             Console.WriteLine("The first recurring character is: {0}", Solution(array));
         }
@@ -31,14 +32,17 @@ namespace First_Recurring_Character
             // ==> O(N^2): expensive if we increase the array's elements
 
             //  0- Found a more naive simple solution I didn't think about
+            //List<int> visited = new List<int>();
             //for (int i = 0; i < array.Length; i++)
             //{
-            //    for (int j = i+1; j < array.Length; j++)
+            //    for (int /*j = i + 1*/ j = 0 ; j < array.Length; j++)
             //    {
-            //        if(array[i] == array[j])
+            //        if (/*array[i] == array[j]*/ visited.Contains(array[j])) // edge case fix for the very simple naive solution
             //        {
-            //            return array[i];
+            //            return array[j];
             //        }
+            //        else
+            //            visited.Add(array[j]);  // edge case fix for the very simple naive solution
             //    }
             //} //  ==> O(N^2)
 
@@ -50,15 +54,15 @@ namespace First_Recurring_Character
             //  that the key (number) is the value (number)
             //  Hash table => O(1): look up: values in memory are accessible directly via unique keys
             //  ==> O(N+1) equivalent to O(N) which is MUCH BETTER than O(N^2)
-            Hashtable hashtable = new Hashtable();
-            for (int i = 0; i < array.Length; i++) // O(N)
-            {
-                if (hashtable.ContainsKey(array[i])){ // O(1)
+            //Hashtable hashtable = new Hashtable();
+            //for (int i = 0; i < array.Length; i++) // O(N)
+            //{
+            //    if (hashtable.ContainsKey(array[i])){ // O(1)
 
-                    return array[i];
-                }
-                hashtable.Add(array[i], array[i]); // O(1)
-            }
+            //        return array[i];
+            //    }
+            //    hashtable.Add(array[i], array[i]); // O(1)
+            //}
             //  ==> O(N*(1+1)) ==> O(N)
             return -1;
         }
