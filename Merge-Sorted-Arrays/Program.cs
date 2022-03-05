@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Merge_Sorted_Arrays
 {
@@ -9,12 +11,46 @@ namespace Merge_Sorted_Arrays
             int[] A = new int[] { 0, 3, 4, 31 };
             int[] B = new int[] { 4, 6, 30 };
 
-            Console.WriteLine("Merged sorted array is: "
-                + String.Join(", ", MergedSortedArray(A, B)));
+            //Console.WriteLine("Merged sorted array is: "
+            //+ String.Join(", ", MergedSortedArray(A, B)));
+
+            //  Hashtable
+            //Hashtable cities = new Hashtable();
+            //cities.Add(1, true);
+            //cities.Add(2, false);
+            //cities.Add(3, false);
+            //cities.Add(4, false);
+
+            //cities[3] = true;
+
+            //foreach (DictionaryEntry item in cities)
+            //{
+            //    Console.WriteLine("Key: {0}, Value: {1}", item.Key, item.Value);
+            //}
+            //foreach (DictionaryEntry item in cities)
+            //{
+            //    Console.WriteLine("There is a key: {0}", item.Key);
+            //}
+
+            //  Dictionnary
+            Dictionary<int, bool> citiesDico = new Dictionary<int, bool>();
+            citiesDico.Add(1, true);
+            citiesDico.Add(2, false);
+            citiesDico.Add(3, false);
+            citiesDico.Add(4, false);
+
+            citiesDico[4] = true;
+
+            foreach (KeyValuePair<int,bool> item in citiesDico)
+            {
+                Console.WriteLine("Key: {0}, Value: {1}", item.Key, item.Value);
+            }
+            
         }
 
         static int[] MergedSortedArray(int[] A, int[] B)
         {
+
             int[] mergedArray = new int[A.Length + B.Length];
 
             //  Copy array A to the new array

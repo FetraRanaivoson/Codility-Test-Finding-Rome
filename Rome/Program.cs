@@ -118,8 +118,80 @@ namespace RomeFinding
             int[] A = new int[5] { 0, 1, 2, 4, 5 };
             int[] B = new int[5] { 2, 3, 3, 3, 2 };
 
-            Console.WriteLine("Rome city is: " + Solution(A, B));
+            //Console.WriteLine("Rome city is: " + Solution(A, B));
+            Console.WriteLine("Rome city is: " + Solution2(A, B));
         }
+
+        public static int Solution2(int[] A, int[] B)
+        {
+            int romeCity = -1;
+
+            //Dictionary<int, int> connections = new Dictionary<int, int>();
+            //for (int i = 0; i < A.Length; i++)
+            //{
+            //    connections.Add(A[i], B[i]);
+            //    //connections.Add(B[i], A[i]);
+            //}
+
+            //foreach (KeyValuePair<int,int> conn in connections)
+            //{
+            //    Console.WriteLine("City: {0} connected TO City {1}", conn.Key, conn.Value);
+            //}
+
+
+            //  Because each key is a city that has a value that is also a city
+            //  The link is 2 way. We probably need a linked list
+            LinkedList<int>[] lc = new LinkedList<int>[A.Length];
+
+            //  Create association
+            for (int i = 0; i < A.Length; i++)
+            {
+                lc[i] = new LinkedList<int>();
+                lc[i].AddLast(A[i]);
+                lc[i].AddLast(B[i]);   
+            }
+
+            //  Find other association
+            int[] reference = new int[A.Length + B.Length];
+            A.CopyTo(reference, 0);
+            B.CopyTo(reference, A.Length);
+
+            for (int i = 0; i < reference.Length; i++)
+            {
+                int cityToSearch = reference[i];
+
+                for (int j = 0; j < lc.Length; j++)
+                {
+                    if (i != j)
+                    {
+                        if (lc[j].Contains(reference[i]))
+                        {
+                            //lc[j].;
+                        }
+                    }
+                }
+            }
+
+
+
+
+
+            Console.WriteLine("City connected: ");
+            foreach (LinkedList<int> linkedCity in lc)
+            {
+                foreach (var city in linkedCity)
+                {
+                    Console.Write(city);
+                    Console.Write(", ");
+                }
+                Console.WriteLine("");
+            }
+
+
+            return romeCity;
+        }
+
+
 
         /// <summary>
         /// Given an array A and B containing city numbers peer to peer connected and knowing that all paths leads to Rome, find Rome city number
@@ -190,7 +262,7 @@ namespace RomeFinding
                         }
 
                         // Check indirect connection
-                        
+
                         else
                         {
                             City cityIntermediate = cities[startIndex].connections[0];
@@ -202,7 +274,7 @@ namespace RomeFinding
                                     // if the other city has a connection with the intermediate city (the city linked to the start city)
                                     if (otherCity.connections[0].cityID == cityIntermediate.connections[0].cityID)
                                     {
-                                                            // trio: other --------> Target <---------- start
+                                        // trio: other --------> Target <---------- start
                                         if (ThereIsPathFrom(otherCity, cities[indexTarget]))
                                         {
                                             path++;
@@ -220,7 +292,7 @@ namespace RomeFinding
                         }
                         //}                 
                     }
-                    if(shouldStopTestingTarget)
+                    if (shouldStopTestingTarget)
                     {
                         break;
                     }
