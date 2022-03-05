@@ -54,16 +54,17 @@ namespace First_Recurring_Character
             //  that the key (number) is the value (number)
             //  Hash table => O(1): look up: values in memory are accessible directly via unique keys
             //  ==> O(N+1) equivalent to O(N) which is MUCH BETTER than O(N^2)
-            //Hashtable hashtable = new Hashtable();
-            //for (int i = 0; i < array.Length; i++) // O(N)
-            //{
-            //    if (hashtable.ContainsKey(array[i])){ // O(1)
+            Hashtable hashtable = new Hashtable();
+            for (int i = 0; i < array.Length; i++) // O(N)
+            {
+                if (hashtable.ContainsKey(array[i]))
+                { // O(1)
 
-            //        return array[i];
-            //    }
-            //    hashtable.Add(array[i], array[i]); // O(1)
-            //}
-            //  ==> O(N*(1+1)) ==> O(N)
+                    return array[i];
+                }
+                hashtable.Add(array[i], array[i]); // O(1)
+            }
+            //  ==> O(N * (1 + 1)) ==> O(N)
             return -1;
         }
 
