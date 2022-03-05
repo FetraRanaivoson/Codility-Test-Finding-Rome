@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 
@@ -141,55 +142,86 @@ namespace RomeFinding
 
             //  Because each key is a city that has a value that is also a city
             //  The link is 2 way. We probably need a linked list
-            LinkedList<int>[] LinkedCities = new LinkedList<int>[A.Length];
+            //LinkedList<int>[] LinkedCities = new LinkedList<int>[A.Length];
 
-            //  Create association
+            ////  Create association
+            //for (int i = 0; i < A.Length; i++)
+            //{
+            //    LinkedCities[i] = new LinkedList<int>();
+            //    LinkedCities[i].AddLast(A[i]);
+            //    LinkedCities[i].AddLast(B[i]);   
+            //}
+
+            ////  Find other association
+            //int[] reference = new int[A.Length + B.Length];
+            //A.CopyTo(reference, 0);
+            //B.CopyTo(reference, A.Length);
+
+            //for (int refLinkedCityIndex = 0; refLinkedCityIndex < LinkedCities.Length; refLinkedCityIndex++)
+            //{
+            //    //int cityToSearch = reference[i];
+            //    for (int parkourIndex = 0; parkourIndex < LinkedCities.Length; parkourIndex++)
+            //    {
+            //        if (refLinkedCityIndex != parkourIndex)
+            //        {
+            //            for (int k = 0; k < LinkedCities[parkourIndex].Count; k++)
+            //            {
+            //                                                                    // the two of the current parkour
+            //                //if (LinkedCities[refLinkedCityIndex].Contains(LinkedCities[parkourIndex].Find(41)))
+            //                //{
+            //                    //lc[j].;
+            //                //}
+            //            }
+
+            //        }
+            //    }
+            //}
+
+            // ==================
+            LinkedList<int> linkedCities = new LinkedList<int>();
+
+            //  Iterate through A.Length
             for (int i = 0; i < A.Length; i++)
             {
-                LinkedCities[i] = new LinkedList<int>();
-                LinkedCities[i].AddLast(A[i]);
-                LinkedCities[i].AddLast(B[i]);   
-            }
-
-            //  Find other association
-            int[] reference = new int[A.Length + B.Length];
-            A.CopyTo(reference, 0);
-            B.CopyTo(reference, A.Length);
-
-            for (int refLinkedCityIndex = 0; refLinkedCityIndex < LinkedCities.Length; refLinkedCityIndex++)
-            {
-                //int cityToSearch = reference[i];
-                for (int parkourIndex = 0; parkourIndex < LinkedCities.Length; parkourIndex++)
+                if (!linkedCities.Contains(A[i]))
                 {
-                    if (refLinkedCityIndex != parkourIndex)
+                    linkedCities.AddLast(A[i]);
+                    if (!linkedCities.Contains(B[i]))
+                        linkedCities.AddLast(B[i]);
+                    //else if (linkedCities.Contains(B[i]))
+                    //{
+                    //    //linkedCities.Remove(B[i]);
+                    //    linkedCities.AddAfter(linkedCities.Find(A[i]), B[i]);
+                    //}
+                }
+
+                else
+                {
+                    if (linkedCities.Contains(A[i]))
                     {
-                        for (int k = 0; k < LinkedCities[parkourIndex].Count; k++)
+                        if (linkedCities.Contains(B[i]))
                         {
-                                                                                // the two of the current parkour
-                            //if (LinkedCities[refLinkedCityIndex].Contains(LinkedCities[parkourIndex].Find(41)))
-                            //{
-                                //lc[j].;
-                            //}
+                            linkedCities.Remove(B[i]);
+                            linkedCities.AddAfter(linkedCities.Find(A[i]), B[i]); 
                         }
-                        
                     }
+
                 }
+
             }
 
 
 
-
-
-            Console.WriteLine("City connected: ");
-            foreach (LinkedList<int> linkedCity in LinkedCities)
-            {
-                foreach (var city in linkedCity)
-                {
-                    Console.Write(city);
-                    Console.Write(", ");
-                }
-                Console.WriteLine("");
-            }
+            //Console.WriteLine("City connected: ");
+            //foreach (LinkedList<int> linkedCity in LinkedCities)
+            //{
+            //    foreach (var city in linkedCity)
+            //    {
+            //        Console.Write(city);
+            //        Console.Write(", ");
+            //    }
+            //    Console.WriteLine("");
+            //}
 
 
             return romeCity;
