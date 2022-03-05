@@ -141,14 +141,14 @@ namespace RomeFinding
 
             //  Because each key is a city that has a value that is also a city
             //  The link is 2 way. We probably need a linked list
-            LinkedList<int>[] lc = new LinkedList<int>[A.Length];
+            LinkedList<int>[] LinkedCities = new LinkedList<int>[A.Length];
 
             //  Create association
             for (int i = 0; i < A.Length; i++)
             {
-                lc[i] = new LinkedList<int>();
-                lc[i].AddLast(A[i]);
-                lc[i].AddLast(B[i]);   
+                LinkedCities[i] = new LinkedList<int>();
+                LinkedCities[i].AddLast(A[i]);
+                LinkedCities[i].AddLast(B[i]);   
             }
 
             //  Find other association
@@ -156,18 +156,22 @@ namespace RomeFinding
             A.CopyTo(reference, 0);
             B.CopyTo(reference, A.Length);
 
-            for (int i = 0; i < reference.Length; i++)
+            for (int refLinkedCityIndex = 0; refLinkedCityIndex < LinkedCities.Length; refLinkedCityIndex++)
             {
-                int cityToSearch = reference[i];
-
-                for (int j = 0; j < lc.Length; j++)
+                //int cityToSearch = reference[i];
+                for (int parkourIndex = 0; parkourIndex < LinkedCities.Length; parkourIndex++)
                 {
-                    if (i != j)
+                    if (refLinkedCityIndex != parkourIndex)
                     {
-                        if (lc[j].Contains(reference[i]))
+                        for (int k = 0; k < LinkedCities[parkourIndex].Count; k++)
                         {
-                            //lc[j].;
+                                                                                // the two of the current parkour
+                            //if (LinkedCities[refLinkedCityIndex].Contains(LinkedCities[parkourIndex].Find(41)))
+                            //{
+                                //lc[j].;
+                            //}
                         }
+                        
                     }
                 }
             }
@@ -177,7 +181,7 @@ namespace RomeFinding
 
 
             Console.WriteLine("City connected: ");
-            foreach (LinkedList<int> linkedCity in lc)
+            foreach (LinkedList<int> linkedCity in LinkedCities)
             {
                 foreach (var city in linkedCity)
                 {

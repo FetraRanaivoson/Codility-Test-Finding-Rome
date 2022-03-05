@@ -11,9 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CyclicRotation", "CyclicRot
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeComplexity-FrogJump", "TimeComplexity-FrogJump\TimeComplexity-FrogJump.csproj", "{9A046337-5E75-4934-B600-1017059483DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reverse-String", "Reverse-String\Reverse-String.csproj", "{AD5000F5-C5F1-494B-9294-614EF956BBAB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reverse-String", "Reverse-String\Reverse-String.csproj", "{AD5000F5-C5F1-494B-9294-614EF956BBAB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Merge-Sorted-Arrays", "Merge-Sorted-Arrays\Merge-Sorted-Arrays.csproj", "{60015FEE-7B07-4D29-B84D-21AD9483C6C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Merge-Sorted-Arrays", "Merge-Sorted-Arrays\Merge-Sorted-Arrays.csproj", "{60015FEE-7B07-4D29-B84D-21AD9483C6C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "First-Recurring-Character", "First-Recurring-Character\First-Recurring-Character.csproj", "{FAEEBC37-956B-4373-9F8A-3509E1C5DD5F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{60015FEE-7B07-4D29-B84D-21AD9483C6C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60015FEE-7B07-4D29-B84D-21AD9483C6C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{60015FEE-7B07-4D29-B84D-21AD9483C6C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAEEBC37-956B-4373-9F8A-3509E1C5DD5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAEEBC37-956B-4373-9F8A-3509E1C5DD5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAEEBC37-956B-4373-9F8A-3509E1C5DD5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAEEBC37-956B-4373-9F8A-3509E1C5DD5F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
