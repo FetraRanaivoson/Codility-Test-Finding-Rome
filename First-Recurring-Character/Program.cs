@@ -20,7 +20,7 @@ namespace First_Recurring_Character
             //  a visited item and
             //  have a method inside this class that loops through all the elements
             //  If the elements exists, then that is the first naive method
-            //Visited visit = new Visited();
+            //Visit visit = new Visit();
             //for (int i = 0; i < array.Length; i++) // O(N)
             //{
             //    if (visit.HasAlreadyVisited(array[i])) // O(N)
@@ -50,10 +50,10 @@ namespace First_Recurring_Character
             return -1;
         }
 
-        class Visited
+        class Visit
         {
             List<int> visited;
-            public Visited()
+            public Visit()
             {
                 visited = new List<int>();
             }
