@@ -20,7 +20,7 @@ namespace Stack_Queue
     /// A Stack class using the system of Linked lists
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    class MyStack<T> where T: default
+    class MyStack<T>
     {
         Node<T> top;
         Node<T> bottom;
@@ -61,15 +61,27 @@ namespace Stack_Queue
         /// <param name="value"></param>
         public void Pop()
         {
-            if(this.top == null)
+            if (this.top == null)
             {
                 return;
             }
             //Node<T> oldTop = this.top;
             this.top = this.top.next;
-            this.length--;
+            if (this.length > 0)
+                this.length--;
 
             //oldTop = null;
+        }
+
+        /// <summary>
+        /// Clear the stack
+        /// </summary>
+        public void Clear()
+        {
+            do
+            {
+                Pop();
+            } while (this.top != null);
         }
 
         /// <summary>
@@ -78,66 +90,67 @@ namespace Stack_Queue
         /// <returns></returns>
         public T Peek()
         {
-            try
-            {
+            if (this.top != null)
                 return this.top.value;
-            }
-            catch (Exception e)
-            {
-                 Console.WriteLine(e.Message);
-            }
-            return null;
+            return default(T);
         }
 
-        /// <summary>
-        /// Print all the stack's value
-        /// </summary>
-        public void Print()
-        {
-            Node<T> nextTop = this.top;
 
-            if(nextTop == null)
-            {
-                Console.WriteLine("[empty stack]");
-            }
-            
-            else
-            {
-                Console.Write("[From top: ");
-                do
-                {
-                    Node<T> toDisplay = nextTop;
-                    nextTop = toDisplay.next;
-                    if (nextTop != null)
-                        Console.Write(toDisplay.value + ", ");
-                    else
-                        Console.WriteLine(toDisplay.value + "]");
-                } while (nextTop != null);
-            }
-        }
-    }
-
-
-    class Program
+    /// <summary>
+    /// Print all the stack's value
+    /// </summary>
+    public void Print()
     {
-        static void Main(string[] args)
+        Node<T> nextTop = this.top;
+
+        if (nextTop == null)
         {
-            //  Create a new stack of int intialized with a top value of 4
-            MyStack<int> stack = new MyStack<int>(4);
+            Console.WriteLine("[empty stack]");
+        }
 
-            //  Push 8
-            stack.Push(8); //[8,4]
-
-            //  Push 12
-            stack.Push(12); //[12,8,4]
-
-            //  Push 1993
-            stack.Push(1993); //[1993, 12,8,4]
-
-            //  Pop 1993
-            stack.Pop(); //[12,8,4]
-
-            stack.Print();
+        else
+        {
+            Console.Write("[From top: ");
+            do
+            {
+                Node<T> toDisplay = nextTop;
+                nextTop = toDisplay.next;
+                if (nextTop != null)
+                    Console.Write(toDisplay.value + ", ");
+                else
+                    Console.WriteLine(toDisplay.value + "]");
+            } while (nextTop != null);
         }
     }
+}
+
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        //  Create a new stack of int intialized with a top value of 4
+        MyStack<int> stack = new MyStack<int>(4);
+
+        //  Push 8
+        stack.Push(8); //[8,4]
+
+        //  Push 12
+        stack.Push(12); //[12,8,4]
+
+        //  Push 1993
+        stack.Push(1993); //[1993, 12,8,4]
+
+        //  Pop 1993
+        stack.Pop(); //[12,8,4]
+
+        //  Clear
+        //stack.Clear(); //[empty stack]
+
+        // Check peek
+        //Console.WriteLine("Peek is : {0}", stack.Peek()); 
+
+        stack.Print();
+    }
+}
 }
