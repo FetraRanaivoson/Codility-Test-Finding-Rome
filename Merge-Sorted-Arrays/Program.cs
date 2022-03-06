@@ -11,8 +11,8 @@ namespace Merge_Sorted_Arrays
             int[] A = new int[] { 0, 3, 4, 31 };
             int[] B = new int[] { 4, 6, 30 };
 
-            //Console.WriteLine("Merged sorted array is: "
-            //+ String.Join(", ", MergedSortedArray(A, B)));
+            Console.WriteLine("Merged sorted array is: "
+            + String.Join(", ", MergedSortedArray(A, B)));
 
             //  Hashtable
             //Hashtable cities = new Hashtable();
@@ -33,19 +33,19 @@ namespace Merge_Sorted_Arrays
             //}
 
             //  Dictionnary
-            Dictionary<int, bool> citiesDico = new Dictionary<int, bool>();
-            citiesDico.Add(1, true);
-            citiesDico.Add(2, false);
-            citiesDico.Add(3, false);
-            citiesDico.Add(4, false);
+            //Dictionary<int, bool> citiesDico = new Dictionary<int, bool>();
+            //citiesDico.Add(1, true);
+            //citiesDico.Add(2, false);
+            //citiesDico.Add(3, false);
+            //citiesDico.Add(4, false);
 
-            citiesDico[4] = true;
+            //citiesDico[4] = true;
 
-            foreach (KeyValuePair<int,bool> item in citiesDico)
-            {
-                Console.WriteLine("Key: {0}, Value: {1}", item.Key, item.Value);
-            }
-            
+            //foreach (KeyValuePair<int,bool> item in citiesDico)
+            //{
+            //    Console.WriteLine("Key: {0}, Value: {1}", item.Key, item.Value);
+            //}
+
         }
 
         static int[] MergedSortedArray(int[] A, int[] B)
@@ -61,11 +61,14 @@ namespace Merge_Sorted_Arrays
             //    Console.WriteLine(mergedArray[i]);
             //}
 
-            for (int i = 0; i < B.Length; i++)
-            {
-                mergedArray[A.Length + i] = B[i];
-            }
+            //for (int i = 0; i < B.Length; i++)
+            //{
+            //    mergedArray[A.Length + i] = B[i];
+            //}
+            // OR
+            B.CopyTo(mergedArray, A.Length);
 
+            //  1st method
             for (int i = 0; i < mergedArray.Length; i++)
             {
                 for (int test = 0; test < mergedArray.Length; test++)
@@ -79,6 +82,7 @@ namespace Merge_Sorted_Arrays
                 }
             }
             // => O(n^2)
+
 
             return mergedArray;
         }
