@@ -61,7 +61,7 @@ namespace RomeFinding
         }
     }
 
-    /*
+    
     /// <summary>
     /// The city pair class
     /// </summary>
@@ -105,7 +105,7 @@ namespace RomeFinding
             Console.WriteLine("(" + cityA.cityID + "," + cityB.cityID + ")");
         }
     }
-    */
+    
 
     class Program
     {
@@ -126,6 +126,71 @@ namespace RomeFinding
         public static int Solution2(int[] A, int[] B)
         {
             int romeCity = -1;
+
+            List<CityPair> allCityPairs = new List<CityPair>();
+            for (int j = 0; j < A.Length; j++)
+            {
+                CityPair newCityPair = new CityPair(new City(A[j]), new City(B[j]));
+                newCityPair.Display();
+                allCityPairs.Add(newCityPair);
+
+
+                if (allCityPairs.Count == A.Length)
+                {
+                    for (int col = 0; col < A.Length; col++)
+                    {
+                        for (int index = 0; index < allCityPairs.Count; index++)
+                        {
+                            if (col != index)
+                            {
+                                if (allCityPairs[col].cityA.cityID == allCityPairs[index].cityA.cityID)
+                                    allCityPairs[col].cityA.AddConnection(allCityPairs[index].cityB); //not city A
+                                if (allCityPairs[col].cityA.cityID == allCityPairs[index].cityB.cityID)
+                                    allCityPairs[col].cityA.AddConnection(allCityPairs[index].cityA); //not city B
+
+                                if (allCityPairs[col].cityB.cityID == allCityPairs[index].cityA.cityID)
+                                    allCityPairs[col].cityB.AddConnection(allCityPairs[index].cityB); //not city A
+                                if (allCityPairs[col].cityB.cityID == allCityPairs[index].cityB.cityID)
+                                    allCityPairs[col].cityB.AddConnection(allCityPairs[index].cityA); //not city B
+                            }
+                        }
+                    }
+                }
+            }
+
+            Console.WriteLine("=============================================");
+            int maxPath = A.Length;
+            if (allCityPairs.Count == A.Length)
+            {
+                for (int k = 0; k < A.Length; k++)
+                {
+                    for (int l = 0; l < 2; l++)
+                    {
+                        Console.WriteLine(allCityPairs[k].cities[l].cityID + "'s connection count = " + allCityPairs[k].cities[l].ConnectionCount());
+                        allCityPairs[k].cities[l].DisplayConnectedCity();
+                        Console.WriteLine("=============================================");
+
+                        if (allCityPairs[k].cities[l].ConnectionCount() == maxPath)
+                        {
+                            romeCity = allCityPairs[k].cities[l].cityID;
+                        }
+                    }
+                }
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             //Dictionary<int, int> connections = new Dictionary<int, int>();
             //for (int i = 0; i < A.Length; i++)
@@ -178,37 +243,51 @@ namespace RomeFinding
             //}
 
             // ==================
-            LinkedList<int> linkedCities = new LinkedList<int>();
+            //LinkedList<int> linkedCities = new LinkedList<int>();
+            LinkedList<LinkedList<int>> linkedCities = new LinkedList<LinkedList<int>>();
 
-            //  Iterate through A.Length
             for (int i = 0; i < A.Length; i++)
             {
-                if (!linkedCities.Contains(A[i]))
+                LinkedList<int> conn = new LinkedList<int>();
+                conn.AddLast(A[i]);
+                conn.AddLast(B[i]);
+                linkedCities.AddLast(conn);
+                if (linkedCities.Contains(conn))
                 {
-                    linkedCities.AddLast(A[i]);
-                    if (!linkedCities.Contains(B[i]))
-                        linkedCities.AddLast(B[i]);
-                    //else if (linkedCities.Contains(B[i]))
-                    //{
-                    //    //linkedCities.Remove(B[i]);
-                    //    linkedCities.AddAfter(linkedCities.Find(A[i]), B[i]);
-                    //}
-                }
-
-                else
-                {
-                    if (linkedCities.Contains(A[i]))
-                    {
-                        if (linkedCities.Contains(B[i]))
-                        {
-                            linkedCities.Remove(B[i]);
-                            linkedCities.AddAfter(linkedCities.Find(A[i]), B[i]); 
-                        }
-                    }
 
                 }
-
+                
             }
+            
+            //  Iterate through A.Length
+            //for (int i = 0; i < A.Length; i++)
+            //{
+            //    if (!linkedCities.Contains(A[i]))
+            //    {
+            //        linkedCities.AddLast(A[i]);
+            //        if (!linkedCities.Contains(B[i]))
+            //            linkedCities.AddLast(B[i]);
+            //        //else if (linkedCities.Contains(B[i]))
+            //        //{
+            //        //    //linkedCities.Remove(B[i]);
+            //        //    linkedCities.AddAfter(linkedCities.Find(A[i]), B[i]);
+            //        //}
+            //    }
+
+            //    else
+            //    {
+            //        if (linkedCities.Contains(A[i]))
+            //        {
+            //            if (linkedCities.Contains(B[i]))
+            //            {
+            //                linkedCities.Remove(B[i]);
+            //                linkedCities.AddAfter(linkedCities.Find(A[i]), B[i]); 
+            //            }
+            //        }
+
+            //    }
+
+            //}
 
 
 
