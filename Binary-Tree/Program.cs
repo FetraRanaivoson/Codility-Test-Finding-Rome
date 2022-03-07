@@ -102,17 +102,22 @@ namespace Binary_Tree
 
         public int Lookup(int value)
         {
+            if(this.root == null)
+            {
+                Console.WriteLine("Cannot find {0}, tree has not root.", value);
+                return -1;
+            }
             Node currentNode = this.root;
             while (true)
             {
                 if(currentNode == null)//At the end of a node (left/right are null)
                 {
-                    Console.WriteLine("Entry {0} not found", value);
+                    Console.WriteLine("Entry {0} not found!", value);
                     return -1;
                 }
                 if (value == currentNode.value)
                 {
-                    Console.WriteLine("Entry {0} found", value);
+                    Console.WriteLine("Entry {0} found!", value);
                     return currentNode.value;
                 }
                 else
@@ -136,6 +141,11 @@ namespace Binary_Tree
 
         public void Print()
         {
+            if (this.root == null)
+            {
+                Console.WriteLine("No tree to print!");
+                return;
+            }
             Node currentNode = this.root;
             while (currentNode.Full)
             {
