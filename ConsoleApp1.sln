@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Merge-Sorted-Arrays", "Merg
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "First-Recurring-Character", "First-Recurring-Character\First-Recurring-Character.csproj", "{FAEEBC37-956B-4373-9F8A-3509E1C5DD5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stack-Queue", "Stack-Queue\Stack-Queue.csproj", "{57746065-089F-4F0D-8340-27745B208105}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stack-Queue", "Stack-Queue\Stack-Queue.csproj", "{57746065-089F-4F0D-8340-27745B208105}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Binary-Tree", "Binary-Tree\Binary-Tree.csproj", "{72E6F64B-70BC-420F-8367-B75C80982DF5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{57746065-089F-4F0D-8340-27745B208105}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57746065-089F-4F0D-8340-27745B208105}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57746065-089F-4F0D-8340-27745B208105}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72E6F64B-70BC-420F-8367-B75C80982DF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72E6F64B-70BC-420F-8367-B75C80982DF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72E6F64B-70BC-420F-8367-B75C80982DF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72E6F64B-70BC-420F-8367-B75C80982DF5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
