@@ -12,6 +12,8 @@ namespace Binary_Tree
         public Node right;
         public bool HasNoChild => this.left == null && this.right == null;
         public bool Full => this.left != null && this.right != null;
+        public bool IsLeftNull => this.left == null;
+        public bool isRightNull => this.right == null;
         public Node(int value)
         {
             this.value = value;
@@ -24,7 +26,6 @@ namespace Binary_Tree
     /// <summary>
     /// Binary Search Tree class
     /// </summary>
-    /// <typeparam name="T"></typeparam>
     class BinarySearchTree
     {
         Node root;
@@ -48,23 +49,20 @@ namespace Binary_Tree
             }
             else
             {
-                //  CASE NODE HAS NO CHILDREN
-                if (currentNode.HasNoChild)
+                if(value < currentNode.value && currentNode.IsLeftNull)
                 {
-                    //  CASE SHOULD GO LEFT
-                    if (value < currentNode.value)
-                    {
-                        currentNode.left = new Node(value);
-                    }
-                    //  CASE SHOULD GO RIGHT
-                    else
-                    {
-                        currentNode.right = new Node(value);
-                    }
+                    //assign
+                    currentNode.left = new Node(value);
                 }
+                else if(value > currentNode.value && currentNode.isRightNull)
+                {
+                    //assign
+                    currentNode.right = new Node(value);
+                }
+
                 else
                 {
-                    //  NODE HAS 2 CHILDREN
+                    //  NODE HAS 2 CHILDREN === WE NEED TO DIVE IN
                     if (currentNode.Full)
                     {
                         if (value < currentNode.left.value)
@@ -76,7 +74,7 @@ namespace Binary_Tree
                             Traverse(ref currentNode.right, value);
                         }
                     }
-                    //  NODE HAS 1 CHILDREN
+                    //  EITHER ONE HAS 1 CHILD
                     else
                     {
                         if (currentNode.left != null)
@@ -109,7 +107,18 @@ namespace Binary_Tree
 
         public void Print()
         {
+            Node currentNode = this.root;
+            while (currentNode.Full)
+            {
+                DisplayNodeAndChildren(currentNode);
+                currentNode = currentNode.left;
+            }
+        }
 
+        private static void DisplayNodeAndChildren(Node currentNode)
+        {
+            Console.WriteLine("...{0}...", currentNode.value);
+            Console.WriteLine("...{0}...{1}...", currentNode.left.value, currentNode.right.value);
         }
     }
 
@@ -125,7 +134,9 @@ namespace Binary_Tree
             tree.Insert(170);
             tree.Insert(15);
             tree.Insert(1);
+            tree.Insert(13);
 
+            tree.Print();//Not working yet
         }
     }
 }
