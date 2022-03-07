@@ -165,7 +165,9 @@ namespace Binary_Tree
             tree.Insert(1);
             tree.Insert(13);
 
-            tree.Lookup(1500);
+            tree.Lookup(1500);  //1500 not found
+            tree.Insert(1500);  //Added 1500
+            tree.Lookup(1500);  //1500 found
 
             tree.Print();//Not working yet
         }
