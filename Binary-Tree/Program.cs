@@ -47,14 +47,14 @@ namespace Binary_Tree
             {
                 currentNode = new Node(value);
             }
-            else
+            else // Can be done with a while true loop
             {
-                if(value < currentNode.value && currentNode.IsLeftNull)
+                if (value < currentNode.value && currentNode.IsLeftNull)
                 {
                     //assign
                     currentNode.left = new Node(value);
                 }
-                else if(value > currentNode.value && currentNode.isRightNull)
+                else if (value > currentNode.value && currentNode.isRightNull)
                 {
                     //assign
                     currentNode.right = new Node(value);
@@ -100,9 +100,38 @@ namespace Binary_Tree
             }
         }
 
-        public Node Lookup(int value)
+        public int Lookup(int value)
         {
-            return null;
+            Node currentNode = this.root;
+            while (true)
+            {
+                if(currentNode == null)//At the end of a node (left/right are null)
+                {
+                    Console.WriteLine("Entry {0} not found", value);
+                    return -1;
+                }
+                if (value == currentNode.value)
+                {
+                    Console.WriteLine("Entry {0} found", value);
+                    return currentNode.value;
+                }
+                else
+                {
+                    if (value < currentNode.value)
+                    {
+                        currentNode = currentNode.left;
+                    }
+                    else if (value > currentNode.value)
+                    {
+                        currentNode = currentNode.right;
+                    }
+                    //else
+                    //{
+                    //    Console.WriteLine("Entry {0} not found", value);
+                    //    return -1;
+                    //}
+                }
+            }
         }
 
         public void Print()
@@ -135,6 +164,8 @@ namespace Binary_Tree
             tree.Insert(15);
             tree.Insert(1);
             tree.Insert(13);
+
+            tree.Lookup(1500);
 
             tree.Print();//Not working yet
         }
