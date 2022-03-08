@@ -139,6 +139,9 @@ namespace Binary_Tree
             }
         }
 
+
+
+
         public void Print()
         {
             if (this.root == null)
@@ -153,7 +156,6 @@ namespace Binary_Tree
                 currentNode = currentNode.left;
             }
         }
-
         private static void DisplayNodeAndChildren(Node currentNode)
         {
             Console.WriteLine("...{0}...", currentNode.value);

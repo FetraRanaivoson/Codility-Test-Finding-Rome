@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace CyclicRotation
@@ -10,10 +12,31 @@ namespace CyclicRotation
             int[] A = new int[] { 3, 8, 9, 7, 6 };
             int K = 3;
 
-            Console.WriteLine(solution(A, K));
+            //  Naive solution using 2 for loops by shifting each elements in the
+            //  int the array K*Number of elements time => O(K*A)
+            //Console.WriteLine(NaiveSolution(A, K));
+
+            //  We can also use linked lists to solve this problem
+            //  NB: Using linked lists is good except we will have to traverse all the elements
+            //  to get the last one (O(N)) => O(K*A)
+            Console.WriteLine(HashTableSolution(A, K));
         }
 
-        public static int[] solution(int[] A, int K)
+        private static int[] HashTableSolution(int[] A, int K)
+        {
+            LinkedList<int> linkedList = new LinkedList<int>(A); // O(N) space complexity
+
+            for (int i = 0; i < K; i++) // O(K)
+            {
+                LinkedListNode<int> last = linkedList.Last; //O(A): traversing a linked list is an O(N) operation to get the last item
+                linkedList.RemoveLast(); //O(A): traversing a linked list is an O(N) operation to get the last item
+                linkedList.AddFirst(last);
+            } // => O(k*A)
+
+            return linkedList.ToArray<int>();// + O(A)
+        }
+
+        public static int[] NaiveSolution(int[] A, int K)
         {
             // Store the last element of the array
             int temp = A[A.Length - 1];
@@ -45,7 +68,7 @@ namespace CyclicRotation
             //}
             Console.Write(string.Join(", ", A));
             Console.WriteLine("]");
-            
+
 
             return A;
         }
