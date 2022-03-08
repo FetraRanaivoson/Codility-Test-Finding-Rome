@@ -19,10 +19,10 @@ namespace CyclicRotation
             //  We can also use linked lists to solve this problem
             //  NB: Using linked lists is good except we will have to traverse all the elements
             //  to get the last one (O(N)) => O(K*A)
-            Console.WriteLine(HashTableSolution(A, K));
+            Console.WriteLine(LinkedListSolution(A, K));
         }
 
-        private static int[] HashTableSolution(int[] A, int K)
+        private static int[] LinkedListSolution(int[] A, int K)
         {
             LinkedList<int> linkedList = new LinkedList<int>(A); // O(N) space complexity
 
