@@ -13,6 +13,10 @@ namespace Graph_Class
             this.nbNodes = 0;
             this.adjacencyList = new Dictionary<int, Connection>();
         }
+
+        /// <summary>
+        /// Add a vertex or a node to this graph.The node will be stored as a Key in an hash table
+        /// </summary>
         public void AddVertex(int newVertexKey)
         {
             if (!this.adjacencyList.ContainsKey(newVertexKey))
@@ -22,19 +26,46 @@ namespace Graph_Class
             }
         }
 
-        public void AddEdge()
+        /// <summary>
+        /// Add an edge or connection to this non oriented graph represented by two existing vertices or two existing nodes
+        /// </summary>
+        public void AddEdge(int vertexA, int vertexB)
         {
+            //  Sanity check
+            int failedToAddEdgeCount = 0;
+            if (!this.adjacencyList.ContainsKey(vertexA))
+            {
+                Console.WriteLine("Vertex '{0}' doesn't exists on the graph!", vertexA);
+                failedToAddEdgeCount++;
+            }
+            if (!this.adjacencyList.ContainsKey(vertexB))
+            {
+                Console.WriteLine("Vertex '{0}' doesn't exists on the graph!", vertexB);
+                failedToAddEdgeCount++;
+            }
+            if (failedToAddEdgeCount > 0)
+            {
+                return;
+            }
+
+            //  Add edge operation
+            this.adjacencyList[vertexA].AddConn(vertexB, vertexB); //Note that the connection key is the same as the value
+            this.adjacencyList[vertexB].AddConn(vertexA, vertexA); //Note that the connection key is the same as the value
 
         }
 
+        /// <summary>
+        /// Print all the connections for this graph
+        /// </summary>
         public void Print()
         {
             if (this.adjacencyList == null)
                 return;
 
+            Console.WriteLine("Graph connections: ");
             foreach (KeyValuePair<int, Connection> vertex in adjacencyList)
             {
-                Console.Write("Vertex {0}: ", vertex.Key);
+                Console.Write("Vertex {0} ---> ", vertex.Key);
                 if(vertex.Value.connections.Count == 0)
                 {
                     Console.Write("No connections");
@@ -61,7 +92,7 @@ namespace Graph_Class
         }
 
         /// <summary>
-        /// Add a connection using key value pair <int,int> to the dictionnary
+        /// Add a connection using key value pair <int,int> to the dictionary
         /// </summary>
         public void AddConn(int key, int value)
         {
@@ -90,6 +121,13 @@ namespace Graph_Class
             {
                 graph.AddVertex(B[i]);
             }
+
+            graph.AddEdge(0, 2);
+            graph.AddEdge(1, 3);
+            graph.AddEdge(2, 3);
+            graph.AddEdge(4, 3);
+            graph.AddEdge(5, 2);
+
 
             graph.Print();
         }
