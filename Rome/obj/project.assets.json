@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    "net5.0": {}
+    "net5.0": {
+      "Graph-Class/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "compile": {
+          "bin/placeholder/Graph-Class.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Graph-Class.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "Graph-Class/1.0.0": {
+      "type": "project",
+      "path": "../Graph-Class/Graph-Class.csproj",
+      "msbuildProject": "../Graph-Class/Graph-Class.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net5.0": []
+    "net5.0": [
+      "Graph-Class >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\MON PC\\.nuget\\packages\\": {}
@@ -33,7 +52,11 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "E:\\ISI\\COURS\\Codility-Tests-Practices\\Graph-Class\\Graph-Class.csproj": {
+              "projectPath": "E:\\ISI\\COURS\\Codility-Tests-Practices\\Graph-Class\\Graph-Class.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

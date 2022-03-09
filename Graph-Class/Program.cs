@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Graph_Class
 {
-    class Graph
+    public class Graph
     {
         int nbNodes;
         Dictionary<int, Connection> adjacencyList;
@@ -51,7 +51,16 @@ namespace Graph_Class
             //  Add edge operation
             this.adjacencyList[vertexA].AddConn(vertexB, vertexB); //Note that the connection key is the same as the value
             this.adjacencyList[vertexB].AddConn(vertexA, vertexA); //Note that the connection key is the same as the value
+        }
 
+        /// <summary>
+        /// The center of a graph is the vertex or node which is connected to all the other vertices or node
+        /// directly or indirectly
+        /// </summary>
+        /// <returns></returns>
+        public int Center()
+        {
+            return -1;
         }
 
         /// <summary>
@@ -82,7 +91,7 @@ namespace Graph_Class
         }
     }
 
-    internal class Connection
+    public class Connection
     {
         public Dictionary<int, int> connections;
 
