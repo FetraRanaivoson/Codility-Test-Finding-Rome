@@ -33,6 +33,7 @@ namespace CyclicRotation
                 linkedList.AddFirst(last);
             } // => O(k*A)
 
+
             return linkedList.ToArray<int>();// + O(A)
         }
 
