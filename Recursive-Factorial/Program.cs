@@ -6,21 +6,31 @@ namespace Recursive_Factorial
     {
         static void Main(string[] args)
         {
-            double number = 12;
+            double number = 50;
             Console.WriteLine("Factorial of {0} is: {1}", number, FactorialRecursive(number));
-            //Console.WriteLine("Factorial of {0} is: {1}", number, FactorialIterative(number));
+            Console.WriteLine("Factorial of {0} is: {1}", number, FactorialIterative(number));
         }
 
-        private static int FactorialIterative(double number)
+        private static double FactorialIterative(double number)
         {
-            throw new NotImplementedException();
+            double result = 1;
+            double counter = number;
+            for (int i = 1; i <= counter; i++)
+            {
+                result = result * number;
+                if (i == counter)
+                {
+                    return result;
+                }
+                number--;
+            }
+            return result;
         }
 
         private static double FactorialRecursive(double number)
         {
             double result = 1;
             double counter = number;
-
             return Factorial(number, counter, result);
         }
 
