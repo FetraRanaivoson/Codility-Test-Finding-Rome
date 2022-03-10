@@ -47,6 +47,7 @@ namespace RomeFinding
             graph.AddEdge(4, 3);
             graph.AddEdge(5, 2);
 
+            //3: 3-2? 3-2-0?
 
             graph.Print();
 
