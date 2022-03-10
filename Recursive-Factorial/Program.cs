@@ -9,9 +9,11 @@ namespace Recursive_Factorial
             double number = 50;
             Console.WriteLine("Factorial of {0} is: {1}", number, FactorialRecursive(number));
             Console.WriteLine("Factorial of {0} is: {1}", number, FactorialIterative(number));
+            Console.WriteLine("Factorial of {0} is: {1}", number, FactorialRecursiveSimpleAndClean(number));
+        
         }
 
-        private static double FactorialIterative(double number)
+        private static double FactorialIterative(double number) // O(N)
         {
             double result = 1;
             //double counter = number;
@@ -36,7 +38,7 @@ namespace Recursive_Factorial
             return Factorial(number, counter, result);
         }
 
-        private static double Factorial(double number, double counter, double result)
+        private static double Factorial(double number, double counter, double result) //O(N) 
         {
             if (counter == 0)
             {
@@ -47,6 +49,18 @@ namespace Recursive_Factorial
             counter--;
             number--;
             return Factorial(number, counter, result);
+        }
+
+        private static double FactorialRecursiveSimpleAndClean(double number) //O(N)
+        {
+            //  Base case: the stop
+            if(number < 2)
+            {
+                return 1;
+            }
+
+            //  Recursive case: the recall
+            return number * FactorialRecursiveSimpleAndClean(number - 1);
         }
     }
 }
