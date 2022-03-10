@@ -14,15 +14,17 @@ namespace Recursive_Factorial
         private static double FactorialIterative(double number)
         {
             double result = 1;
-            double counter = number;
-            for (int i = 1; i <= counter; i++)
+            //double counter = number;
+            //for (int i = 1; i <= counter; i++)
+            for (double i = number; i > 1; i--)
             {
-                result = result * number;
-                if (i == counter)
-                {
-                    return result;
-                }
-                number--;
+                //result = result * number;
+                result = result * i;
+                //if (i == counter)
+                //{
+                    //return result;
+                //}
+                //number--;
             }
             return result;
         }
@@ -41,7 +43,7 @@ namespace Recursive_Factorial
                 return result;
             }
 
-            result =  result * number;
+            result = result * number;
             counter--;
             number--;
             return Factorial(number, counter, result);
