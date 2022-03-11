@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Reverse_String
 {
@@ -7,20 +8,47 @@ namespace Reverse_String
         static void Main(string[] args)
         {
             string text = "Hello, my name is Fetra. I am a game developer";
-            //Console.WriteLine(Reverse(text));
-            Console.WriteLine(Reverse2(text));
-           
+            Console.WriteLine(ReverseLoop(text));
+            Console.WriteLine(ReverseSimplified(text));
+            Console.WriteLine(ReverseRecursion(text));
+
         }
 
-        static string Reverse2(string text)
+        private static string ReverseRecursion(string text)
         {
-            char[] reversed = text.ToCharArray(); 
+            //  Base case: stop
+            if (text.Length <= 1)
+            {
+                return text;
+            }
+
+            //  Recursive case: recall => if (text.Length != 0)
+            char[] chrs = text.ToCharArray();
+            LinkedList<char> charactersList = new LinkedList<char>(chrs);
+            LinkedListNode<char> lastChar = charactersList.Last;
+            LinkedListNode<char> firstChar = charactersList.First;
+            if (charactersList.Count > 1)
+            {
+                charactersList.RemoveLast();
+                charactersList.RemoveFirst();
+
+            }
+            return lastChar.Value + ReverseRecursion(string.Join("", charactersList)) + firstChar.Value;
+
+            //            "H +   eli    + o    "
+            //            "o + e +l + i + H    "
+            //            "o + i +l + e + H    "
+        }
+
+        static string ReverseSimplified(string text)
+        {
+            char[] reversed = text.ToCharArray();
             Array.Reverse(reversed);
             return string.Join("", reversed);
             //return string.Join("", text.Split(""));
         }
 
-        static string Reverse(string text)
+        static string ReverseLoop(string text)
         {
             //  I do not need the extra loop to create a separate array to hold the characters.
             //  string is already an array but I just need to convert it into string when assigning to the new array
@@ -36,7 +64,7 @@ namespace Reverse_String
 
             //  text = "abc"
             //  1-  You create a new array with the same length as the array we are working on
-            string[] newArray = new string[text.Length]; 
+            string[] newArray = new string[text.Length];
 
             //  2-  Assign new values for the new array starting from old array index going backward from the end
             //  int currentOldArrayIndex = oldArray.Length -1
@@ -67,7 +95,9 @@ namespace Reverse_String
             //}
 
             //  3-  Transform the array to a text
-            return string.Join("",newArray);
+            return string.Join("", newArray);
         }
+
+
     }
 }
