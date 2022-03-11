@@ -102,7 +102,7 @@ namespace Binary_Tree
 
         public int Lookup(int value)
         {
-            if(this.root == null)
+            if (this.root == null)
             {
                 Console.WriteLine("Cannot find {0}, tree has not root.", value);
                 return -1;
@@ -110,7 +110,7 @@ namespace Binary_Tree
             Node currentNode = this.root;
             while (true)
             {
-                if(currentNode == null)//At the end of a node (left/right are null)
+                if (currentNode == null)//At the end of a node (left/right are null)
                 {
                     Console.WriteLine("Entry {0} not found!", value);
                     return -1;
@@ -139,32 +139,47 @@ namespace Binary_Tree
             }
         }
 
-
-
-
         public void Print()
         {
-            if (this.root == null)
-            {
-                Console.WriteLine("No tree to print!");
-                return;
-            }
-            Node currentNode = this.root;
-            while (currentNode.Full)
-            {
-                DisplayNodeAndChildren(currentNode);
-                currentNode = currentNode.left;
-            }
+            PrintRecursive(this.root);
         }
-        private static void DisplayNodeAndChildren(Node currentNode)
+        private void PrintRecursive(Node currentNode)
         {
-            Console.WriteLine("...{0}...", currentNode.value);
-            Console.WriteLine("...{0}...{1}...", currentNode.left.value, currentNode.right.value);
+            //  Base case
+            //  if(currentNode == null){ do nothing because nothing to print)
+
+            //  Recursive case
+            if (currentNode != null)
+            {
+                if (currentNode.left != null && currentNode.right != null)
+                {
+                    Console.WriteLine("{0}--> L:{1}, R:{2}", currentNode.value, currentNode.left.value, currentNode.right.value);
+                    PrintRecursive(currentNode.left);
+                    PrintRecursive(currentNode.right);
+                }
+                else if (currentNode.left != null && currentNode.right == null)
+                {
+                    Console.WriteLine("{0}--> L:{1}, R:{2}", currentNode.value, currentNode.left.value, "Empty");
+                    PrintRecursive(currentNode.left);
+                }
+                else if (currentNode.left == null && currentNode.right != null)
+                {
+                    Console.WriteLine("{0}--> L:{1}, R:{2}", currentNode.value, "Empty", currentNode.right.value);
+                    PrintRecursive(currentNode.right);
+                }
+            }
         }
     }
 
     class Program
     {
+        //      9
+        //    /   \
+        //   4     20
+        //  / \   /  \
+        // 1   6 15  170
+        //       /   /  \
+        //      13  21  1500
         static void Main(string[] args)
         {
             BinarySearchTree tree = new BinarySearchTree();
@@ -180,6 +195,8 @@ namespace Binary_Tree
             tree.Lookup(1500);  //1500 not found
             tree.Insert(1500);  //Added 1500
             tree.Lookup(1500);  //1500 found
+
+            tree.Insert(21);
 
             tree.Print();//Not working yet
         }
