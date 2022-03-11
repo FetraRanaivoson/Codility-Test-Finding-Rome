@@ -35,6 +35,10 @@ namespace Binary_Tree
             this.root = null;
         }
 
+        /// <summary>
+        /// Insert this value to this the binary tree
+        /// </summary>
+        /// <param name="value"></param>
         public void Insert(int value)
         {
             //Traverse(ref this.root, value);
@@ -107,7 +111,7 @@ namespace Binary_Tree
         private void TraverseRecursive(Node currentNode, int value)
         {
             //  Particular case: no root
-            if(this.root == null)
+            if (this.root == null)
             {
                 this.root = new Node(value);
             }
@@ -127,7 +131,7 @@ namespace Binary_Tree
 
             }
             else if (value > currentNode.value)
-            {   
+            {
                 //  Base case
                 if (currentNode.right == null)
                 {
@@ -139,6 +143,124 @@ namespace Binary_Tree
                     TraverseRecursive(currentNode.right, value);
                 }
             }
+        }
+
+        /// <summary>
+        /// Remove a value from the tree
+        /// </summary>
+        public void Remove(int value)
+        {
+            if (this.root == null)
+            {
+                Console.WriteLine("Failed to remove {0}, no root found", value);
+            }
+            else
+            {
+                Node currentNode = this.root;
+                Node parentNode = null;
+                while (currentNode != null)
+                {
+                    if (value < currentNode.value)
+                    {
+                        parentNode = currentNode;
+                        currentNode = currentNode.left;
+                    }
+                    else if (value > currentNode.value)
+                    {
+                        parentNode = currentNode;
+                        currentNode = currentNode.right;
+                    }
+                    else if (currentNode.value == value) //Match
+                    {
+                        //Case 1: No right child
+                        if (currentNode.right == null)
+                        {
+                            if (parentNode == null) // case: deleting the root
+                            {
+                                this.root = currentNode.left;
+                            }
+                            else //Is the value to delete is less/greater than the parent value?
+                            {
+                                //  If parent value greater than current node value, then
+                                //  make the current node left child a child of the parent
+                                if (currentNode.value < parentNode.value)
+                                {
+                                    //parentNode.left = currentNode.left; //act of nullifying the current node
+                                    parentNode.left = null;
+                                    currentNode = parentNode.left;
+                                }
+                                //  Else if parent value less than current value, then
+                                //  make the current node left child  a child of the right parent
+                                else if (currentNode.value > parentNode.value)
+                                {
+                                    //parentNode.right = currentNode.left;
+                                    parentNode.right = null;
+                                    currentNode = parentNode.left;
+                                }
+                            }
+                        }
+                        //Case 2: Right child doesnt have a left child
+                        else if (currentNode.right.left == null)
+                        {
+                            currentNode.right.left = currentNode.left;
+                            if (parentNode == null)
+                            {
+                                this.root = currentNode.right;
+                            }
+                            else
+                            {
+                                //if parent > current, make right child of the left the parent
+                                if (currentNode.value < parentNode.value)
+                                {
+                                    parentNode.left = currentNode.right;
+                                    //parentNode.left = null;
+                                    //currentNode = parentNode.right;
+                                }
+                                //if parent < current, make right child a right child of the parent
+                                else if (currentNode.value > parentNode.value)
+                                {
+                                    parentNode.right = currentNode.right;
+                                }
+                            }  
+                        }
+                        //Option 3: Right child that has a left child
+                        else
+                        {
+
+                            //find the Right child's left most child
+                            Node leftmost = currentNode.right.left;
+                            Node leftmostParent = currentNode.right;
+                            while (leftmost.left != null)
+                            {
+                                leftmostParent = leftmost;
+                                leftmost = leftmost.left;
+                            }
+
+                            //Parent's left subtree is now leftmost's right subtree
+                            leftmostParent.left = leftmost.right;
+                            leftmost.left = currentNode.left;
+                            leftmost.right = currentNode.right;
+
+                            if (parentNode == null)
+                            {
+                                this.root = leftmost;
+                            }
+                            else
+                            {
+                                if (currentNode.value < parentNode.value)
+                                {
+                                    parentNode.left = leftmost;
+                                }
+                                else if (currentNode.value > parentNode.value)
+                                {
+                                    parentNode.right = leftmost;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            Console.WriteLine("==============================");
         }
 
 
@@ -214,7 +336,12 @@ namespace Binary_Tree
                     Console.WriteLine("{0}--> L:{1}, R:{2}", currentNode.value, "Empty", currentNode.right.value);
                     PrintRecursive(currentNode.right);
                 }
+                else
+                {
+                    Console.WriteLine("{0}--> L:{1}, R:{2}", currentNode.value, "Empty", "Empty");
+                }
             }
+         
         }
     }
 
@@ -245,6 +372,11 @@ namespace Binary_Tree
 
             tree.Insert(21);
             tree.Insert(19);
+
+            tree.Print();
+
+            tree.Remove(21);
+            tree.Remove(1500);
 
             tree.Print();
         }
