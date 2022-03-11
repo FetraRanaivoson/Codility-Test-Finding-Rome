@@ -37,7 +37,8 @@ namespace Binary_Tree
 
         public void Insert(int value)
         {
-            Traverse(ref this.root, value);
+            //Traverse(ref this.root, value);
+            TraverseRecursive(this.root, value);
         }
 
         private static void Traverse(ref Node currentNode, int value)
@@ -100,6 +101,48 @@ namespace Binary_Tree
             }
         }
 
+        /// <summary>
+        /// A more cleaner short recursive way to insert value to the binary tree
+        /// </summary>
+        private void TraverseRecursive(Node currentNode, int value)
+        {
+            //  Particular case: no root
+            if(this.root == null)
+            {
+                this.root = new Node(value);
+            }
+
+            else if (value < currentNode.value)
+            {
+                //  Base case
+                if (currentNode.left == null)
+                {
+                    currentNode.left = new Node(value);
+                }
+                //  Recursive case
+                else
+                {
+                    TraverseRecursive(currentNode.left, value);
+                }
+
+            }
+            else if (value > currentNode.value)
+            {   
+                //  Base case
+                if (currentNode.right == null)
+                {
+                    currentNode.right = new Node(value);
+                }
+                //  Recursive case
+                else
+                {
+                    TraverseRecursive(currentNode.right, value);
+                }
+            }
+        }
+
+
+
         public int Lookup(int value)
         {
             if (this.root == null)
@@ -139,6 +182,10 @@ namespace Binary_Tree
             }
         }
 
+
+        /// <summary>
+        /// Print every node and their connections (if any)
+        /// </summary>
         public void Print()
         {
             PrintRecursive(this.root);
@@ -176,10 +223,10 @@ namespace Binary_Tree
         //      9
         //    /   \
         //   4     20
-        //  / \   /  \
-        // 1   6 15  170
-        //       /   /  \
-        //      13  21  1500
+        //  / \   /   \
+        // 1   6 15   170
+        //       /\   /  \
+        //      13 19 21  1500
         static void Main(string[] args)
         {
             BinarySearchTree tree = new BinarySearchTree();
@@ -197,8 +244,9 @@ namespace Binary_Tree
             tree.Lookup(1500);  //1500 found
 
             tree.Insert(21);
+            tree.Insert(19);
 
-            tree.Print();//Not working yet
+            tree.Print();
         }
     }
 }
