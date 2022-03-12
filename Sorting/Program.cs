@@ -12,8 +12,9 @@ namespace Sorting
 
             //unsorted.Sort();
             //Console.WriteLine("Sorted array using built in tool : {0}", string.Join(", ",unsorted)); 
-            Console.WriteLine("Bubble sorted array : {0}", string.Join(", ", BubbleSort(unsorted)));
-            Console.WriteLine("Bubble sorted array inverse : {0}", string.Join(", ", BubbleSortInverse(unsorted)));
+            //Console.WriteLine("Bubble sorted array : {0}", string.Join(", ", BubbleSort(unsorted)));
+            //Console.WriteLine("Bubble sorted array inverse : {0}", string.Join(", ", BubbleSortInverse(unsorted)));
+            Console.WriteLine("Bubble sorted array recursive : {0}", string.Join(", ", BubbleSortRecursion(unsorted)));
 
         }
         private static List<int> BubbleSort(List<int> unsorted)
@@ -49,13 +50,41 @@ namespace Sorting
                         if (first < second)
                         {
                             unsorted[k] = second;
-                            unsorted[k+1] = first;   //the current item is moving because it becomes in k+1 index and so we always test for it in the k for loop
+                            unsorted[k + 1] = first;   //the current item is moving because it becomes in k+1 index and so we always test for it in the k for loop
                         }
                     }
                 }//At the end of this loop, we should have resolve the case of 'first'which is always moving (bubbling)
             }//At the end of this should resolve all cases
             return unsorted;
         }
-  
+
+        private static List<int> BubbleSortRecursion(List<int> unsorted)
+        {
+            if (unsorted.Count <= 1)
+            {
+                return unsorted;
+            }
+
+            int first = unsorted[unsorted.Count-1];
+            int second = unsorted[unsorted.Count-2];
+            List<int> append = new List<int>();
+            if (first > second)
+            {
+                unsorted[unsorted.Count-1] = second;
+                unsorted[unsorted.Count-2] = first;
+                append.Add(unsorted[unsorted.Count-1]);
+                unsorted.RemoveAt(unsorted.Count-1);
+            }
+            else
+            {
+                append.Add(first);
+                unsorted.RemoveAt(unsorted.Count-1);
+            }
+
+            
+
+            return  BubbleSortRecursion(unsorted);
+        }
+
     }
 }
