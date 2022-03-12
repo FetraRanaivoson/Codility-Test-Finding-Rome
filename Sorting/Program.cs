@@ -18,8 +18,31 @@ namespace Sorting
             //Console.WriteLine("Bubble sorted array recursive : {0}", string.Join(", ", BubbleSortRecursion(unsorted)));
 
             //Console.WriteLine("Selection sorted array : {0}", string.Join(", ", SelectionSort(unsorted)));
-            Console.WriteLine("Selection sorted (clean) array : {0}", string.Join(", ", SelectionSortClean(unsorted)));
+            //Console.WriteLine("Selection sorted (clean) array : {0}", string.Join(", ", SelectionSortClean(unsorted)));
 
+            Console.WriteLine("Insertion sorted array : {0}", string.Join(", ", InsertionSort(unsorted)));
+
+        }
+
+        private static List<int> InsertionSort(List<int> unsorted)
+        {
+            int precedCount = 1;
+            for (int i = 0; i < unsorted.Count; i++)
+            {
+                if (i > 0)
+                {
+                    for (int j = i; j > 0; j--) // Retro check starting from index j=i back to index 0
+                    {
+                        if (unsorted[j] < unsorted[j-1])
+                        {
+                            int temp = unsorted[j-1];
+                            unsorted[j - 1] = unsorted[j];
+                            unsorted[j] = temp;
+                        }
+                    }
+                }
+            }
+            return unsorted;
         }
 
         private static List<int> SelectionSort(List<int> unsorted)
@@ -80,7 +103,6 @@ namespace Sorting
 
             return unsorted;
         }
-
         private static List<int> SelectionSortClean(List<int> unsorted)
         {
             int listCount = unsorted.Count;
@@ -90,7 +112,7 @@ namespace Sorting
                 int minRedIndex = RED_INDEX;
                 //  The element to swap for the minimum found
                 int temp = unsorted[RED_INDEX];
-                for (int BLUE_INDEX = RED_INDEX+1; BLUE_INDEX < listCount; BLUE_INDEX++)
+                for (int BLUE_INDEX = RED_INDEX + 1; BLUE_INDEX < listCount; BLUE_INDEX++)
                 {
                     //  Remember, we need to find the smallest value after the min(RED_INDEX: i) and
                     //  if we find it, the next min (RED_INDEX) will be the older (BLUE_INDEX)
