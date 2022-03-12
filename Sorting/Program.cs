@@ -17,7 +17,8 @@ namespace Sorting
             //Console.WriteLine("Bubble sorted array inverse : {0}", string.Join(", ", BubbleSortInverse(unsorted)));
             //Console.WriteLine("Bubble sorted array recursive : {0}", string.Join(", ", BubbleSortRecursion(unsorted)));
 
-            Console.WriteLine("Selection sorted array : {0}", string.Join(", ", SelectionSort(unsorted)));
+            //Console.WriteLine("Selection sorted array : {0}", string.Join(", ", SelectionSort(unsorted)));
+            Console.WriteLine("Selection sorted (clean) array : {0}", string.Join(", ", SelectionSortClean(unsorted)));
 
         }
 
@@ -33,19 +34,19 @@ namespace Sorting
             for (int RED_INDEX = 0; RED_INDEX < unsorted.Count; RED_INDEX++)
             {
                 //  Always check from RED_INDEX up
-                for (int BLUE_INDEX = RED_INDEX +1; BLUE_INDEX < unsorted.Count; BLUE_INDEX++)
+                for (int BLUE_INDEX = RED_INDEX + 1; BLUE_INDEX < unsorted.Count; BLUE_INDEX++)
                 {
                     //  As soon as current value > next value, break this so that on the next outer iteration,
                     //  the RED_INDEX WILL BE THE BLUE INDEX
                     if (unsorted[RED_INDEX] > unsorted[BLUE_INDEX])
                     {
                         //Technically RED_INDEX = BLUE_INDEX but because the outer for loop will increment, we need to counter that!
-                        RED_INDEX = BLUE_INDEX-1; 
+                        RED_INDEX = BLUE_INDEX - 1;
                         break;
                     }
 
                     //  Else if current value < next, we need to BUBBLE UP OUR COMPARISON TILL THE END
-                    else if(unsorted[RED_INDEX] < unsorted[BLUE_INDEX])
+                    else if (unsorted[RED_INDEX] < unsorted[BLUE_INDEX])
                     {
                         //  If we found out that the value on the RED_INDEX is SMALLER than all the others starting from [BLUE_INDEX +1]
                         if (BLUE_INDEX == unsorted.Count - 1)
@@ -67,10 +68,10 @@ namespace Sorting
                 }
 
                 //  Particular case when we are comparing the last 2 values and the last element is less than the last element-1
-                if (RED_INDEX == unsorted.Count-2 && unsorted[RED_INDEX] > unsorted[RED_INDEX + 1])
+                if (RED_INDEX == unsorted.Count - 2 && unsorted[RED_INDEX] > unsorted[RED_INDEX + 1])
                 {
-                    int toBubbleUp = unsorted[RED_INDEX+1];
-                    unsorted.RemoveAt(RED_INDEX+1);
+                    int toBubbleUp = unsorted[RED_INDEX + 1];
+                    unsorted.RemoveAt(RED_INDEX + 1);
                     unsorted.Insert(insertionIndex, toBubbleUp);
                     insertionIndex++;
                     RED_INDEX = insertionIndex - 1;
@@ -79,6 +80,33 @@ namespace Sorting
 
             return unsorted;
         }
+
+        private static List<int> SelectionSortClean(List<int> unsorted)
+        {
+            int listCount = unsorted.Count;
+            for (int i = 0; i < listCount; i++)
+            {
+                //  Set the current index as minimum
+                int min = i;
+                int temp = unsorted[i];
+                for (int j = i+1; j < listCount; j++)
+                {
+                    //  Remember, we need to find the smallest value after the min(RED_INDEX: i) and
+                    //  if we don't find it, the next min (RED_INDEX) will be the older j(BLUE_INDEX)
+                    if (unsorted[j] < unsorted[min])
+                    {
+                        //  Update minimum if current is lower that what we had previously (Where indew are we? What index is the minimum?)
+                        min = j;
+                    }
+                }
+                //  Now after finding the min INDEX between ALL the  elements, SWAP the min INDEX value and the element where to place it (temp)
+                unsorted[i] = unsorted[min];
+                //  And the  value of where the min was before is the temp 
+                unsorted[min] = temp;
+            }
+            return unsorted;
+        }
+
 
         private static List<int> BubbleSort(List<int> unsorted)
         {
@@ -127,25 +155,25 @@ namespace Sorting
                 return unsorted;
             }
 
-            int first = unsorted[unsorted.Count-1];
-            int second = unsorted[unsorted.Count-2];
+            int first = unsorted[unsorted.Count - 1];
+            int second = unsorted[unsorted.Count - 2];
             List<int> append = new List<int>();
             if (first > second)
             {
-                unsorted[unsorted.Count-1] = second;
-                unsorted[unsorted.Count-2] = first;
-                append.Add(unsorted[unsorted.Count-1]);
-                unsorted.RemoveAt(unsorted.Count-1);
+                unsorted[unsorted.Count - 1] = second;
+                unsorted[unsorted.Count - 2] = first;
+                append.Add(unsorted[unsorted.Count - 1]);
+                unsorted.RemoveAt(unsorted.Count - 1);
             }
             else
             {
                 append.Add(first);
-                unsorted.RemoveAt(unsorted.Count-1);
+                unsorted.RemoveAt(unsorted.Count - 1);
             }
 
-            
 
-            return  BubbleSortRecursion(unsorted);
+
+            return BubbleSortRecursion(unsorted);
         }
 
     }
