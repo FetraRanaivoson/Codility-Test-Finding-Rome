@@ -25,7 +25,7 @@ namespace Sorting
         {
             //  RED_INDEX = THE INDEX OF THE "SMALLER" VALUE (We suppose that the first index is the smaller value)
             //  BLUE_INDEX = THE INDEX OF THE VALUE NEXT TO THE RED INDEX (RED INDEX++)
-            //  The idea is to bubble the smaller value to the end of the collection and INSERT it back at the beginning or after all
+            //  The idea is to find the SMALLEST VALUE after the RED_INDEX and INSERT it back at the beginning or after all
             //  the smaller values at the beginning
 
             int insertionIndex = 0;
