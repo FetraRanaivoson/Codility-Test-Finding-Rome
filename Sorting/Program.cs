@@ -84,25 +84,26 @@ namespace Sorting
         private static List<int> SelectionSortClean(List<int> unsorted)
         {
             int listCount = unsorted.Count;
-            for (int i = 0; i < listCount; i++)
+            for (int RED_INDEX = 0; RED_INDEX < listCount; RED_INDEX++)
             {
                 //  Set the current index as minimum
-                int min = i;
-                int temp = unsorted[i];
-                for (int j = i+1; j < listCount; j++)
+                int minRedIndex = RED_INDEX;
+                //  The element to swap for the minimum found
+                int temp = unsorted[RED_INDEX];
+                for (int BLUE_INDEX = RED_INDEX+1; BLUE_INDEX < listCount; BLUE_INDEX++)
                 {
                     //  Remember, we need to find the smallest value after the min(RED_INDEX: i) and
-                    //  if we don't find it, the next min (RED_INDEX) will be the older j(BLUE_INDEX)
-                    if (unsorted[j] < unsorted[min])
+                    //  if we find it, the next min (RED_INDEX) will be the older (BLUE_INDEX)
+                    if (unsorted[BLUE_INDEX] < unsorted[minRedIndex])
                     {
                         //  Update minimum if current is lower that what we had previously (Where indew are we? What index is the minimum?)
-                        min = j;
+                        minRedIndex = BLUE_INDEX;
                     }
                 }
                 //  Now after finding the min INDEX between ALL the  elements, SWAP the min INDEX value and the element where to place it (temp)
-                unsorted[i] = unsorted[min];
+                unsorted[RED_INDEX] = unsorted[minRedIndex];
                 //  And the  value of where the min was before is the temp 
-                unsorted[min] = temp;
+                unsorted[minRedIndex] = temp;
             }
             return unsorted;
         }
