@@ -20,13 +20,67 @@ namespace Sorting
             //Console.WriteLine("Selection sorted array : {0}", string.Join(", ", SelectionSort(unsorted)));
             //Console.WriteLine("Selection sorted (clean) array : {0}", string.Join(", ", SelectionSortClean(unsorted)));
 
-            Console.WriteLine("Insertion sorted array : {0}", string.Join(", ", InsertionSort(unsorted)));
+            //Console.WriteLine("Insertion sorted array : {0}", string.Join(", ", InsertionSort(unsorted)));
+            
+            Console.WriteLine("Merge sorted array: {0}", string.Join(", ", MergeSort(unsorted)));
 
+        }
+
+        // O(n log n) time complexity but requires more space
+        private static List<int> MergeSort(List<int> unsorted)
+        {
+            if(unsorted.Count == 1)
+            {
+                return unsorted;
+            }
+
+            //  Split list into left and right
+            List<int> tempLeft = new List<int>(unsorted);
+            tempLeft.RemoveRange(unsorted.Count / 2, unsorted.Count - unsorted.Count / 2);
+            List<int> left = tempLeft;
+
+            List<int> tempRight= new List<int>(unsorted);
+            tempRight.RemoveRange(0, unsorted.Count / 2);
+            List<int> right = tempRight;
+
+            //Console.WriteLine("Left: " + string.Join(",", left));
+            //Console.WriteLine("Right: " + string.Join(",", right));
+            //Console.WriteLine("--------------------");
+
+            return Merge(MergeSort(left), MergeSort(right));
+        }
+
+        private static List<int> Merge(List<int> left, List<int> right)
+        {
+            List<int> mergeResult = new List<int>();
+            int leftIndex = 0;
+            int rightIndex = 0;
+
+            while(leftIndex < left.Count && rightIndex < right.Count)
+            {
+                if(left[leftIndex]< right[rightIndex])
+                {
+                    mergeResult.Add(left[leftIndex]);
+                    leftIndex++;
+                }
+                else
+                {
+                    mergeResult.Add(right[rightIndex]);
+                    rightIndex++;
+                }
+            }
+            //Remove unecessary items because they have already been added to the result
+            right.RemoveRange(0, rightIndex);
+            left.RemoveRange(0, leftIndex);
+
+            mergeResult.AddRange(left);
+            mergeResult.AddRange(right);
+
+            return mergeResult;
         }
 
         private static List<int> InsertionSort(List<int> unsorted)
         {
-            int precedCount = 1;
             for (int i = 0; i < unsorted.Count; i++)
             {
                 if (i > 0)
@@ -44,6 +98,7 @@ namespace Sorting
             }
             return unsorted;
         }
+
 
         private static List<int> SelectionSort(List<int> unsorted)
         {
