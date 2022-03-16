@@ -270,19 +270,19 @@ namespace Binary_Tree
         /// Searching broader first (left to right) then deeper (down)
         /// NB: the memory consumption for the queue can be very large if the tree is very wide
         /// </summary>
-        public void BreadthFirstSearch()
+        public List<int> BreadthFirstSearch()
         {
             Node currentNode = this.root;
             List<int> list = new List<int>();
             Queue<Node> queue = new Queue<Node>(); //FIFO: we'll put in the left node first then the right node so we'll always go from left to right first
             queue.Enqueue(currentNode);
 
-            Console.WriteLine("BFS visit order: ");
+            //Console.WriteLine("BFS visit order: ");
             while(queue.Count > 0)
             {
                 currentNode = queue.Dequeue(); //Overwrite current node. At the 1st iteration, the current node will be the root. Later it will be the 'First In' on the queue etc
                 list.Add(currentNode.value);
-                Console.WriteLine("-> {0}", currentNode.value);
+                //Console.WriteLine("-> {0}", currentNode.value);
                 if (currentNode.left != null)
                 {
                     queue.Enqueue(currentNode.left);
@@ -291,10 +291,43 @@ namespace Binary_Tree
                 {
                     queue.Enqueue(currentNode.right);
                 }
-
             }
+            Console.Write("BFS visit order Normal method: ");
+            Console.WriteLine(string.Join(", ", list));
+            return list;
         }
 
+        /// <summary>
+        /// Breadth First Search Algorithm (Recursive method)
+        /// </summary>
+        public List<int> BreadthFirstSearchR()
+        {
+            Queue<Node> queue = new Queue<Node>();
+            List<int> list = new List<int>();
+            queue.Enqueue(this.root);
+            return BreadthFirstSearchRecursive(queue,list);
+        }
+
+        private List<int> BreadthFirstSearchRecursive(Queue<Node> queue, List<int> list)
+        {
+            if(queue.Count == 0)
+            {
+                Console.Write("BFS visit order Recursive method: ");
+                Console.WriteLine(string.Join(", ", list));
+                return list;
+            }
+            Node currentNode = queue.Dequeue();
+            list.Add(currentNode.value);
+            if(currentNode.left != null)
+            {
+                queue.Enqueue(currentNode.left);
+            }
+            if(currentNode.right != null)
+            {
+                queue.Enqueue(currentNode.right);
+            }
+            return BreadthFirstSearchRecursive(queue, list);
+        }
 
         public int Lookup(int value)
         {
@@ -414,6 +447,7 @@ namespace Binary_Tree
             tree.Print();
 
             tree.BreadthFirstSearch();
+            tree.BreadthFirstSearchR();
         }
     }
 }
