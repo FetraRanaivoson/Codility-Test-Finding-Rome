@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Binary_Tree
 {
@@ -260,9 +261,39 @@ namespace Binary_Tree
                     }
                 }
             }
-            Console.WriteLine("==============================");
+            //Console.WriteLine("==============================");
         }
 
+
+        /// <summary>
+        /// Breadth First Search Algorithm.
+        /// Searching broader first (left to right) then deeper (down)
+        /// NB: the memory consumption for the queue can be very large if the tree is very wide
+        /// </summary>
+        public void BreadthFirstSearch()
+        {
+            Node currentNode = this.root;
+            List<int> list = new List<int>();
+            Queue<Node> queue = new Queue<Node>(); //FIFO: we'll put in the left node first then the right node so we'll always go from left to right first
+            queue.Enqueue(currentNode);
+
+            Console.WriteLine("BFS visit order: ");
+            while(queue.Count > 0)
+            {
+                currentNode = queue.Dequeue(); //Overwrite current node. At the 1st iteration, the current node will be the root. Later it will be the 'First In' on the queue etc
+                list.Add(currentNode.value);
+                Console.WriteLine("-> {0}", currentNode.value);
+                if (currentNode.left != null)
+                {
+                    queue.Enqueue(currentNode.left);
+                }
+                if (currentNode.right != null)
+                {
+                    queue.Enqueue(currentNode.right);
+                }
+
+            }
+        }
 
 
         public int Lookup(int value)
@@ -310,7 +341,9 @@ namespace Binary_Tree
         /// </summary>
         public void Print()
         {
+            Console.WriteLine("==============BINARY TREE===============");
             PrintRecursive(this.root);
+            Console.WriteLine("========================================");
         }
         private void PrintRecursive(Node currentNode)
         {
@@ -375,10 +408,12 @@ namespace Binary_Tree
 
             tree.Print();
 
-            tree.Remove(21);
-            tree.Remove(1500);
+            //tree.Remove(21);
+            //tree.Remove(1500);
 
             tree.Print();
+
+            tree.BreadthFirstSearch();
         }
     }
 }
