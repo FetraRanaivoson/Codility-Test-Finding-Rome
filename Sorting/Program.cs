@@ -15,7 +15,6 @@ namespace Sorting
 
             //Console.WriteLine("Bubble sorted array : {0}", string.Join(", ", BubbleSort(unsorted)));
             //Console.WriteLine("Bubble sorted array inverse : {0}", string.Join(", ", BubbleSortInverse(unsorted)));
-            //Console.WriteLine("Bubble sorted array recursive : {0}", string.Join(", ", BubbleSortRecursion(unsorted)));
 
             //Console.WriteLine("Selection sorted array : {0}", string.Join(", ", SelectionSort(unsorted)));
             //Console.WriteLine("Selection sorted (clean) array : {0}", string.Join(", ", SelectionSortClean(unsorted)));
@@ -26,7 +25,16 @@ namespace Sorting
 
         }
 
-        // O(n log n) time complexity but requires more space
+
+
+        /// <summary>
+        ///  Merge Sort always have an O(n log n) time complexity in all scenarios (best to worst case)
+        ///  as opposed to Quick sort which can have a O(n^2) time complexity if you are not using a good pivot.
+        ///  Also, Merge Sort is stable in as sense that if you have two identical items, they will be sorted
+        ///  in order as they were before.
+        ///  In terms of space complexity, Merge sort takes a bit more memory at O(n)
+        ///  as opposed to Quick Sort with a O(n log n) space complexity.
+        /// </summary>
         private static List<int> MergeSort(List<int> unsorted)
         {
             if(unsorted.Count == 1)
@@ -52,7 +60,7 @@ namespace Sorting
 
         private static List<int> Merge(List<int> left, List<int> right)
         {
-            List<int> mergeResult = new List<int>();
+            List<int> mergeResult = new List<int>(); 
             int leftIndex = 0;
             int rightIndex = 0;
 
@@ -79,6 +87,13 @@ namespace Sorting
             return mergeResult;
         }
 
+
+        /// <summary>
+        /// Insertion sort is mostly used when you have a small amount of inputs to be sorted
+        /// although it has O(n^2) time complexity.
+        /// It is very performant in memory with O(1) space complexity
+        /// It is easy to code
+        /// </summary>
         private static List<int> InsertionSort(List<int> unsorted)
         {
             for (int i = 0; i < unsorted.Count; i++)
@@ -99,7 +114,9 @@ namespace Sorting
             return unsorted;
         }
 
-
+        /// <summary>
+        /// With a O(n^2) space complexity, you mostly won't use Selection Sort in real life
+        /// </summary>
         private static List<int> SelectionSort(List<int> unsorted)
         {
             //  RED_INDEX = THE INDEX OF THE "SMALLER" VALUE (We suppose that the first index is the smaller value)
@@ -186,6 +203,9 @@ namespace Sorting
         }
 
 
+        /// <summary>
+        /// With a O(n^2) space complexity, you mostly won't use Bubble Sort in real life
+        /// </summary>
         private static List<int> BubbleSort(List<int> unsorted)
         {
             for (int i = 0; i < unsorted.Count; i++)
@@ -206,6 +226,9 @@ namespace Sorting
             }//At the end of this should resolve all cases
             return unsorted;
         }
+        /// <summary>
+        /// With a O(n^2) space complexity, you mostly won't use Bubble Sort in real life
+        /// </summary>
         private static List<int> BubbleSortInverse(List<int> unsorted)
         {
             for (int i = 0; i < unsorted.Count; i++)
@@ -226,33 +249,5 @@ namespace Sorting
             }//At the end of this should resolve all cases
             return unsorted;
         }
-        private static List<int> BubbleSortRecursion(List<int> unsorted)
-        {
-            if (unsorted.Count <= 1)
-            {
-                return unsorted;
-            }
-
-            int first = unsorted[unsorted.Count - 1];
-            int second = unsorted[unsorted.Count - 2];
-            List<int> append = new List<int>();
-            if (first > second)
-            {
-                unsorted[unsorted.Count - 1] = second;
-                unsorted[unsorted.Count - 2] = first;
-                append.Add(unsorted[unsorted.Count - 1]);
-                unsorted.RemoveAt(unsorted.Count - 1);
-            }
-            else
-            {
-                append.Add(first);
-                unsorted.RemoveAt(unsorted.Count - 1);
-            }
-
-
-
-            return BubbleSortRecursion(unsorted);
-        }
-
     }
 }
