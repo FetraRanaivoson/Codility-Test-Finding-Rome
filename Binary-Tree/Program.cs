@@ -222,7 +222,7 @@ namespace Binary_Tree
                                 {
                                     parentNode.right = currentNode.right;
                                 }
-                            }  
+                            }
                         }
                         //Option 3: Right child that has a left child
                         else
@@ -278,7 +278,7 @@ namespace Binary_Tree
             queue.Enqueue(currentNode);
 
             //Console.WriteLine("BFS visit order: ");
-            while(queue.Count > 0)
+            while (queue.Count > 0)
             {
                 currentNode = queue.Dequeue(); //Overwrite current node. At the 1st iteration, the current node will be the root. Later it will be the 'First In' on the queue etc
                 list.Add(currentNode.value);
@@ -305,12 +305,12 @@ namespace Binary_Tree
             Queue<Node> queue = new Queue<Node>();
             List<int> list = new List<int>();
             queue.Enqueue(this.root);
-            return BreadthFirstSearchRecursive(queue,list);
+            return BreadthFirstSearchRecursive(queue, list);
         }
 
         private List<int> BreadthFirstSearchRecursive(Queue<Node> queue, List<int> list)
         {
-            if(queue.Count == 0)
+            if (queue.Count == 0)
             {
                 Console.Write("BFS visit order Recursive method: ");
                 Console.WriteLine(string.Join(", ", list));
@@ -318,17 +318,121 @@ namespace Binary_Tree
             }
             Node currentNode = queue.Dequeue();
             list.Add(currentNode.value);
-            if(currentNode.left != null)
+            if (currentNode.left != null)
             {
                 queue.Enqueue(currentNode.left);
             }
-            if(currentNode.right != null)
+            if (currentNode.right != null)
             {
                 queue.Enqueue(currentNode.right);
             }
             return BreadthFirstSearchRecursive(queue, list);
         }
 
+        /// <summary>
+        /// In order Depth first search algorithm (Recursive approach).
+        /// Going as deep as possible to the left first then wider to the right
+        /// </summary>
+        ///<returns>Returns the ordered list of visits in a DFS InOrder method</returns>
+        public List<int> DFSInOrder()
+        {
+            Node currentNode = this.root;
+            List<int> list = new List<int>();
+            list = DFSInOrderRecursive(currentNode, list);
+
+            Console.Write("DFS InOrder visit: ");
+            Console.WriteLine(string.Join(", ", list));
+            return list;
+        }
+        private List<int> DFSInOrderRecursive(Node currentNode, List<int> list)
+        {
+            if (currentNode.left != null)
+            {
+                DFSInOrderRecursive(currentNode.left, list); //Going deeper to the left until there is no more children
+            }
+            // No more node?
+            list.Add(currentNode.value);
+
+            if (currentNode.right != null) //Going deeper to the right until there is no more children
+            {
+                DFSInOrderRecursive(currentNode.right, list);
+            }
+            return list; //If there is no more depth to go, return the list but also return the last common ancestor 
+        }
+
+        /// <summary>
+        /// Pre order Depth first search algorithm (Recursive approach).
+        /// The order is we start FROM the PARENT FIRST. Useful when you want to recreate a tree because the tree is ordered. 
+        /// </summary>
+        /// <returns>Returns the ordered list of visits in a DFS PreOrder method ie STARTING FROM A PARENT FIRST.</returns>
+        public List<int> DFSPreOrder()
+        {
+            Node currentNode = this.root;
+            List<int> list = new List<int>();
+            list = DFSPreOrderRecursive(currentNode, list);
+
+            Console.Write("DFS PreOrder visit: ");
+            Console.WriteLine(string.Join(", ", list));
+            return list;
+        }
+        private List<int> DFSPreOrderRecursive(Node currentNode, List<int> list)
+        {
+            //The only difference from InOrder is you want to push at the very beginning before we get to the left node
+            list.Add(currentNode.value);
+
+            if (currentNode.left != null)
+            {
+                DFSPreOrderRecursive(currentNode.left, list); //Going deeper to the left until there is no more children
+            }
+            // No more node?
+            //list.Add(currentNode.value);
+
+            if (currentNode.right != null) //Going deeper to the right until there is no more children
+            {
+                DFSPreOrderRecursive(currentNode.right, list);
+            }
+            return list; //If there is no more depth to go, return the list but also return the last common ancestor 
+        }
+
+        /// <summary>
+        /// Post order Depth first search algorithm (Recursive approach).
+        /// The order is we start from the LEAF NODES (deep) from left to right then GO UP to a parent
+        /// </summary>
+        /// <returns>Returns the ordered list of visits in a DFS PostOrder method ie LEAFS FIRST THEN PARENT</returns>
+        public List<int> DFSPostOrder()
+        {
+            Node currentNode = this.root;
+            List<int> list = new List<int>();
+            list = DFSPostOrderRecursive(currentNode, list);
+
+            Console.Write("DFS PostOrder visit: ");
+            Console.WriteLine(string.Join(", ", list));
+            return list;
+        }
+        private List<int> DFSPostOrderRecursive(Node currentNode, List<int> list)
+        {
+            if (currentNode.left != null)
+            {
+                DFSPostOrderRecursive(currentNode.left, list); //Going deeper to the left until there is no more children
+            }
+
+            if (currentNode.right != null) //Going deeper to the right until there is no more children
+            {
+                DFSPostOrderRecursive(currentNode.right, list);
+            }
+
+            //Push when there is no left and right child anymore ie push the parent lastly
+            list.Add(currentNode.value);
+
+            return list; //If there is no more depth to go, return the list but also return the last common ancestor 
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"> value to search</param>
+        /// <returns>returns the value if found, else returns -1</returns>
         public int Lookup(int value)
         {
             if (this.root == null)
@@ -368,7 +472,6 @@ namespace Binary_Tree
             }
         }
 
-
         /// <summary>
         /// Print every node and their connections (if any)
         /// </summary>
@@ -404,10 +507,11 @@ namespace Binary_Tree
                 }
                 else
                 {
-                    Console.WriteLine("{0}--> L:{1}, R:{2}", currentNode.value, "Empty", "Empty");
+                    //Console.WriteLine("{0}--> L:{1}, R:{2}", currentNode.value, "Empty", "Empty");
+                    Console.WriteLine("{0}--> Leaf", currentNode.value);
                 }
             }
-         
+
         }
     }
 
@@ -432,14 +536,14 @@ namespace Binary_Tree
             tree.Insert(1);
             tree.Insert(13);
 
-            tree.Lookup(1500);  //1500 not found
+            //tree.Lookup(1500);  //1500 not found
             tree.Insert(1500);  //Added 1500
-            tree.Lookup(1500);  //1500 found
+            //tree.Lookup(1500);  //1500 found
 
             tree.Insert(21);
             tree.Insert(19);
 
-            tree.Print();
+            //tree.Print();
 
             //tree.Remove(21);
             //tree.Remove(1500);
@@ -448,6 +552,11 @@ namespace Binary_Tree
 
             tree.BreadthFirstSearch();
             tree.BreadthFirstSearchR();
+
+            tree.DFSInOrder();
+            tree.DFSPreOrder();
+            tree.DFSPostOrder();
+
         }
     }
 }
