@@ -384,6 +384,9 @@ namespace Graph_Class
             //graph.BreadthFirstSearchR(0); //0,2,3,5, 1,4
             //graph.BreadthFirstSearchR(3); //3,1,2,4, 0,5
             //graph.BreadthFirstSearchR(5); //5,2,0, 3,1,4
+            //graph.DFSInOrder(3); //1,3, 0,2,5, 4
+            //graph.DFSPreOrder(3); //3,1,2, 0,5, 4
+            //graph.DFSPostOrder(3); //1, 0,5, 2,4, 3
 
             //      9
             //    /   \
@@ -413,7 +416,7 @@ namespace Graph_Class
             graph.DFSPreOrder(9); //9,4,1,6, 20,15,13,19, 170,21,1500
             graph.DFSPostOrder(9); //1,6,4, 9, 13,19,15, 20, 21,1500,170, 20, 9
             graph.DFSPostOrder(15); //1,6,4, 9, 21,1500,170, 20, 13,19,15
-            
+
 
         }
     }
