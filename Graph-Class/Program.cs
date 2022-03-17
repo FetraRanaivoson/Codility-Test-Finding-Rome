@@ -28,9 +28,10 @@ namespace Graph_Class
         }
 
         /// <summary>
-        /// Add an edge or connection to this non oriented graph represented by two existing vertices or two existing nodes
+        /// Add an edge or connection to this graph represented by two existing vertices or two existing nodes
         /// </summary>
-        public void AddEdge(int vertexA, int vertexB)
+        /// <param name="oneWay">Choose true if the connection is only from A to B</param>
+        public void AddEdge(int vertexA, int vertexB, bool oneWay)
         {
             //  Sanity check
             int failedToAddEdgeCount = 0;
@@ -55,8 +56,16 @@ namespace Graph_Class
             }
 
             //  Add the edges 
-            this.adjacencyList[vertexA].AddConn(vertexB, this.adjacencyList[vertexB]);
-            this.adjacencyList[vertexB].AddConn(vertexA, this.adjacencyList[vertexA]);
+            if (oneWay)
+            {
+                this.adjacencyList[vertexA].AddConn(vertexB, this.adjacencyList[vertexB]);
+
+            }
+            else
+            {
+                this.adjacencyList[vertexA].AddConn(vertexB, this.adjacencyList[vertexB]);
+                this.adjacencyList[vertexB].AddConn(vertexA, this.adjacencyList[vertexA]);
+            }
         }
 
         /// <summary>
@@ -127,7 +136,7 @@ namespace Graph_Class
         }
 
         /// <summary>
-        /// PostOrder Depth First Search: start from the leaf nodes from left to right then go up to a parent
+        /// PostOrder Depth First Search: start deepest as possible from the leaf nodes then go up to a parent
         /// </summary>
         /// <param name="startVertex">The starting vertex of the PostOrder DFS</param>
         /// <returns>The list of order of visit for a PostOrder DFS</returns>
@@ -221,7 +230,7 @@ namespace Graph_Class
                     DFSInOrderRecursive(vertexKey.Value, list); //DFS InOrder => Priority is the deepest vertices ...                                                           
                     break;  // ... and the parent node (currentVertex.connections): that's why we break this loop after adding the deepest value to the list
                 }
-               
+
             }
             // At this point, we traversed one deepest path(ie all intermediate nodes have been visited)
             // We need to add the current Vertex to the list first
@@ -375,11 +384,11 @@ namespace Graph_Class
             //{
             //    graph.AddVertex(B[i]);
             //}
-            //graph.AddEdge(0, 2);
-            //graph.AddEdge(1, 3);
-            //graph.AddEdge(2, 3);
-            //graph.AddEdge(4, 3);
-            //graph.AddEdge(5, 2);
+            //graph.AddEdge(0, 2,false);
+            //graph.AddEdge(1, 3,false);
+            //graph.AddEdge(2, 3,false);
+            //graph.AddEdge(4, 3,false);
+            //graph.AddEdge(5, 2,false);
             //graph.Print();
             //graph.BreadthFirstSearchR(0); //0,2,3,5, 1,4
             //graph.BreadthFirstSearchR(3); //3,1,2,4, 0,5
@@ -405,7 +414,7 @@ namespace Graph_Class
             for (int i = 0; i < B.Length; i++)
             {
                 graph.AddVertex(B[i]);
-                graph.AddEdge(A[i], B[i]);
+                graph.AddEdge(A[i], B[i], false);
             }
 
             graph.Print();
