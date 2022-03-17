@@ -238,6 +238,55 @@ namespace Graph_Class
             return list; //Then we return to the stack under (currentVertex) that will continue to check all the non visited vertices again
         }
 
+        /// <summary>
+        /// PreOrder Depth First Search. 
+        /// The order is we start FROM A PARENT FIRST then go deeper as we go. Useful when you want to recreate a tree because the tree is ordered.
+        /// </summary>
+        /// <param name="startVertex">The starting vertex of the PreOrder DFS</param>
+        /// <returns>The list of order of visit for a PreOrder DFS</returns>
+        public List<int> DFSPreOrder(int startVertex)
+        {
+            // Initialize
+            foreach (KeyValuePair<int, Vertex> vertexKey in this.adjacencyList)
+            {
+                vertexKey.Value.IsVisited = false;
+            }
+
+            if (!this.adjacencyList.ContainsKey(startVertex))
+            {
+                Console.WriteLine("DFS PreOrder Error : the graph doesn't contains the vertex {0}", startVertex);
+                return null;
+            }
+
+            List<int> list = new List<int>();
+            list = DFSPreOrderRecursive(this.adjacencyList[startVertex], list);
+
+            Console.Write("Graph DFS PreOrder visit starting from {0}: ", this.adjacencyList[startVertex].value);
+            Console.WriteLine(string.Join(", ", list));
+            return list;
+
+        }
+
+        /// <summary>
+        /// The recursive method for a PreOrder DFS.
+        /// </summary>
+        private List<int> DFSPreOrderRecursive(Vertex currentVertex, List<int> list)
+        {
+            currentVertex.IsVisited = true;
+            // Because in PreOrder DFS, we add the parent first
+            list.Add(currentVertex.value);
+
+            foreach (KeyValuePair<int, Vertex> vertexKey in currentVertex.connections)
+            {
+                if (!vertexKey.Value.IsVisited)
+                {
+                    DFSPreOrderRecursive(vertexKey.Value, list); //Then deeper                        
+                }
+
+            }
+            return list;
+        }
+
 
         /// <summary>
         /// Print all the connections for this graph
@@ -247,7 +296,7 @@ namespace Graph_Class
             if (this.adjacencyList == null)
                 return;
 
-            Console.WriteLine("Graph connections: ");
+            Console.WriteLine("========Graph connections===========");
             foreach (KeyValuePair<int, Vertex> vertex in adjacencyList)
             {
                 Console.Write("Vertex {0} ---> ", vertex.Key);
@@ -264,6 +313,7 @@ namespace Graph_Class
                 }
                 Console.WriteLine("");
             }
+            Console.WriteLine("====================================");
         }
     }
 
@@ -277,10 +327,12 @@ namespace Graph_Class
         /// The value of this vertex
         /// </summary>
         public int value;
+
         /// <summary>
         /// The keyvalue pair int,Vertex connections of this vertex
         /// </summary>
         public Dictionary<int, Vertex> connections;
+
         /// <summary>
         /// Is this vertex already visited?
         /// </summary>
@@ -358,8 +410,10 @@ namespace Graph_Class
             graph.BreadthFirstSearchR(9); //9, 4,20, 1,6,15,170, 13,19,21,1500
 
             graph.DFSInOrder(9); //1,4,6, 9, 13,15,19, 20, 21,170,1500
+            graph.DFSPreOrder(9); //9,4,1,6, 20,15,13,19, 170,21,1500
             graph.DFSPostOrder(9); //1,6,4, 9, 13,19,15, 20, 21,1500,170, 20, 9
             graph.DFSPostOrder(15); //1,6,4, 9, 21,1500,170, 20, 13,19,15
+            
 
         }
     }
