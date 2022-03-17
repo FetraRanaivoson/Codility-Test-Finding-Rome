@@ -127,7 +127,7 @@ namespace Graph_Class
         }
 
         /// <summary>
-        /// PostOrder Depth First Search: start from the leaf nodes from left to right then go up to a parenr
+        /// PostOrder Depth First Search: start from the leaf nodes from left to right then go up to a parent
         /// </summary>
         /// <param name="startVertex">The starting vertex of the PostOrder DFS</param>
         /// <returns>The list of order of visit for a PostOrder DFS</returns>
@@ -146,10 +146,10 @@ namespace Graph_Class
             }
 
             List<int> list = new List<int>();
-            this.adjacencyList[startVertex].IsVisited = true;
+            //this.adjacencyList[startVertex].IsVisited = true;
             list = DFSPostOrderRecursive(this.adjacencyList[startVertex], list);
 
-            Console.Write("Graph DFS PostOrder visit: ");
+            Console.Write("Graph DFS PostOrder visit in relation to {0}: ", this.adjacencyList[startVertex].value);
             Console.WriteLine(string.Join(", ", list));
             return list;
 
@@ -169,7 +169,6 @@ namespace Graph_Class
                 if (!vertexKey.Value.IsVisited)
                 {
                     DFSPostOrderRecursive(vertexKey.Value, list); //DFS PostOrder => Priority is the deepest vertices and the neighbours (currentVertex.connections)
-
                 }
             }
 
@@ -199,10 +198,9 @@ namespace Graph_Class
             }
 
             List<int> list = new List<int>();
-            //this.adjacencyList[startVertex].IsVisited = true;
             list = DFSInOrderRecursive(this.adjacencyList[startVertex], list);
 
-            Console.Write("Graph DFS InOrder visit: ");
+            Console.Write("Graph DFS InOrder visit in relation to {0}: ", this.adjacencyList[startVertex].value);
             Console.WriteLine(string.Join(", ", list));
             return list;
 
@@ -220,34 +218,25 @@ namespace Graph_Class
             {
                 if (!vertexKey.Value.IsVisited)
                 {
-                    DFSInOrderRecursive(vertexKey.Value, list); //DFS InOrder => Priority is the deepest vertices ...
-                                                                // ... and the parent node (currentVertex.connections)
-
-                    // At this point, we traversed one deepest path(ie all intermediate nodes have been visited)
-                    // We need to add the vertexKey to the list first
-                    //list.Add(vertexKey.Value.value);
-
-                    //vertexKey.Value.IsVisited = true;
-                    //break;
-                    //list.Add(currentVertex.value);
-                    //urrentVertex.IsVisited = true;
+                    DFSInOrderRecursive(vertexKey.Value, list); //DFS InOrder => Priority is the deepest vertices ...                                                           
+                    break;  // ... and the parent node (currentVertex.connections): that's why we break this loop after adding the deepest value to the list
                 }
                
             }
             // At this point, we traversed one deepest path(ie all intermediate nodes have been visited)
-            // We need to add the vertexKey to the list first
-            if (!list.Contains(currentVertex.value))
-            {
-                list.Add(currentVertex.value);
-            }
+            // We need to add the current Vertex to the list first
+            list.Add(currentVertex.value);
 
+            foreach (KeyValuePair<int, Vertex> vertexKey in currentVertex.connections)
+            {
+                if (!vertexKey.Value.IsVisited)
+                {
+                    DFSInOrderRecursive(vertexKey.Value, list); //DFS InOrder => Priority is the deepest vertices ...                          
+                }
+
+            }
             return list; //Then we return to the stack under (currentVertex) that will continue to check all the non visited vertices again
         }
-
-
-
-
-
 
 
         /// <summary>
@@ -318,15 +307,39 @@ namespace Graph_Class
     {
         static void Main(string[] args)
         {
+            Graph graph = new Graph();
             //   0      1
             //    \    /
             //      2-3
             //    /    \
             //   5      4
-            Graph graph = new Graph();
             //int[] A = new int[5] { 0, 1, 2, 4, 5 };
             //int[] B = new int[5] { 2, 3, 3, 3, 2 };
+            //for (int i = 0; i < A.Length; i++)
+            //{
+            //    graph.AddVertex(A[i]);
+            //}
+            //for (int i = 0; i < B.Length; i++)
+            //{
+            //    graph.AddVertex(B[i]);
+            //}
+            //graph.AddEdge(0, 2);
+            //graph.AddEdge(1, 3);
+            //graph.AddEdge(2, 3);
+            //graph.AddEdge(4, 3);
+            //graph.AddEdge(5, 2);
+            //graph.Print();
+            //graph.BreadthFirstSearchR(0); //0,2,3,5, 1,4
+            //graph.BreadthFirstSearchR(3); //3,1,2,4, 0,5
+            //graph.BreadthFirstSearchR(5); //5,2,0, 3,1,4
 
+            //      9
+            //    /   \
+            //   4     20
+            //  / \   /   \
+            // 1   6 15   170
+            //       /\   /  \
+            //      13 19 21  1500
             int[] A = new int[10] { 9, 9, 4, 4, 20, 20, 15, 15, 170, 170 };
             int[] B = new int[10] { 4, 20, 1, 6, 15, 170, 13, 19, 21, 1500 };
 
@@ -340,21 +353,13 @@ namespace Graph_Class
                 graph.AddEdge(A[i], B[i]);
             }
 
-            //graph.AddEdge(0, 2);
-            //graph.AddEdge(1, 3);
-            //graph.AddEdge(2, 3);
-            //graph.AddEdge(4, 3);
-            //graph.AddEdge(5, 2);
-
-
             graph.Print();
 
-            graph.BreadthFirstSearchR(0); //0,2,3,5, 1,4
-            graph.BreadthFirstSearchR(3); //3,1,2,4, 0,5
-            graph.BreadthFirstSearchR(5); //5,2,0, 3,1,4
+            graph.BreadthFirstSearchR(9); //9, 4,20, 1,6,15,170, 13,19,21,1500
 
-            graph.DFSInOrder(9);
-            graph.DFSPostOrder(9);
+            graph.DFSInOrder(9); //1,4,6, 9, 13,15,19, 20, 21,170,1500
+            graph.DFSPostOrder(9); //1,6,4, 9, 13,19,15, 20, 21,1500,170, 20, 9
+            graph.DFSPostOrder(15); //1,6,4, 9, 21,1500,170, 20, 13,19,15
 
         }
     }
