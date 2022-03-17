@@ -79,7 +79,7 @@ namespace Graph_Class
         public List<int> BreadthFirstSearchR(int startVertex)
         {
             // Initialize
-            foreach (KeyValuePair<int, Vertex> vertexKey in adjacencyList)
+            foreach (KeyValuePair<int, Vertex> vertexKey in this.adjacencyList)
             {
                 vertexKey.Value.IsVisited = false;
             }
@@ -94,7 +94,7 @@ namespace Graph_Class
             }
 
             vertexQueue.Enqueue(adjacencyList[startVertex]);
-            adjacencyList[startVertex].IsVisited = true;
+            //adjacencyList[startVertex].IsVisited = true;
 
             return BreadthFirstSearchRecursive(vertexQueue, list);
 
@@ -102,7 +102,7 @@ namespace Graph_Class
         /// <summary>
         /// The recursive method for a BFS.
         /// </summary>
-        /// <param name="queue">The list of direct neighbours to visit</param>
+        /// <param name="queue">The list of direct neighbours to visit first</param>
         /// <param name="list">The list of already visited vertices</param>
         private List<int> BreadthFirstSearchRecursive(Queue<Vertex> queue, List<int> list)
         {
@@ -125,6 +125,130 @@ namespace Graph_Class
             }
             return BreadthFirstSearchRecursive(queue, list);
         }
+
+        /// <summary>
+        /// PostOrder Depth First Search: start from the leaf nodes from left to right then go up to a parenr
+        /// </summary>
+        /// <param name="startVertex">The starting vertex of the PostOrder DFS</param>
+        /// <returns>The list of order of visit for a PostOrder DFS</returns>
+        public List<int> DFSPostOrder(int startVertex)
+        {
+            // Initialize
+            foreach (KeyValuePair<int, Vertex> vertexKey in this.adjacencyList)
+            {
+                vertexKey.Value.IsVisited = false;
+            }
+
+            if (!this.adjacencyList.ContainsKey(startVertex))
+            {
+                Console.WriteLine("DFS PostOrder Error : the graph doesn't contains the vertex {0}", startVertex);
+                return null;
+            }
+
+            List<int> list = new List<int>();
+            this.adjacencyList[startVertex].IsVisited = true;
+            list = DFSPostOrderRecursive(this.adjacencyList[startVertex], list);
+
+            Console.Write("Graph DFS PostOrder visit: ");
+            Console.WriteLine(string.Join(", ", list));
+            return list;
+
+        }
+        /// <summary>
+        /// The recursive method for an PreOrder DFS.
+        /// </summary>
+        /// <param name="vertexQueue">The list of deepest vertices first</param>
+        /// <param name="list">The list of already visited vertices</param>
+        private List<int> DFSPostOrderRecursive(Vertex currentVertex, List<int> list)
+        {
+            currentVertex.IsVisited = true;
+
+            //  Deepest vertex first
+            foreach (KeyValuePair<int, Vertex> vertexKey in currentVertex.connections)
+            {
+                if (!vertexKey.Value.IsVisited)
+                {
+                    DFSPostOrderRecursive(vertexKey.Value, list); //DFS PostOrder => Priority is the deepest vertices and the neighbours (currentVertex.connections)
+
+                }
+            }
+
+            // Leaf node?
+            list.Add(currentVertex.value);
+
+            return list;
+        }
+
+        /// <summary>
+        /// InOrder Depth First Search: start from deeper then go up to a parent
+        /// </summary>
+        /// <param name="startVertex">The starting vertex of the InOrder DFS</param>
+        /// <returns>The list of order of visit for an InOrder DFS</returns>
+        public List<int> DFSInOrder(int startVertex)
+        {
+            // Initialize
+            foreach (KeyValuePair<int, Vertex> vertexKey in this.adjacencyList)
+            {
+                vertexKey.Value.IsVisited = false;
+            }
+
+            if (!this.adjacencyList.ContainsKey(startVertex))
+            {
+                Console.WriteLine("DFS InOrder Error : the graph doesn't contains the vertex {0}", startVertex);
+                return null;
+            }
+
+            List<int> list = new List<int>();
+            //this.adjacencyList[startVertex].IsVisited = true;
+            list = DFSInOrderRecursive(this.adjacencyList[startVertex], list);
+
+            Console.Write("Graph DFS InOrder visit: ");
+            Console.WriteLine(string.Join(", ", list));
+            return list;
+
+        }
+
+        /// <summary>
+        /// The recursive method for an InOrder DFS.
+        /// </summary>
+        private List<int> DFSInOrderRecursive(Vertex currentVertex, List<int> list)
+        {
+            currentVertex.IsVisited = true;
+
+            //  Deepest vertex first then the parent 
+            foreach (KeyValuePair<int, Vertex> vertexKey in currentVertex.connections)
+            {
+                if (!vertexKey.Value.IsVisited)
+                {
+                    DFSInOrderRecursive(vertexKey.Value, list); //DFS InOrder => Priority is the deepest vertices ...
+                                                                // ... and the parent node (currentVertex.connections)
+
+                    // At this point, we traversed one deepest path(ie all intermediate nodes have been visited)
+                    // We need to add the vertexKey to the list first
+                    //list.Add(vertexKey.Value.value);
+
+                    //vertexKey.Value.IsVisited = true;
+                    //break;
+                    //list.Add(currentVertex.value);
+                    //urrentVertex.IsVisited = true;
+                }
+               
+            }
+            // At this point, we traversed one deepest path(ie all intermediate nodes have been visited)
+            // We need to add the vertexKey to the list first
+            if (!list.Contains(currentVertex.value))
+            {
+                list.Add(currentVertex.value);
+            }
+
+            return list; //Then we return to the stack under (currentVertex) that will continue to check all the non visited vertices again
+        }
+
+
+
+
+
+
 
         /// <summary>
         /// Print all the connections for this graph
@@ -160,8 +284,17 @@ namespace Graph_Class
 
     public class Vertex
     {
+        /// <summary>
+        /// The value of this vertex
+        /// </summary>
         public int value;
+        /// <summary>
+        /// The keyvalue pair int,Vertex connections of this vertex
+        /// </summary>
         public Dictionary<int, Vertex> connections;
+        /// <summary>
+        /// Is this vertex already visited?
+        /// </summary>
         public bool IsVisited { get; set; }
 
 
@@ -191,8 +324,11 @@ namespace Graph_Class
             //    /    \
             //   5      4
             Graph graph = new Graph();
-            int[] A = new int[5] { 0, 1, 2, 4, 5 };
-            int[] B = new int[5] { 2, 3, 3, 3, 2 };
+            //int[] A = new int[5] { 0, 1, 2, 4, 5 };
+            //int[] B = new int[5] { 2, 3, 3, 3, 2 };
+
+            int[] A = new int[10] { 9, 9, 4, 4, 20, 20, 15, 15, 170, 170 };
+            int[] B = new int[10] { 4, 20, 1, 6, 15, 170, 13, 19, 21, 1500 };
 
             for (int i = 0; i < A.Length; i++)
             {
@@ -201,13 +337,14 @@ namespace Graph_Class
             for (int i = 0; i < B.Length; i++)
             {
                 graph.AddVertex(B[i]);
+                graph.AddEdge(A[i], B[i]);
             }
 
-            graph.AddEdge(0, 2);
-            graph.AddEdge(1, 3);
-            graph.AddEdge(2, 3);
-            graph.AddEdge(4, 3);
-            graph.AddEdge(5, 2);
+            //graph.AddEdge(0, 2);
+            //graph.AddEdge(1, 3);
+            //graph.AddEdge(2, 3);
+            //graph.AddEdge(4, 3);
+            //graph.AddEdge(5, 2);
 
 
             graph.Print();
@@ -215,6 +352,9 @@ namespace Graph_Class
             graph.BreadthFirstSearchR(0); //0,2,3,5, 1,4
             graph.BreadthFirstSearchR(3); //3,1,2,4, 0,5
             graph.BreadthFirstSearchR(5); //5,2,0, 3,1,4
+
+            graph.DFSInOrder(9);
+            graph.DFSPostOrder(9);
 
         }
     }
