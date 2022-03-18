@@ -66,21 +66,29 @@ namespace Recursive_Fibonacci
             int N = 12;
 
             var sw = Stopwatch.StartNew();
-            Console.WriteLine("The index {0} in the Fibonacci sequence is of value {1}",
+            Console.WriteLine("The index {0} in the Fibonacci sequence using Recursion is of value {1}",
                N, FibonacciRecursive(N));
             Console.WriteLine("Recursion time: {0}", sw.ElapsedTicks);
-
+            Console.WriteLine("======================================");
 
             var sw2 = Stopwatch.StartNew();
-            Console.WriteLine("The index {0} in the Fibonacci sequence is of value {1}",
+            Console.WriteLine("The index {0} in the Fibonacci sequence using Iteration is of value {1}",
             N, FibonacciIterative(N));
             Console.WriteLine("Iterative time: {0}", sw2.ElapsedTicks);
+            Console.WriteLine("======================================");
 
             var sw3 = Stopwatch.StartNew();
-            Console.WriteLine("The index {0} in the Fibonacci sequence is of value {1} (Memoization method)",
+            Console.WriteLine("The index {0} in the Fibonacci sequence before caching is of value {1} (Memoization method)",
             N, FibonacciMemoization(N));
-            Console.WriteLine("Memoization time: {0}", sw3.ElapsedTicks);
+            Console.WriteLine("Memoization time BEFORE CACHING is: {0}", sw3.ElapsedTicks);
+            Console.WriteLine("======================================");
 
+            N = 12;
+            var sw4 = Stopwatch.StartNew();
+            Console.WriteLine("The index {0} in the Fibonacci sequence after caching is of value {1} (Memoization method)",
+            N, FibonacciMemoization(N));
+            Console.WriteLine("Memoization time AFTER CACHING is: {0}", sw4.ElapsedTicks);
+            Console.WriteLine("======================================");
         }
 
         private static int FibonacciMemoization(int n)
@@ -89,14 +97,17 @@ namespace Recursive_Fibonacci
 
             for (int i = 0; i <= n; i++)
             {
+                if (memoizer.Contains(n))
+                {
+                    return memoizer.ValueOf(n);
+                }
+
                 if (i < 2)
                 {
                     memoizer.CreateValueOf(i, i);
                 }
 
-
-
-                else
+                if(memoizer.Contains(i-1) && memoizer.Contains(i - 2))
                 {
                     /// Long time code here ///
                     memoizer.CreateValueOf(i, memoizer.ValueOf(i - 1) + memoizer.ValueOf(i - 2));
@@ -105,10 +116,6 @@ namespace Recursive_Fibonacci
             return memoizer.ValueOf(n);
         }
 
-        private static int Fibonacci(int n)
-        {
-            return n > 1 ? (n - 2) + (n - 1) : n;
-        }
 
         private static int FibonacciIterative(int n)
         {
