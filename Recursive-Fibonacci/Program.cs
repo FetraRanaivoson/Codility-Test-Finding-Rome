@@ -1,13 +1,60 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Recursive_Fibonacci
 {
+    /// <summary>
+    /// Memoization is a technique for improving performance 
+    /// by caching the return values of expensive function calls. 
+    /// </summary>
+    public class Memoizer
+    {
+        Dictionary<int, int> memoizeValues;
+        public Memoizer()
+        {
+            memoizeValues = new Dictionary<int, int>();
+        }
+        /// <summary>
+        /// Returns true if the key n has a cache value in this Memoizer.
+        /// </summary>
+        public bool Contains(int n)
+        {
+            return memoizeValues.ContainsKey(n);
+        }
+
+        /// <summary>
+        /// Returns the cached value of the key n is this Memoizer.
+        /// </summary>
+        public int ValueOf(int n)
+        {
+            return memoizeValues[n];
+        }
+
+        /// <summary>
+        /// Create the value of the given key n and assign its value in this Memoizer.
+        /// </summary>
+        public void CreateValueOf(int n, int value)
+        {
+            memoizeValues.Add(n, value);
+        }
+
+        /// <summary>
+        /// Set the value of the given key n in this Memoizer.
+        /// </summary>
+        public void SetValueOf(int n, int value)
+        {
+            memoizeValues[n] = value;
+        }
+    }
+
     class Program
     {
+        public delegate int Memoization(int n);
+
         static void Main(string[] args)
         {
-            //  The first 20 Fibonacci seq uence
+            //  The first 20 Fibonacci sequence
             DisplayParameterFirstFibonacciSequence(20);
 
             //  Given an index N return the value in the
@@ -16,14 +63,51 @@ namespace Recursive_Fibonacci
             //N 0, 1, 2, 3, 4, 5, 6,  7,  8,  9, 10, 11, 12, ...                
             //  =>Each value is the sum of the two previous values
 
-            int N =3;
+            int N = 12;
 
+            var sw = Stopwatch.StartNew();
             Console.WriteLine("The index {0} in the Fibonacci sequence is of value {1}",
                N, FibonacciRecursive(N));
+            Console.WriteLine("Recursion time: {0}", sw.ElapsedTicks);
+
+
+            var sw2 = Stopwatch.StartNew();
             Console.WriteLine("The index {0} in the Fibonacci sequence is of value {1}",
             N, FibonacciIterative(N));
+            Console.WriteLine("Iterative time: {0}", sw2.ElapsedTicks);
+
+            var sw3 = Stopwatch.StartNew();
+            Console.WriteLine("The index {0} in the Fibonacci sequence is of value {1} (Memoization method)",
+            N, FibonacciMemoization(N));
+            Console.WriteLine("Memoization time: {0}", sw3.ElapsedTicks);
+
+        }
+
+        private static int FibonacciMemoization(int n)
+        {
+            Memoizer memoizer = new Memoizer();
+
+            for (int i = 0; i <= n; i++)
+            {
+                if (i < 2)
+                {
+                    memoizer.CreateValueOf(i, i);
+                }
 
 
+
+                else
+                {
+                    /// Long time code here ///
+                    memoizer.CreateValueOf(i, memoizer.ValueOf(i - 1) + memoizer.ValueOf(i - 2));
+                }
+            }
+            return memoizer.ValueOf(n);
+        }
+
+        private static int Fibonacci(int n)
+        {
+            return n > 1 ? (n - 2) + (n - 1) : n;
         }
 
         private static int FibonacciIterative(int n)
