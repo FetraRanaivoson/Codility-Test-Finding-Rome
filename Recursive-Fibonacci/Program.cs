@@ -63,27 +63,32 @@ namespace Recursive_Fibonacci
             //N 0, 1, 2, 3, 4, 5, 6,  7,  8,  9, 10, 11, 12, ...                
             //  =>Each value is the sum of the two previous values
 
-            int N = 12;
+            int N = 40;
 
+            // The recursive runtine last around 11000000 ticks and can get bigger if N increase, worst can freeze
             var sw = Stopwatch.StartNew();
             Console.WriteLine("The index {0} in the Fibonacci sequence using Recursion is of value {1}",
                N, FibonacciRecursive(N));
             Console.WriteLine("Recursion time: {0}", sw.ElapsedTicks);
             Console.WriteLine("======================================");
 
+            //  The iterative runtine last around 2000 ticks
             var sw2 = Stopwatch.StartNew();
             Console.WriteLine("The index {0} in the Fibonacci sequence using Iteration is of value {1}",
             N, FibonacciIterative(N));
             Console.WriteLine("Iterative time: {0}", sw2.ElapsedTicks);
             Console.WriteLine("======================================");
 
+            // Always constant time around: 50000-70000 ticks even if N increases and never freeze: VERY FAST
             var sw3 = Stopwatch.StartNew();
             Console.WriteLine("The index {0} in the Fibonacci sequence before caching is of value {1} (Memoization method)",
             N, FibonacciMemoization(N));
             Console.WriteLine("Memoization time BEFORE CACHING is: {0}", sw3.ElapsedTicks);
             Console.WriteLine("======================================");
 
-            N = 12;
+            // Retrieving the cached value: we always get around 500-1000 ticks, better than the iterative time if
+            // we plan to calculate any already cached number in the future
+            N = 40;
             var sw4 = Stopwatch.StartNew();
             Console.WriteLine("The index {0} in the Fibonacci sequence after caching is of value {1} (Memoization method)",
             N, FibonacciMemoization(N));
@@ -91,29 +96,81 @@ namespace Recursive_Fibonacci
             Console.WriteLine("======================================");
         }
 
+        /// <summary>
+        ///  O(n) time complexity but increased space complexity O(n)
+        /// </summary>
         private static int FibonacciMemoization(int n)
         {
-            Memoizer memoizer = new Memoizer();
+            //  USING Memoizer class and a for loop
+            //Memoizer memoizer = new Memoizer();
+            //for (int i = 0; i <= n; i++)
+            //{
+            //    if (memoizer.Contains(n))
+            //    {
+            //        return memoizer.ValueOf(n);
+            //    }
 
-            for (int i = 0; i <= n; i++)
+            //    if (i < 2)
+            //    {
+            //        memoizer.CreateValueOf(i, i);
+            //    }
+
+            //    if (memoizer.Contains(i - 1) && memoizer.Contains(i - 2))
+            //    {
+            //        /// Long time code here ///
+            //        memoizer.CreateValueOf(i, memoizer.ValueOf(i - 1) + memoizer.ValueOf(i - 2));
+            //    }
+            //}
+            //return memoizer.ValueOf(n);
+
+            //  USING Memoizer class and a recursion inside a closure with a lambda function
+            //Memoizer memoizer = new Memoizer();
+            //Func<int, int> fib = null;
+            //fib = delegate (int n)
+            //{
+            //    if (memoizer.Contains(n))
+            //    {
+            //        return memoizer.ValueOf(n);
+            //    }
+            //    else
+            //    {
+            //        if (n < 2)
+            //        {
+            //            memoizer.CreateValueOf(n, n);
+            //            return memoizer.ValueOf(n);
+            //        }
+            //        else
+            //        {
+            //            memoizer.SetValueOf(n, fib(n - 1) + fib(n - 2));
+            //            return memoizer.ValueOf(n);
+            //        }
+            //    }
+            //};
+            //return fib.Invoke(n);
+
+            //  USING directly a dictionnary and a recursion inside a closure with a lambda function
+            Dictionary<int, int> memoizer = new Dictionary<int, int>();
+            Func<int, int> fib = null;
+            fib = delegate (int n)
             {
-                if (memoizer.Contains(n))
+                if (memoizer.ContainsKey(n))
                 {
-                    return memoizer.ValueOf(n);
+                    return memoizer[n];
                 }
-
-                if (i < 2)
+                else
                 {
-                    memoizer.CreateValueOf(i, i);
+                    if (n < 2)
+                    {
+                        return n;
+                    }
+                    else
+                    {
+                        memoizer[n] = fib(n - 1) + fib(n - 2);
+                        return memoizer[n];
+                    }
                 }
-
-                if(memoizer.Contains(i-1) && memoizer.Contains(i - 2))
-                {
-                    /// Long time code here ///
-                    memoizer.CreateValueOf(i, memoizer.ValueOf(i - 1) + memoizer.ValueOf(i - 2));
-                }
-            }
-            return memoizer.ValueOf(n);
+            };
+            return fib.Invoke(n);
         }
 
 
@@ -143,7 +200,9 @@ namespace Recursive_Fibonacci
             return -1;
         }
 
-
+        /// <summary>
+        /// O(2^n) time complexity 
+        /// </summary>
         private static int FibonacciRecursive(int n)
         {
             if (n < 2)
