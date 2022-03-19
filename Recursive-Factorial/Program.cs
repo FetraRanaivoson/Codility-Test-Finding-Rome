@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Recursive_Factorial
 {
@@ -7,11 +9,66 @@ namespace Recursive_Factorial
         static void Main(string[] args)
         {
             double number = 50;
+
+            //  100000 - 300000 ticks
+            var sw = Stopwatch.StartNew();
             Console.WriteLine("Factorial of {0} is: {1}", number, FactorialRecursive(number));
-            Console.WriteLine("Factorial of {0} is: {1}", number, FactorialIterative(number));
+            Console.WriteLine("Recursion time: {0}", sw.ElapsedTicks);
+            Console.WriteLine("======================================");
+
+            //  1400-1700 ticks
+            var sw1 = Stopwatch.StartNew();
             Console.WriteLine("Factorial of {0} is: {1}", number, FactorialRecursiveSimpleAndClean(number));
-        
+            Console.WriteLine("Recursive simple and clean time: {0}", sw1.ElapsedTicks);
+            Console.WriteLine("======================================");
+
+            //  900 - 1500 ticks
+            var sw2 = Stopwatch.StartNew();
+            Console.WriteLine("Factorial of {0} is: {1}", number, FactorialIterative(number));
+            Console.WriteLine("Iterative time: {0}", sw2.ElapsedTicks);
+            Console.WriteLine("======================================");
+
+            // 80000 - 90000 ticks
+            var sw3 = Stopwatch.StartNew();
+            Console.WriteLine("Factorial of {0} is: {1}", number, FactorialMemoization(number));
+            Console.WriteLine("Memoization time: {0}", sw3.ElapsedTicks);
+            Console.WriteLine("======================================");
+
+            // 700 - 1000
+            var sw4 = Stopwatch.StartNew();
+            Console.WriteLine("Factorial of {0} is: {1}", number, FactorialMemoization(number));
+            Console.WriteLine("Memoization time after caching: {0}", sw4.ElapsedTicks);
+            Console.WriteLine("======================================");
         }
+
+        private static double FactorialMemoization(double number)
+        {
+            Dictionary<double, double> memoizer = new Dictionary<double, double>();
+
+            Func<double, double> factorial = null;
+            factorial = delegate (double number)
+            {
+                if (memoizer.ContainsKey(number))
+                {
+                    return memoizer[number];
+                }
+                else
+                {
+                    if (number < 2)
+                    {
+                        return number;
+                    }
+                    else
+                    {
+                        memoizer[number] = number * factorial(number - 1);
+                        return memoizer[number];
+                    }
+                }
+            };
+            return factorial.Invoke(number);
+        }
+
+
 
         private static double FactorialIterative(double number) // O(N)
         {
