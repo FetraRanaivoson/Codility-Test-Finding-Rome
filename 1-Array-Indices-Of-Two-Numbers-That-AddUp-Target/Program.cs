@@ -12,7 +12,7 @@ namespace _1_Array_Indices_Of_Two_Numbers_That_AddUp_Target
             //of the two numbers that add up to a given target
 
             int[] A = { 1, 3, 7, 9, 2 };
-            int target = 16;
+            int target = 11;
 
 
             //1-Constaints:
@@ -51,11 +51,17 @@ namespace _1_Array_Indices_Of_Two_Numbers_That_AddUp_Target
             if (solution2 == null)
                 Console.WriteLine("Null");
             else
-                Console.WriteLine("Hash table solution: " + String.Join(",", solution2));
+                Console.WriteLine("Hash table solution(2 separate loop): " + String.Join(",", solution2));
             Console.WriteLine(sw2.ElapsedTicks);
 
-
-
+            //3000 ticks
+            var sw3 = Stopwatch.StartNew();
+            int[] solution3 = Solution3(A, target);
+            if (solution3 == null)
+                Console.WriteLine("Null");
+            else
+                Console.WriteLine("Hash table solution (1 loop): " + String.Join(",", solution3));
+            Console.WriteLine(sw3.ElapsedTicks);
         }
 
         private static int[] Solution(int[] a, int target) // O(n^2) time complexity
@@ -64,7 +70,7 @@ namespace _1_Array_Indices_Of_Two_Numbers_That_AddUp_Target
             {
                 int numberToFind = target - a[i];
 
-                for (int j = 1; j < a.Length; j++)
+                for (int j = i+1; j < a.Length; j++)
                 {
                     if (a[j] == numberToFind)
                         return new int[] { i, j };
@@ -83,8 +89,7 @@ namespace _1_Array_Indices_Of_Two_Numbers_That_AddUp_Target
             }
 
             //0+11:  i + (target - a[i]
-            //1+10:  i + (target - a[i]
-            //2+9: etc
+            //2+9 
             //3+8
             //4+7
             //5+6
@@ -94,6 +99,27 @@ namespace _1_Array_Indices_Of_Two_Numbers_That_AddUp_Target
                 {
                     //return new int[] {a[i], dico[target - a[i]] };
                     return new int[] {i, dico[target - a[i]] }; //Remember to return the index
+                }
+            }
+            return null;
+        }
+
+
+        private static int[] Solution3(int[] a, int target) // O(n) time complexity
+        {
+            Dictionary<int, int> dico = new Dictionary<int, int>(); //At the cost of O(n) space complexity
+            //0+11:  i + (target - a[i]
+            //2+9 
+            //3+8
+            //4+7
+            //5+6
+            for (int i = 0; i < a.Length; i++)
+            {
+                dico.Add(a[i], i); //Where the Key is the ITEM VALUE and the value is the INDEX
+                if (dico.ContainsKey(target - a[i]))
+                {
+                    //return new int[] {a[i], dico[target - a[i]] };
+                    return new int[] { i, dico[target - a[i]] }; //Remember to return the index
                 }
             }
             return null;
