@@ -50,7 +50,12 @@ namespace Container_With_Most_Water
             //Best case: 8*3 = 24 index[3] = 9 > 8
 
 
-            int[] A = { 1, 8, 6, 2, 9, 4 };
+            //int[] A = { 1, 8, 6, 2, 5, 4, 8, 3, 7 };
+            //int[] A = { 1, 1};
+            //int[] A = { 2, 1 };
+            //int[] A = { 1, 2, 4, 3 };
+            //int[] A = { 2, 3, 4, 5, 18, 17, 6 };
+            int[] A = { 8, 20, 1, 2, 3, 4, 5, 6 };
 
             //200000 ticks
             var sw = Stopwatch.StartNew();
@@ -121,7 +126,15 @@ namespace Container_With_Most_Water
             //  While v[i] < v[next] result can grow
             //  Specifically, if v[i] < v[lastIndex], optimum result would be v[i], v[lastIndex], a = v[i] * lastIndex = 1*4 = 4
             //   => So I don't need to check the in between: I know that I need to compare to a
-            int maxArea = v[0] * (v.Length - 1 - 0);
+
+            int maxArea = -1;
+            if (v[0] < v[v.Length - 1 - 0])
+                maxArea = v[0] * (v.Length - 1 - 0);
+            else if (v[0] > v[v.Length - 1 - 0])
+                maxArea = v[v.Length - 1 - 0];
+            else
+                maxArea = v[0] * (v.Length - 1 - 0);
+
             int highestWallValue = -1;
             int highestWallIndex = -1;
 
@@ -141,9 +154,21 @@ namespace Container_With_Most_Water
                 //  So I go to v[i+1]:8 (> 4 so can potentially improve the solution) so compare to the last one: v[i+1]= 8 > v[lastIndex] = 4 so a= v[lastIndex] * i+1 = 4* 4 = 16
                 if (v[i] >= highestWallValue)
                 {
-                    maxArea = highestWallValue * Math.Abs(highestWallIndex - i);
+                    int calculatedArea = highestWallValue * Math.Abs(highestWallIndex - i);
                     highestWallValue = v[i];
                     highestWallIndex = i;
+                    if (calculatedArea > maxArea)
+                    {
+                        //highestWallValue = v[i];
+                        //highestWallIndex = i;
+                        maxArea = calculatedArea;
+                    }
+                }
+                else if (v[i] < highestWallValue)
+                {
+                    int calculatedArea = v[i] * Math.Abs(highestWallIndex - i); // 6* index(20) = 6 * 6 = 36
+                    if (calculatedArea > maxArea)                               //but 6* index(8) = 6* 7 = 42;
+                        maxArea = calculatedArea;   
                 }
 
                 //  Now check v[i+1]: 6 (< 8 so cannot potentially improve the solution)
