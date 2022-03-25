@@ -55,14 +55,17 @@ namespace Container_With_Most_Water
             //int[] A = { 2, 1 };
             //int[] A = { 1, 2, 4, 3 };
             //int[] A = { 2, 3, 4, 5, 18, 17, 6 };
-            int[] A = { 8, 20, 1, 2, 3, 4, 5, 6 };
+            //int[] A = { 8, 20, 1, 2, 3, 4, 5, 6 };
+            //int[] A = { 4, 4, 2, 11, 0, 11, 5, 11, 13, 8 };
+            //int[] A = { 1, 3, 2, 5, 25, 24, 5 };
+            int[] A = { 1, 2, 3, 4, 5, 25, 24, 3, 4 };
 
-            //200000 ticks
+            //200000 ticks (19ms)
             var sw = Stopwatch.StartNew();
             Console.WriteLine("Greatest area of water (Bubble sort): {0}", MaxAreaContainer(A));
             Console.WriteLine(sw.ElapsedTicks);
 
-            //2100 ticks
+            //2100 ticks (0ms)
             var sw2 = Stopwatch.StartNew();
             Console.WriteLine("Greatest area of water (O(n)): {0}", MaxAreaContainer2(A));
             Console.WriteLine(sw2.ElapsedTicks);
@@ -108,7 +111,7 @@ namespace Container_With_Most_Water
         }
 
 
-        private static int MaxAreaContainer2(int[] v)
+        private static int MaxAreaContainer2(int[] height)
         {
             //     9
             //  8  |   8
@@ -128,47 +131,83 @@ namespace Container_With_Most_Water
             //   => So I don't need to check the in between: I know that I need to compare to a
 
             int maxArea = -1;
-            if (v[0] < v[v.Length - 1 - 0])
-                maxArea = v[0] * (v.Length - 1 - 0);
-            else if (v[0] > v[v.Length - 1 - 0])
-                maxArea = v[v.Length - 1 - 0];
+            if (height[0] < height[height.Length - 1 - 0])
+            {
+                int h = height[0];
+                int w = (height.Length - 1 - 0);
+                maxArea = h * w;
+
+            }
+            else if (height[0] > height[height.Length - 1 - 0])
+            {
+                int h = height[height.Length - 1];
+                int w = (height.Length - 1 - 0);
+                maxArea = h * w;
+            }
             else
-                maxArea = v[0] * (v.Length - 1 - 0);
+            {
+                maxArea = height[0] * (height.Length - 1 - 0);
+            }
 
             int highestWallValue = -1;
             int highestWallIndex = -1;
 
-            if (v[0] < v[v.Length - 1])
+            if (height[0] < height[height.Length - 1])
             {
-                highestWallValue = v[v.Length - 1];
-                highestWallIndex = v.Length - 1;
+                highestWallValue = height[height.Length - 1];
+                highestWallIndex = height.Length - 1;
             }
             else
             {
-                highestWallValue = v[0];
+                highestWallValue = height[0];
                 highestWallIndex = 0;
             }
 
-            for (int i = 1; i < v.Length; i++)
+            for (int i = 1; i < height.Length; i++)
             {
+                int previousHighestWallValue = highestWallValue;
+                int previousHighestWallIndex = highestWallIndex;
                 //  So I go to v[i+1]:8 (> 4 so can potentially improve the solution) so compare to the last one: v[i+1]= 8 > v[lastIndex] = 4 so a= v[lastIndex] * i+1 = 4* 4 = 16
-                if (v[i] >= highestWallValue)
+                if (height[i] >= highestWallValue)
                 {
+
                     int calculatedArea = highestWallValue * Math.Abs(highestWallIndex - i);
-                    highestWallValue = v[i];
+                    highestWallValue = height[i];
                     highestWallIndex = i;
-                    if (calculatedArea > maxArea)
+
+
+                    if (calculatedArea > maxArea) //only change highest wall value if the area improves. Because if you don't, the width will shrink
                     {
-                        //highestWallValue = v[i];
-                        //highestWallIndex = i;
+                        highestWallValue = height[i];
+                        highestWallIndex = i;
                         maxArea = calculatedArea;
                     }
+
+                    else if (calculatedArea < maxArea)  //only change highest wall value if the area improves. Because if you don't, the width will shrink so revert if area doesn't improve
+                    {
+                        if (highestWallValue < previousHighestWallValue)//18 < 6? NO so don't change highestWallValue
+                        {
+                            highestWallValue = previousHighestWallValue;
+                            //highestWallIndex = previousHighestWallIndex;
+                        }
+                        highestWallIndex = previousHighestWallIndex;
+                    }
+                    else
+                    {
+                        if (highestWallValue < previousHighestWallValue)
+                        {
+                            highestWallValue = previousHighestWallValue;
+                            highestWallIndex = i;
+                        }
+                        else
+                            highestWallIndex = previousHighestWallIndex;
+                    }
                 }
-                else if (v[i] < highestWallValue)
+                else if (height[i] < highestWallValue)
                 {
-                    int calculatedArea = v[i] * Math.Abs(highestWallIndex - i); // 6* index(20) = 6 * 6 = 36
+                    int calculatedArea = height[i] * Math.Abs(highestWallIndex - i); // 6* index(20) = 6 * 6 = 36
                     if (calculatedArea > maxArea)                               //but 6* index(8) = 6* 7 = 42;
-                        maxArea = calculatedArea;   
+                        maxArea = calculatedArea;
                 }
 
                 //  Now check v[i+1]: 6 (< 8 so cannot potentially improve the solution)
@@ -178,8 +217,6 @@ namespace Container_With_Most_Water
             }
             return maxArea;
         }
-
-
     }
 }
 
