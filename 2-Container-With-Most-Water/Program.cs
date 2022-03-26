@@ -58,56 +58,61 @@ namespace Container_With_Most_Water
             //int[] A = { 8, 20, 1, 2, 3, 4, 5, 6 };
             //int[] A = { 4, 4, 2, 11, 0, 11, 5, 11, 13, 8 };
             //int[] A = { 1, 3, 2, 5, 25, 24, 5 };
-            int[] A = { 1, 2, 3, 4, 5, 25, 24, 3, 4 };
+            //int[] A = { 1, 2, 3, 4, 5, 25, 24, 3, 4 };
+            int[] A = { 3, 9, 3, 4, 7, 2, 12, 6 };
 
-            //200000 ticks (19ms)
+            //150000 ticks (19ms)
             var sw = Stopwatch.StartNew();
             Console.WriteLine("Greatest area of water (Bubble sort): {0}", MaxAreaContainer(A));
             Console.WriteLine(sw.ElapsedTicks);
 
             //2100 ticks (0ms)
-            var sw2 = Stopwatch.StartNew();
-            Console.WriteLine("Greatest area of water (O(n)): {0}", MaxAreaContainer2(A));
-            Console.WriteLine(sw2.ElapsedTicks);
+            //var sw2 = Stopwatch.StartNew();
+            //Console.WriteLine("Greatest area of water (O(n)): {0}", MaxAreaContainer2(A));
+            //Console.WriteLine(sw2.ElapsedTicks);
+
+            // ticks (ms)
+            var sw3 = Stopwatch.StartNew();
+            Console.WriteLine("Greatest area of water (): {0}", MaxAreaContainer3(A));
+            Console.WriteLine(sw3.ElapsedTicks);
 
         }
-
-        private static int MaxAreaContainer(int[] a) // O(n^2)
+         
+        private static int MaxAreaContainer(int[] height) // O(n^2)
         {
-            List<int> areaList = new List<int>();//=> Duplicate values
-
-            for (int i = 0; i < a.Length; i++)
+            int maxArea = 0;
+            if (height.Length < 2 || height.Length > 100000)
             {
-                for (int j = 0; j < a.Length; j++)
+                return maxArea;
+            }
+
+            List<int> sorted = new List<int>(height);
+            sorted.Sort();
+            for (int i = sorted.Count/2; i < sorted.Count; i++)
+            {
+                if (sorted[sorted.Count / 2] > 10000)
+                    return maxArea;
+                else
+                    sorted.RemoveRange(0, sorted.Count / 2);
+              
+                if (sorted.Count == 1)
+                    break;
+            }
+
+
+            for (int i = 0; i < height.Length; i++)
+            {
+                for (int j = 0; j < height.Length; j++)
                 {
                     if (i != j)
                     {
-                        if (a[j] == a[i])
-                        {
-                            int w = Math.Abs(j - i);
-                            int h = a[i]; // or a[j]
-                            if (!areaList.Contains(w * h))
-                                areaList.Add(w * h);
-                        }
-                        else if (a[j] > a[i])
-                        {
-                            int w = Math.Abs(j - i);
-                            int h = a[i];
-                            if (!areaList.Contains(w * h))
-                                areaList.Add(w * h);
-                        }
-                        else if (a[j] < a[i])
-                        {
-                            int w = Math.Abs(j - i);
-                            int h = a[j];
-                            if (!areaList.Contains(w * h))
-                                areaList.Add(w * h);
-                        }
+                        int h = Math.Min(height[j], height[i]);
+                        int w = Math.Abs(j - i);
+                        maxArea = Math.Max(maxArea, h * w);
                     }
                 }
             }
-            areaList.Sort();
-            return areaList[areaList.Count - 1];
+            return maxArea;
         }
 
 
@@ -128,7 +133,6 @@ namespace Container_With_Most_Water
             //  Initialize the max area
             //  While v[i] < v[next] result can grow
             //  Specifically, if v[i] < v[lastIndex], optimum result would be v[i], v[lastIndex], a = v[i] * lastIndex = 1*4 = 4
-            //   => So I don't need to check the in between: I know that I need to compare to a
 
             int maxArea = -1;
             if (height[0] < height[height.Length - 1 - 0])
@@ -217,6 +221,68 @@ namespace Container_With_Most_Water
             }
             return maxArea;
         }
+
+
+
+        //int[] A = { 1, 8, 6, 2, 5, 4, 8, 3, 7 };
+        private static int MaxAreaContainer3(int[] height)
+        {
+            int maxArea = 0;
+
+            if (height.Length < 2 || height.Length > 100000)
+            {
+                return maxArea;
+            }
+
+            List<int> sorted = new List<int>(height);
+            sorted.Sort();
+            for (int i = sorted.Count / 2; i < sorted.Count; i++)
+            {
+                if (sorted[sorted.Count / 2] > 10000)
+                    return maxArea;
+                else
+                    sorted.RemoveRange(0, sorted.Count / 2);
+
+                if (sorted.Count == 1)
+                    break;
+            }
+
+            int firstIndex = 0;
+            int lastIndex = height.Length-1;
+            
+            while(firstIndex < lastIndex)
+            {
+                int h = Math.Min(height[lastIndex], height[firstIndex]);
+                int w = Math.Abs(lastIndex - firstIndex);
+                maxArea = Math.Max(maxArea, h * w);
+
+                if(height[firstIndex] <= height[lastIndex])
+                {
+                    firstIndex++;
+                }
+                else
+                {
+                    lastIndex--;
+                }
+            }
+            //do
+            //{
+            //    firstIndex++;
+            //    lastIndex--;
+
+            //    if (height[firstIndex] <= height[lastIndex])
+            //        maxArea = height[firstIndex] * Math.Abs(lastIndex - firstIndex);
+            //    else
+            //        maxArea = height[lastIndex] * Math.Abs(lastIndex - firstIndex);
+
+            //    if (firstIndex == height.Length - 1 || lastIndex == 0)
+            //        break;
+
+            //} while (height[firstIndex + 1] >= height[firstIndex] || height[lastIndex - 1] >= height[lastIndex]);
+
+            return maxArea;
+        }
+
     }
 }
 
