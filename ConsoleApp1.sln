@@ -29,9 +29,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Recursive-Fibonacci", "Recu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sorting", "Sorting\Sorting.csproj", "{5524E111-7EEB-4D46-9C96-8A6420CFEA63}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "1-Array-Indices-Of-Two-Numbers-That-AddUp-Target", "1-Array-Indices-Of-Two-Numbers-That-AddUp-Target\1-Array-Indices-Of-Two-Numbers-That-AddUp-Target.csproj", "{1B5B9701-B796-4727-85C6-7A8CF3E52F1E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "1-Array-Indices-Of-Two-Numbers-That-AddUp-Target", "1-Array-Indices-Of-Two-Numbers-That-AddUp-Target\1-Array-Indices-Of-Two-Numbers-That-AddUp-Target.csproj", "{1B5B9701-B796-4727-85C6-7A8CF3E52F1E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "2-Container-With-Most-Water", "2-Container-With-Most-Water\2-Container-With-Most-Water.csproj", "{155CE6DD-A8AF-46DC-81D2-97D2681E8E3B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "3-Trapping-Rain-Water", "3-Trapping-Rain-Water\3-Trapping-Rain-Water.csproj", "{C9162254-66E6-4D7E-B854-BE6B343231C9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -223,6 +225,18 @@ Global
 		{155CE6DD-A8AF-46DC-81D2-97D2681E8E3B}.Release|x64.Build.0 = Release|Any CPU
 		{155CE6DD-A8AF-46DC-81D2-97D2681E8E3B}.Release|x86.ActiveCfg = Release|Any CPU
 		{155CE6DD-A8AF-46DC-81D2-97D2681E8E3B}.Release|x86.Build.0 = Release|Any CPU
+		{C9162254-66E6-4D7E-B854-BE6B343231C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9162254-66E6-4D7E-B854-BE6B343231C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9162254-66E6-4D7E-B854-BE6B343231C9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C9162254-66E6-4D7E-B854-BE6B343231C9}.Debug|x64.Build.0 = Debug|Any CPU
+		{C9162254-66E6-4D7E-B854-BE6B343231C9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C9162254-66E6-4D7E-B854-BE6B343231C9}.Debug|x86.Build.0 = Debug|Any CPU
+		{C9162254-66E6-4D7E-B854-BE6B343231C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9162254-66E6-4D7E-B854-BE6B343231C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9162254-66E6-4D7E-B854-BE6B343231C9}.Release|x64.ActiveCfg = Release|Any CPU
+		{C9162254-66E6-4D7E-B854-BE6B343231C9}.Release|x64.Build.0 = Release|Any CPU
+		{C9162254-66E6-4D7E-B854-BE6B343231C9}.Release|x86.ActiveCfg = Release|Any CPU
+		{C9162254-66E6-4D7E-B854-BE6B343231C9}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
