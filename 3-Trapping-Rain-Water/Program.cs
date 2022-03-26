@@ -9,8 +9,9 @@ namespace _3_Trapping_Rain_Water
             //Given an array of integers representing an
             //elevation map where the width of each bar is 1,
             //return how much rainwater can be trapped
-            int[] height = { 0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1 };
+            //int[] height = { 0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1 };
             //int[] height = {4,2,0,3,2,5 };
+            int[] height = { 0, 7, 1, 4, 6 };
 
             var sw = Stopwatch.StartNew();
             Console.WriteLine("Total unit of rainwater (O(n^2)) is: {0}", RainWater(height));
@@ -26,9 +27,6 @@ namespace _3_Trapping_Rain_Water
             //
             //h = 0
             //mV = 0
-
-            int h = 0;
-            int mV = 0;
 
             //          ||
             // ||* * * *||
@@ -61,40 +59,77 @@ namespace _3_Trapping_Rain_Water
             ///*if false, can I be in the middle of before me and after me? */   b = 2 < me = 2 < a = nothing
             //End h=9
 
+            int h = 0;
+            var lmV = 0;
+            var rmV = 0;
+
             for (int i = 0; i < height.Length; i++)
             {
                 var cV = height[i];
-                if(cV >= mV)
+                if (cV >= lmV)
                 {
-                    mV = cV;
-                    h += (mV - cV);
+                    lmV = cV;
+                    rmV = 0;
+                    h += (lmV - cV);
                 }
+  
                 else
                 {
-                    var foundMax = false;
+
+                    if (i == height.Length - 1)
+                        continue;
+
+                    //var foundMax = false;
+                    //var rmV = 0;
                     for (int j = i; j < height.Length; j++)
                     {
-                        if(height[j] >= mV)
+                        //if(height[j] >= mV)
+                        if (height[j] >= cV && height[j] > rmV)
                         {
-                            foundMax = true;
+                            //foundMax = true;
                             //break;
+                            rmV = height[j];
+                            //break; 
                         }
                     }
-                    if (foundMax)
-                        h += (mV - cV);
-                    else if(i!=0 && i!= height.Length-1)
+                    //if (foundMax)
+                    //h += (mV - cV);
+
+                    if (cV < rmV)
                     {
-                        var before = height[i - 1];
-                        var current = height[i];
-                        var after = height[i + 1];
-                        if (before > current && current < after)
-                            h += (Math.Min(before - current, after - current));
+                        //if (lmV == rmV)
+                          //  h += rmV; //or lmV
+                        //else
+                            h += Math.Abs(cV - Math.Min(lmV, rmV));
+                        //0 -      (2,3)     => 0 - 2 = -2
+                        //1 -      (2,3)    => 1- 2 = -1
+                        //3 -      (2,2)     => 3-          
 
                     }
-                }
+                    //else if (i != 0 && i != height.Length - 1)
+                    //{
+                    //    var before = height[i - 1];
+                    //    var current = cV;
+                    //    var after = height[i + 1];
+                    //    if (before > current && current < after)
+                    //        h += (Math.Min(before - current, after - current));
+                    //
+                    //}
+                }   //
             }
             return h;
 
+
+            //int [] height = {0,7,1,4,6}
+
+            //   ||        ||  
+            //   ||*  *||  ||
+            //   ||*  *||  ||
+            //   ||* ||||||||   
+            //   ||* ||||||||  
+            //   ||* ||||||||
+            //   ||||||||||||
+            // 0  7 1 4 6 4 7
 
 
             //int[] height = { 0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1 };
