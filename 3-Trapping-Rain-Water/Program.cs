@@ -9,9 +9,9 @@ namespace _3_Trapping_Rain_Water
             //Given an array of integers representing an
             //elevation map where the width of each bar is 1,
             //return how much rainwater can be trapped
-            //int[] height = { 0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1 };
+            int[] height = { 0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1 };
             //int[] height = {4,2,0,3,2,5 };
-            int[] height = { 0, 7, 1, 4, 6 };
+            //int[] height = { 0, 7, 1, 4, 6, 4, 4 };
 
             var sw = Stopwatch.StartNew();
             Console.WriteLine("Total unit of rainwater (O(n^2)) is: {0}", RainWater(height));
@@ -63,73 +63,68 @@ namespace _3_Trapping_Rain_Water
             var lmV = 0;
             var rmV = 0;
 
+            //int l = 0;
+            //int r = height.Length - 1;
+            //var lmV = height[0];
+            //var rmV = height[height.Length-1];
+
+            //while(l < r)
+            //{
+            //    h += Math.Abs(height[l] - Math.Min(height[l], height[r]));
+
+            //    if(height[l] <= height[r])
+            //    {
+
+            //    }
+            //    else
+            //    {
+
+            //    }
+            //}
+
             for (int i = 0; i < height.Length; i++)
             {
                 var cV = height[i];
+                    rmV = 0;
                 if (cV >= lmV)
                 {
                     lmV = cV;
-                    rmV = 0;
                     h += (lmV - cV);
                 }
-  
-                else
+                else if (cV < lmV)
                 {
-
                     if (i == height.Length - 1)
                         continue;
 
-                    //var foundMax = false;
-                    //var rmV = 0;
                     for (int j = i; j < height.Length; j++)
                     {
-                        //if(height[j] >= mV)
                         if (height[j] >= cV && height[j] > rmV)
                         {
-                            //foundMax = true;
-                            //break;
                             rmV = height[j];
-                            //break; 
                         }
                     }
-                    //if (foundMax)
-                    //h += (mV - cV);
 
                     if (cV < rmV)
                     {
-                        //if (lmV == rmV)
-                          //  h += rmV; //or lmV
-                        //else
                             h += Math.Abs(cV - Math.Min(lmV, rmV));
                         //0 -      (2,3)     => 0 - 2 = -2
-                        //1 -      (2,3)    => 1- 2 = -1
-                        //3 -      (2,2)     => 3-          
-
+                        //1 -      (2,3)    => 1- 2 = -1    
                     }
-                    //else if (i != 0 && i != height.Length - 1)
-                    //{
-                    //    var before = height[i - 1];
-                    //    var current = cV;
-                    //    var after = height[i + 1];
-                    //    if (before > current && current < after)
-                    //        h += (Math.Min(before - current, after - current));
-                    //
-                    //}
-                }   //
+                }   
             }
             return h;
 
 
             //int [] height = {0,7,1,4,6}
 
-            //   ||        ||  
-            //   ||*  *||  ||
-            //   ||*  *||  ||
+            //   ||   
+            //   ||*  *||
+            //   ||*  *|| 
             //   ||* ||||||||   
             //   ||* ||||||||  
             //   ||* ||||||||
             //   ||||||||||||
-            // 0  7 1 4 6 4 7
+            //  0 7 1 4 6 4 4
 
 
             //int[] height = { 0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1 };
