@@ -10,9 +10,10 @@ namespace _3_Trapping_Rain_Water
             //Given an array of integers representing an
             //elevation map where the width of each bar is 1,
             //return how much rainwater can be trapped
-            //int[] height = { 0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1 };
+            int[] height = { 0, 1, 0, 2, 1, 0, 3, 1, 0, 1, 2 };
             //int[] height = {4,2,0,3,2,5 };
-            int[] height = { 0, 7, 1, 4, 6, 4, 4 };
+            //int[] height = { 0, 7, 1, 4, 6, 4, 4 };
+            //int[] height = { 3, 7, 1, 7, 8, 4, 4, 5, 6 };
 
             var sw = Stopwatch.StartNew();
             Console.WriteLine("Total unit of rainwater (O(n^2)) is: {0}", RainWater(height));
@@ -20,7 +21,7 @@ namespace _3_Trapping_Rain_Water
 
             var sw2 = Stopwatch.StartNew();
             Console.WriteLine("Total unit of rainwater (O(n)) is: {0}", RainWater2(height));
-            Console.WriteLine("Elapsed ticks: {0}", sw2.ElapsedTicks);
+            Console.WriteLine("Elapsed ticks: {0}", sw2.ElapsedTicks); //2500 ticks
         }
 
         private static int RainWater(int[] height)
@@ -35,7 +36,7 @@ namespace _3_Trapping_Rain_Water
             // ||* *|| *||
             // ||||*||||||
             // ||||*||||||
-            // 4 2 0 3 2 5
+            // 4 2 0 3 2 5     max = 5: h = (max - cV)
 
             //0- cV >= mV => 4> 0 => mV = 4
             //h += mV - cV = 0 + 4 - 4 = 0
@@ -129,7 +130,7 @@ namespace _3_Trapping_Rain_Water
 
                     if (cV < rmV)
                     {
-                        h += Math.Abs(cV - Math.Min(lmV, rmV));
+                        h += Math.Abs(cV - Math.Min(lmV, rmV)); //h += Math.Min(lmV, rmV) - cV;
                     }
                 }
             }
@@ -188,49 +189,48 @@ namespace _3_Trapping_Rain_Water
 
         private static int RainWater2(int[] height)
         {
-            int h = 0;
+            var l = 0;
+            var r = height.Length - 1;
+            var h = 0;
+            var maxLeft = 0;
+            var maxRight = 0;
 
-            int l = 0;
-            int r = height.Length - 1;
-
-            var lMax = height[0];
-            //var rMax = height[height.Length - 1];
-            var rMax = height[2];
-
-            //The reason why I always reset the rMax is
-            //because if I pass this value, I wouldn't have the ahead next rMax
-            List<int> sorted = new List<int>(height);
-            sorted.Sort();
-            int max = sorted[sorted.Count - 1];
-            //   ||    
-            //   ||*  *||
-            //   ||*  *|| 
-            //   ||* ||||||||   
-            //   ||* ||||||||  
-            //   ||* ||||||||
-            //   ||||||||||||
-            //  0 7 1 4 6 4 4
-            int lMaxIndex = 0;
-            for (int i = 0; i < height.Length-1; i++)
+            while (l < r)
             {
-                if (height[i] >= lMax)
+                if (height[l] <= height[r])
                 {
-                    lMax = height[i];
-                    lMaxIndex = i;
-                }
+                    //Now we need a maxLeft > height[l] to caclulate water
 
-                if(height[i+1]< height[i])
-                {
-                    //Suppose that rMax = lMax
-                    rMax = lMax;
+                    //Update current water for height[l]?
+                    if (maxLeft >= height[l])
+                    {
+                        h += maxLeft - height[l];
+                    }
+
+                    //Or update maxLeft?
+                    else if (maxLeft <= height[l])
+                    {
+                        maxLeft = height[l];
+                    }
+                    l++;
                 }
-                else
+                else if (height[l] > height[r])
                 {
-                    rMax = height[i + 1];
+                    //Now we need a maxRight > height[r] to caclulate water
+
+                    //Update current water for height[r]?
+                    if (maxRight >= height[r])
+                    {
+                        h += maxRight - height[r];
+                    }
+
+                    //Or update maxRight?
+                    else if (maxRight <= height[r])
+                    {
+                        maxRight = height[r];
+                    }
+                    r--;
                 }
-                
-                h += (i - lMaxIndex) * Math.Abs(height[i] - Math.Min(lMax, rMax));
-                
             }
             return h;
         }
