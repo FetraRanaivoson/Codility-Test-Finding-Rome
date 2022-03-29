@@ -6,25 +6,64 @@ namespace Priority_Queue_Graph_Class
     public class PriorityQueue
     {
         Node root;
+        int nextIndex = -1;
+        int parentIndex = 0;
+        /// <summary>
+        /// Given this list of BFS parkour, we can map
+        /// each parent left-right children.
+        /// If i is the parent node index, left child index = 2*i +1
+        /// and right child index = 2*i +2
+        /// </summary>
+        List<int> breadthIndex;
 
         public PriorityQueue()
         {
             this.root = null;
+            this.breadthIndex = new List<int>();
         }
 
         /// <summary>
-        /// Insert this value to this the priority queue
+        /// Insert this value to this the priority queue using a list of priority queue
         /// </summary>
-        /// <param name="value"></param>
         public void Insert(int value)
         {
-            PriorityInsertDFS(this.root,value);
+            //  Just add the  value first and increment the current Index
+            this.breadthIndex.Add(value);
+            this.nextIndex++;
+
+            //  Check if we are done with a parent
+            if (this.breadthIndex.Count > 2 * this.parentIndex + 2)
+            {
+                this.parentIndex++;
+            }
+
+            //  Check if parent value less than the next index then swap if necessary, parent value
+            //  being incremented every 2 insertions
+            if (this.breadthIndex[this.parentIndex] < this.breadthIndex[this.nextIndex])
+            {
+                int smaller = this.breadthIndex[this.parentIndex];
+                this.breadthIndex[this.parentIndex] = this.breadthIndex[this.nextIndex];
+                this.breadthIndex[this.nextIndex] = smaller;
+            }
         }
 
+        private void UpdateBinaryHeapGraph()
+        {
+            Node currentNode = this.root;
+            for (int i = 0; i < breadthIndex.Count; i++)
+            {
+                //giving the index formula, returns the key-value pair registred for that index
+                //index_value is a BFS list
+                currentNode.left = new Node(breadthIndex[2 * i + 1], currentNode);
+                currentNode.right = new Node(breadthIndex[2 * i + 2], currentNode);
+            }
+        }
+
+
         /// <summary>
-        /// A more cleaner short recursive way to insert value 
+        /// Tried to insert value with swap feature on a binary heap graph but the tree became inbalanced
         /// </summary>
-        private void PriorityInsertDFS(Node currentNode, int value)
+        private void BinaryHeapInsertDFS(Node currentNode, int value)
         {
             if (this.root == null)
             {
@@ -49,6 +88,11 @@ namespace Priority_Queue_Graph_Class
                         currentNode.value = value;
                         currentNode.left = new Node(parentValue, currentNode);
                         currentNode = currentNode.parent;
+                        if (currentNode == null)//root
+                        {
+                            this.root = currentNode;
+                            break;
+                        }
                     }
                     Print();
                     return;
@@ -62,7 +106,7 @@ namespace Priority_Queue_Graph_Class
                     currentNode.right = new Node(value, currentNode);
                     Print();
                     return;
-                } 
+                }
                 else if (currentNode.value < value) //   Rule violation => swap
                 {
                     while (currentNode.value < value)
@@ -71,7 +115,13 @@ namespace Priority_Queue_Graph_Class
                         currentNode.value = value;
                         currentNode.right = new Node(parentValue, currentNode);
                         currentNode = currentNode.parent;
+                        if (currentNode == null)//root
+                        {
+                            this.root = currentNode;
+                            break;
+                        }
                     }
+
                     Print();
                     return;
                 }
@@ -81,11 +131,11 @@ namespace Priority_Queue_Graph_Class
             {
                 if (currentNode.left != null)
                 {
-                    PriorityInsertDFS(currentNode.left, value);
+                    BinaryHeapInsertDFS(currentNode.left, value);
                 }
                 else if (currentNode.right != null)
                 {
-                    PriorityInsertDFS(currentNode.right, value);
+                    BinaryHeapInsertDFS(currentNode.right, value);
                 }
             }
 
@@ -521,6 +571,14 @@ namespace Priority_Queue_Graph_Class
         public bool Full => this.left != null && this.right != null;
         public bool IsLeftNull => this.left == null;
         public bool isRightNull => this.right == null;
+
+        public Node(int value)
+        {
+            this.value = value;
+            this.left = null;
+            this.right = null;
+        }
+
         public Node(int value, Node parent)
         {
             this.value = value;
@@ -577,6 +635,7 @@ namespace Priority_Queue_Graph_Class
             pq.Insert(4);
             pq.Insert(2);
             pq.Insert(3);
+            pq.Insert(6);
 
         }
     }
