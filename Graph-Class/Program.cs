@@ -7,7 +7,7 @@ namespace Graph_Class
     public class Graph
     {
         int nbNodes;
-        Dictionary<int, Vertex> adjacencyList;
+        public Dictionary<int, Vertex> adjacencyList { get; }
 
         public Graph()
         {

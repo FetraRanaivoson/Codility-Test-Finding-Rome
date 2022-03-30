@@ -6,7 +6,7 @@ namespace Binary_Tree
     /// <summary>
     /// A node prototype for binary trees
     /// </summary>
-    class Node
+    public class Node
     {
         public int value;
         public Node left;
@@ -27,7 +27,7 @@ namespace Binary_Tree
     /// <summary>
     /// Binary Search Tree class
     /// </summary>
-    class BinarySearchTree
+    public class BinarySearchTree
     {
         Node root;
 
@@ -432,13 +432,14 @@ namespace Binary_Tree
         /// 
         /// </summary>
         /// <param name="value"> value to search</param>
-        /// <returns>returns the value if found, else returns -1</returns>
-        public int Lookup(int value)
+        /// <returns>returns the Node /*value*/ if found, else returns null/*-1*/</returns>
+        public Node Lookup(int value)
         {
             if (this.root == null)
             {
                 Console.WriteLine("Cannot find {0}, tree has not root.", value);
-                return -1;
+                //return -1;
+                return null;
             }
             Node currentNode = this.root;
             while (true)
@@ -446,12 +447,14 @@ namespace Binary_Tree
                 if (currentNode == null)//At the end of a node (left/right are null)
                 {
                     Console.WriteLine("Entry {0} not found!", value);
-                    return -1;
+                    //return -1;
+                    return null;
                 }
                 if (value == currentNode.value)
                 {
                     Console.WriteLine("Entry {0} found!", value);
-                    return currentNode.value;
+                    //return currentNode.value;
+                    return currentNode;
                 }
                 else
                 {
