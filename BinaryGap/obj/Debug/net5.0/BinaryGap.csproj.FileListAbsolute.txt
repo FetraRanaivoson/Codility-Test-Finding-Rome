@@ -5,7 +5,6 @@ E:\ISI\COURS\Codility-Tests-Practices\BinaryGap\bin\Debug\net5.0\BinaryGap.runti
 E:\ISI\COURS\Codility-Tests-Practices\BinaryGap\bin\Debug\net5.0\BinaryGap.dll
 E:\ISI\COURS\Codility-Tests-Practices\BinaryGap\bin\Debug\net5.0\ref\BinaryGap.dll
 E:\ISI\COURS\Codility-Tests-Practices\BinaryGap\bin\Debug\net5.0\BinaryGap.pdb
-E:\ISI\COURS\Codility-Tests-Practices\BinaryGap\obj\Debug\net5.0\BinaryGap.csprojAssemblyReference.cache
 E:\ISI\COURS\Codility-Tests-Practices\BinaryGap\obj\Debug\net5.0\BinaryGap.GeneratedMSBuildEditorConfig.editorconfig
 E:\ISI\COURS\Codility-Tests-Practices\BinaryGap\obj\Debug\net5.0\BinaryGap.AssemblyInfoInputs.cache
 E:\ISI\COURS\Codility-Tests-Practices\BinaryGap\obj\Debug\net5.0\BinaryGap.AssemblyInfo.cs
@@ -14,3 +13,4 @@ E:\ISI\COURS\Codility-Tests-Practices\BinaryGap\obj\Debug\net5.0\BinaryGap.dll
 E:\ISI\COURS\Codility-Tests-Practices\BinaryGap\obj\Debug\net5.0\ref\BinaryGap.dll
 E:\ISI\COURS\Codility-Tests-Practices\BinaryGap\obj\Debug\net5.0\BinaryGap.pdb
 E:\ISI\COURS\Codility-Tests-Practices\BinaryGap\obj\Debug\net5.0\BinaryGap.genruntimeconfig.cache
+E:\ISI\COURS\Codility-Tests-Practices\BinaryGap\obj\Debug\net5.0\BinaryGap.csproj.AssemblyReference.cache

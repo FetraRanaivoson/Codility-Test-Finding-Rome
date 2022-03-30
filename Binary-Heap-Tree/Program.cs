@@ -3,40 +3,56 @@ using System.Collections.Generic;
 
 namespace Priority_Queue_Graph_Class
 {
+    public enum Heap
+    {
+        Min, Max
+    }
     public class BinaryHeap
     {
+        /// <summary>
+        /// The root of this binary heap
+        /// </summary>
         Node root;
-        List<Node> nodes;
 
-        int nextIndex = -1;
+        /// <summary>
+        /// Starting from -1, this is the index of the last child node we inserted on the 
+        /// node list. Next node will always be inserted at childIndex by default then
+        /// can bubble up if violates the rule
+        /// </summary>
+        int childIndex = -1;
+
+        /// <summary>
+        /// Parent index is incremented incremented every 2 node insertions,
+        /// to let us know the parent of the child index and therefore 
+        /// we can compare the value of those 2
+        /// </summary>
         int parentIndex = 0;
 
         /// <summary>
-        /// Given this list of BFS parkour, we can map
-        /// each parent left-right children.
-        /// If i is the parent node index, left child index = 2*i +1
+        /// A BFS list representation of the nodes in the binary heap.
+        /// BFS because nodes are filled from left to right
+        /// If 'i' is the parent node index, left child index = 2*i +1
         /// and right child index = 2*i +2
         /// </summary>
-        List<int> breadthIndex;
+        List<Node> nodeList;
 
         public BinaryHeap()
         {
             this.root = null;
-            this.breadthIndex = new List<int>();
-            this.nodes = new List<Node>();
+            this.nodeList = new List<Node>();
         }
 
         /// <summary>
         /// Insert this value to this binary heap graph: heap = Max
         /// </summary>
-        public void Add(int value)
+        public void Add(/*int value*/Node node)
         {
-            //  Just add the  value first and increment the current Index
-            this.breadthIndex.Add(value);
-            this.nextIndex++;
+            //  Just add the  value first and increment the child Index
+            this.nodeList.Add(node);
+            this.childIndex++;
 
             //  Check if we are done with a parent
-            if (this.breadthIndex.Count - 1 > 2 * this.parentIndex + 2)
+            if (this.nodeList.Count - 1 > 2 * this.parentIndex + 2)
             {
                 this.parentIndex++;
             }
@@ -44,76 +60,119 @@ namespace Priority_Queue_Graph_Class
             //  Check if parent value less than the next index then swap if necessary, parent value
             //  being incremented every 2 insertions
 
-            int pI = this.parentIndex; //We will just make a copy of the parentIndex because we have to keep it
-            while (this.breadthIndex[pI] < this.breadthIndex[this.nextIndex])
-            {
-                int smaller = this.breadthIndex[pI];
-                this.breadthIndex[pI] = this.breadthIndex[this.nextIndex];
-                this.breadthIndex[this.nextIndex] = smaller;
-                if (this.nextIndex > 2)
-                    pI = this.nextIndex - 2; //Bubbling up
+            //  The bubbling needs to keep track of the parentIndex of a particular childIndex in the array
+            //  If the childIndex is bubbling up, we need also to make sure that every parent of that child
+            //  is less in value
+            int pI = this.parentIndex;
+            int cI = this.childIndex;
 
-            }
+            Heap heap = Heap.Max;
+            BubbleCheck(pI, cI, heap);
 
-            if (this.breadthIndex.Count == 1)
+            //Console.WriteLine("{0} added.", node.value);
+            //Console.Write("Binary heap array: ");
+            //foreach (Node item in this.breadthNodes)
+            //{
+            //    Console.Write("{0},", item.value);
+            //}
+            //Console.WriteLine();
+            UpdateBinaryHeapGraph();
+        }
+
+        /// <summary>
+        /// The bubble method
+        /// </summary>
+        /// <param name="pI">The current parent Index for insertion</param>
+        /// <param name="cI">The current child Index of to be inserted </param>
+        /// <param name="heap">The heap type: bubbling up Max or bubbling up Min?</param>
+        private void BubbleCheck(int pI, int cI, Heap heap)
+        {
+            if(heap == Heap.Max)
             {
-                this.root = new Node(breadthIndex[0]);
+                while (this.nodeList[pI].value < this.nodeList[cI].value)
+                {
+                    Node smaller = this.nodeList[pI];
+                    smaller.left = null; smaller.right = null;
+                    this.nodeList[pI] = this.nodeList[cI];
+                    this.nodeList[cI] = smaller;
+
+                    //  As soon as the swap occurs
+                    cI = pI;
+
+                    // What is the parent index of this childIndex (cI) that has been bubbled up?
+                    if (pI >= 1) // There need to be at least 1 parent index to bubble up
+                    {
+                        if (cI % 2 != 0) // If this child index is odd, this child is on the left of its parent
+                        {
+                            pI = (cI - 1) / 2; // A formula to get the parentIndex of the its left child
+                        }
+                        else // Else if this child index is even, this child is on the right of its parent
+                        {
+                            pI = (cI - 2) / 2;  // A formula to get the parentIndex of the its right child
+                        }
+                    }
+                }
             }
             else
             {
-                Node currentNode = this.root;
-                for (int i = breadthIndex.Count - 1; i >= 0; i--)
+                while (this.nodeList[pI].value > this.nodeList[cI].value)
                 {
-                    Node parent = new Node(breadthIndex[(i - 2) / 2]);
-                    if (i % 2 == 0)
-                        parent.right = new Node(breadthIndex[i]);
-                    else
-                        parent.left = new Node(breadthIndex[i]);
+                    Node smaller = this.nodeList[pI];
+                    smaller.left = null; smaller.right = null;
+                    this.nodeList[pI] = this.nodeList[cI];
+                    this.nodeList[cI] = smaller;
+
+                    //  As soon as the swap occurs
+                    cI = pI;
+
+                    // What is the parent index of this childIndex (cI) that has been bubbled up?
+                    if (pI >= 1) // There need to be at least 1 parent index to bubble up
+                    {
+                        if (cI % 2 != 0) // If this child index is odd, this child is on the left of its parent
+                        {
+                            pI = (cI - 1) / 2; // A formula to get the parentIndex of the its left child
+                        }
+                        else // Else if this child index is even, this child is on the right of its parent
+                        {
+                            pI = (cI - 2) / 2;  // A formula to get the parentIndex of the its right child
+                        }
+                    }
                 }
             }
-
-
-
-            Print();
+        
         }
 
-        private void RestructureBinaryHeap(Node root, int value)
+        /// <summary>
+        /// Update the binary heap graph to handle any changes
+        /// </summary>
+        public void UpdateBinaryHeapGraph()
         {
-            TraverseRecursive(this.root, value);
-        }
-        private void TraverseRecursive(Node currentNode, int value)
-        {
-            //  Particular case: no root
-            if (this.root == null)
+            Queue<Node> bfsQueue = new Queue<Node>();
+            for (int i = 0; i < nodeList.Count; i++)
             {
-                this.root = new Node(value);
+                bfsQueue.Enqueue(nodeList[i]);
             }
+            Node currentNode = bfsQueue.Dequeue();
+            this.root = currentNode;
+            Queue<Node> parentNode = new Queue<Node>();
 
-            else if (value < currentNode.value)
+            while (bfsQueue.Count > 0)
             {
-                //  Base case
-                if (currentNode.left == null)
+                Node left = bfsQueue.Dequeue();
+                if (parentNode.Count > 0)
+                    currentNode = parentNode.Dequeue();
+                if (left != null)
                 {
-                    currentNode.left = new Node(value);
-                }
-                //  Recursive case
-                else
-                {
-                    TraverseRecursive(currentNode.left, value);
-                }
-
-            }
-            else if (value > currentNode.value)
-            {
-                //  Base case
-                if (currentNode.right == null)
-                {
-                    currentNode.right = new Node(value);
-                }
-                //  Recursive case
-                else
-                {
-                    TraverseRecursive(currentNode.right, value);
+                    currentNode.left = left;
+                    if (bfsQueue.Count == 0)
+                        return;
+                    Node right = bfsQueue.Dequeue();
+                    if (right != null)
+                    {
+                        currentNode.right = right;
+                        parentNode.Enqueue(left);
+                        parentNode.Enqueue(right);
+                    }
                 }
             }
         }
@@ -404,7 +463,6 @@ namespace Priority_Queue_Graph_Class
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="value"> value to search</param>
         /// <returns>returns the value if found, else returns -1</returns>
         public int Lookup(int value)
         {
@@ -450,9 +508,17 @@ namespace Priority_Queue_Graph_Class
         /// </summary>
         public void Print()
         {
-            Console.WriteLine("==============PRIORITY QUEUE===============");
+            Console.WriteLine("==============BINARY HEAP===============");
+
+            Console.Write("Binary heap array: ");
+            foreach (Node item in this.nodeList)
+            {
+                Console.Write("{0},", item.value);
+            }
+            Console.WriteLine();
+
             PrintRecursive(this.root);
-            Console.WriteLine("========================================");
+            Console.WriteLine("===========================================");
         }
         private void PrintRecursive(Node currentNode)
         {
@@ -491,7 +557,7 @@ namespace Priority_Queue_Graph_Class
     /// <summary>
     /// A node prototype for binary trees
     /// </summary>
-    class Node
+    public class Node
     {
         public int value;
         public Node left;
@@ -524,62 +590,44 @@ namespace Priority_Queue_Graph_Class
 
 
     }
-    /// <summary>
-    /// A vertex (Node) prototype for graphs that implement BFS and DFS
-    /// </summary>
 
-
-    public class Vertex
-    {
-        /// <summary>
-        /// The value of this vertex
-        /// </summary>
-        public int value;
-
-        /// <summary>
-        /// The keyvalue pair int,Vertex connections of this vertex
-        /// </summary>
-        public Dictionary<int, Vertex> connections;
-
-        /// <summary>
-        /// Is this vertex already visited?
-        /// </summary>
-        public bool IsVisited { get; set; }
-
-
-        public Vertex(int value)
-        {
-            this.value = value;
-            this.IsVisited = false;
-            this.connections = new Dictionary<int, Vertex>();
-        }
-
-        /// <summary>
-        /// Add a connection using key value pair <int,Vertex> to the dictionary
-        /// </summary>
-        public void AddConn(int key, Vertex vertex)
-        {
-            connections.Add(key, vertex);
-        }
-    }
     class Program
     {
         static void Main(string[] args)
         {
             BinaryHeap bh = new BinaryHeap();
 
-            bh.Add(5);
-            Console.ReadKey();
-            bh.Add(1);
-            Console.ReadKey();
-            bh.Add(4);
-            Console.ReadKey();
-            bh.Add(2);
-            Console.ReadKey();
-            bh.Add(3);
-            Console.ReadKey();
-            bh.Add(6);
-            Console.ReadKey();
+
+            //            10
+            //          /    \
+            //         6       5
+            //        / \     / \
+            //       4   2   4   3
+            //      / \  /\
+            //     1   3 n
+            //
+            // n = next insertion.
+            // n will bubble up as its parent has less value than him
+
+            bh.Add(new Node(5));
+            bh.Add(new Node(1));
+            bh.Add(new Node(4));
+            bh.Add(new Node(2));
+            bh.Add(new Node(3));
+            bh.Add(new Node(6));
+
+            bh.Add(new Node(3));
+            bh.Add(new Node(10));
+
+            bh.Add(new Node(4));
+
+            bh.Print(); //BFS [10,6,5,4,2,4,3,1,3]
+
+            bh.Add(new Node(21)); // n= 21 => BFS [21,10,5,4,6,4,3,1,3,2]
+            bh.Print();
+
+            bh.BreadthFirstSearch(); // CQFD BFS [21,10,5,4,6,4,3,1,3,2]
+
 
         }
     }
