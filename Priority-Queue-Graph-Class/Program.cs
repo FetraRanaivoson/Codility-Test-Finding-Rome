@@ -29,7 +29,7 @@ namespace Priority_Queue_Graph_Class
         /// <summary>
         /// Insert this value to this binary heap graph: heap = Max
         /// </summary>
-        public void Insert(int value)
+        public void Add(int value)
         {
             //  Just add the  value first and increment the current Index
             this.breadthIndex.Add(value);
@@ -45,10 +45,8 @@ namespace Priority_Queue_Graph_Class
             //  being incremented every 2 insertions
 
             int pI = this.parentIndex; //We will just make a copy of the parentIndex because we have to keep it
-            bool swap = false;
             while (this.breadthIndex[pI] < this.breadthIndex[this.nextIndex])
             {
-                swap = true;
                 int smaller = this.breadthIndex[pI];
                 this.breadthIndex[pI] = this.breadthIndex[this.nextIndex];
                 this.breadthIndex[this.nextIndex] = smaller;
@@ -57,195 +55,69 @@ namespace Priority_Queue_Graph_Class
 
             }
 
-            if (this.nextIndex == 0)
+            if (this.breadthIndex.Count == 1)
             {
-                nodes.Add(new Node(this.breadthIndex[nextIndex]));
+                this.root = new Node(breadthIndex[0]);
             }
             else
             {
-                if (swap)
-                    nodes.Add(new Node(this.breadthIndex[nextIndex], new Node(this.breadthIndex[parentIndex])));
+                Node currentNode = this.root;
+                for (int i = breadthIndex.Count - 1; i >= 0; i--)
+                {
+                    Node parent = new Node(breadthIndex[(i - 2) / 2]);
+                    if (i % 2 == 0)
+                        parent.right = new Node(breadthIndex[i]);
+                    else
+                        parent.left = new Node(breadthIndex[i]);
+                }
             }
 
-            ////  See the result
-            //for (int i = 0; i < nodes.Count; i++)
-            //{
-            //    if (i == 0)
-            //    {
-            //        Console.WriteLine("Node: {0} ---> Parent: Null (Root)", nodes[i].value);
 
-            //    }
-            //    else
-            //        Console.WriteLine("Node: {0} ---> Parent: {1}", nodes[i].value, nodes[i].parent.value);
-            //}
-            //Console.WriteLine("----------------------------");
+
+            Print();
         }
 
-        //private void UpdateBinaryHeapGraph()
-        //{
-        //    Queue<Node> queue = new Queue<Node>();
-        //    this.root = new Node(this.breadthIndex[0], null);
-        //    if(breadthIndex.Count == 2)
-        //    {
-        //        this.root.left = new Node(breadthIndex[2 * 0 + 1], this.root);
-        //    }
+        private void RestructureBinaryHeap(Node root, int value)
+        {
+            TraverseRecursive(this.root, value);
+        }
+        private void TraverseRecursive(Node currentNode, int value)
+        {
+            //  Particular case: no root
+            if (this.root == null)
+            {
+                this.root = new Node(value);
+            }
 
-        //    else if (breadthIndex.Count == 3)
-        //    {
-        //        this.root.left = new Node(breadthIndex[2 * 0 + 1], this.root);
-        //        this.root.right = new Node(breadthIndex[2 * 0 + 2], this.root);
-        //    }
-        //    else
-        //    {
-        //        queue.Enqueue(this.root.left);
-        //        queue.Enqueue(this.root.right);
-        //        int index = 0;
-        //        while (queue.Count > 0 && index < breadthIndex.Count - 1)
-        //        {
-        //            Node currentNode = queue.Dequeue();
-        //            if (breadthIndex.Count - 1 >= 2 * index + 2)
-        //            {
-        //                currentNode.left = new Node(breadthIndex[2 * index + 1], currentNode);
-        //                currentNode.right = new Node(breadthIndex[2 * index + 2], currentNode);
-        //                queue.Enqueue(currentNode.left);
-        //                queue.Enqueue(currentNode.right);
-        //            }
-        //            index++;
-        //        }
-        //    }
+            else if (value < currentNode.value)
+            {
+                //  Base case
+                if (currentNode.left == null)
+                {
+                    currentNode.left = new Node(value);
+                }
+                //  Recursive case
+                else
+                {
+                    TraverseRecursive(currentNode.left, value);
+                }
 
-        //    Print();
-        //}
+            }
+            else if (value > currentNode.value)
+            {
+                //  Base case
+                if (currentNode.right == null)
+                {
+                    currentNode.right = new Node(value);
+                }
+                //  Recursive case
+                else
+                {
+                    TraverseRecursive(currentNode.right, value);
+                }
+            }
+        }
 
-
-        /// <summary>
-        /// Tried to insert value with swap feature on a binary heap graph but the tree became inbalanced
-        /// </summary>
-        //private void BinaryHeapInsertDFS(Node currentNode, int value)
-        //{
-        //    if (this.root == null)
-        //    {
-        //        this.root = new Node(value, null);
-        //        Print();
-        //        return;
-        //    }
-        //
-        //    else if (currentNode.left == null) //   Insertion is at the DFS first parent that has no left child
-        //    {
-        //        if (currentNode.value >= value)
-        //        {
-        //            currentNode.left = new Node(value, currentNode);
-        //            Print();
-        //            return;
-        //        }
-        //        else if (currentNode.value < value) //   Rule violation => swap
-        //        {
-        //            while (currentNode.value < value)
-        //            {
-        //                int parentValue = currentNode.value;
-        //                currentNode.value = value;
-        //                currentNode.left = new Node(parentValue, currentNode);
-        //                currentNode = currentNode.parent;
-        //                if (currentNode == null)//root
-        //                {
-        //                    this.root = currentNode;
-        //                    break;
-        //                }
-        //            }
-        //            Print();
-        //            return;
-        //        }
-        //    }
-        //
-        //    else if (currentNode.right == null) // or insertion at right child
-        //    {
-        //        if (currentNode.value >= value)
-        //        {
-        //            currentNode.right = new Node(value, currentNode);
-        //            Print();
-        //            return;
-        //        }
-        //        else if (currentNode.value < value) //   Rule violation => swap
-        //        {
-        //            while (currentNode.value < value)
-        //            {
-        //                int parentValue = currentNode.value;
-        //                currentNode.value = value;
-        //                currentNode.right = new Node(parentValue, currentNode);
-        //                currentNode = currentNode.parent;
-        //                if (currentNode == null)//root
-        //                {
-        //                    this.root = currentNode;
-        //                    break;
-        //                }
-        //            }
-        //
-        //            Print();
-        //            return;
-        //        }
-        //    }
-        //
-        //    else // Otherwise find deeply the insertion point (DFS)
-        //    {
-        //        if (currentNode.left != null)
-        //        {
-        //            BinaryHeapInsertDFS(currentNode.left, value);
-        //        }
-        //        else if (currentNode.right != null)
-        //        {
-        //            BinaryHeapInsertDFS(currentNode.right, value);
-        //        }
-        //    }
-        //
-        //
-        //    /*
-        //    Queue<Node> queue = new Queue<Node>(); //FIFO: we'll put in the left node first then the right node so we'll always go from left to right first
-        //    queue.Enqueue(currentNode);
-        //
-        //    while (queue.Count > 0)
-        //    {
-        //        currentNode = queue.Dequeue();
-        //        Node parent = currentNode.parent;
-        //        if (currentNode.value < value)
-        //        {
-        //            Node temp = currentNode;
-        //            Node priorityNode = null;
-        //            if (parent == null) // case: root node
-        //            {
-        //                priorityNode = new Node(value, null);
-        //                this.root = priorityNode;
-        //                this.root.left = temp;
-        //            }
-        //            else // case: not root node
-        //            {
-        //                priorityNode = new Node(value, parent);
-        //                priorityNode.left = temp;
-        //                parent.left = priorityNode;
-        //                priorityNode.left.parent = priorityNode;
-        //                
-        //            }                
-        //            break;
-        //        }
-        //
-        //        if (currentNode.left == null)
-        //        {
-        //            currentNode.left = new Node(value, currentNode);
-        //            currentNode.left.parent = currentNode;
-        //            //queue.Enqueue(currentNode.left);
-        //        }
-        //        else if (currentNode.right == null)
-        //        {
-        //            currentNode.right = new Node(value, currentNode);
-        //            currentNode.right.parent = currentNode;
-        //            //queue.Enqueue(currentNode.right);
-        //        }
-        //        else
-        //        {
-        //            queue.Enqueue(currentNode.left);
-        //        }
-        //    }
-        //    */
-        //}
 
         /// <summary>
         /// Remove a value from the tree
@@ -696,17 +568,17 @@ namespace Priority_Queue_Graph_Class
         {
             BinaryHeap bh = new BinaryHeap();
 
-            bh.Insert(5);
+            bh.Add(5);
             Console.ReadKey();
-            bh.Insert(1);
+            bh.Add(1);
             Console.ReadKey();
-            bh.Insert(4);
+            bh.Add(4);
             Console.ReadKey();
-            bh.Insert(2);
+            bh.Add(2);
             Console.ReadKey();
-            bh.Insert(3);
+            bh.Add(3);
             Console.ReadKey();
-            bh.Insert(6);
+            bh.Add(6);
             Console.ReadKey();
 
         }
