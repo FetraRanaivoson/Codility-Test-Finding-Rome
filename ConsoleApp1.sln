@@ -41,6 +41,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sorted-Array-To-BST", "Sort
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Binary-Heap-Tree", "Binary-Heap-Tree\Binary-Heap-Tree.csproj", "{FC1D90C4-A82F-4775-85A5-10212E924DFE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2-Integers", "2-Integers", "{78294233-A140-45B6-B7F2-BB3AF58BA7C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "1-FizzBuzz", "1-FizzBuzz\1-FizzBuzz.csproj", "{87FAD3EA-2C2A-41A9-813C-F5B46A82077F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -279,9 +283,24 @@ Global
 		{FC1D90C4-A82F-4775-85A5-10212E924DFE}.Release|x64.Build.0 = Release|Any CPU
 		{FC1D90C4-A82F-4775-85A5-10212E924DFE}.Release|x86.ActiveCfg = Release|Any CPU
 		{FC1D90C4-A82F-4775-85A5-10212E924DFE}.Release|x86.Build.0 = Release|Any CPU
+		{87FAD3EA-2C2A-41A9-813C-F5B46A82077F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87FAD3EA-2C2A-41A9-813C-F5B46A82077F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87FAD3EA-2C2A-41A9-813C-F5B46A82077F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{87FAD3EA-2C2A-41A9-813C-F5B46A82077F}.Debug|x64.Build.0 = Debug|Any CPU
+		{87FAD3EA-2C2A-41A9-813C-F5B46A82077F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{87FAD3EA-2C2A-41A9-813C-F5B46A82077F}.Debug|x86.Build.0 = Debug|Any CPU
+		{87FAD3EA-2C2A-41A9-813C-F5B46A82077F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87FAD3EA-2C2A-41A9-813C-F5B46A82077F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87FAD3EA-2C2A-41A9-813C-F5B46A82077F}.Release|x64.ActiveCfg = Release|Any CPU
+		{87FAD3EA-2C2A-41A9-813C-F5B46A82077F}.Release|x64.Build.0 = Release|Any CPU
+		{87FAD3EA-2C2A-41A9-813C-F5B46A82077F}.Release|x86.ActiveCfg = Release|Any CPU
+		{87FAD3EA-2C2A-41A9-813C-F5B46A82077F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{87FAD3EA-2C2A-41A9-813C-F5B46A82077F} = {78294233-A140-45B6-B7F2-BB3AF58BA7C8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AD9969E2-9893-4F97-8D8E-8656C4E9CC98}
