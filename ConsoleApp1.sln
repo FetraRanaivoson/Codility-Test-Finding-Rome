@@ -47,6 +47,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "1-FizzBuzz", "1-FizzBuzz\1-
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2-Palindrome-Number", "2-Palindrome-Number\2-Palindrome-Number.csproj", "{CC06C629-BFC9-4021-9542-35C1C47F8339}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "3-Factorial-Trailing-Zeroes", "3-Factorial-Trailing-Zeroes\3-Factorial-Trailing-Zeroes.csproj", "{B109BB8E-B6A7-4E2F-8CA1-A1A21907725A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -309,6 +311,18 @@ Global
 		{CC06C629-BFC9-4021-9542-35C1C47F8339}.Release|x64.Build.0 = Release|Any CPU
 		{CC06C629-BFC9-4021-9542-35C1C47F8339}.Release|x86.ActiveCfg = Release|Any CPU
 		{CC06C629-BFC9-4021-9542-35C1C47F8339}.Release|x86.Build.0 = Release|Any CPU
+		{B109BB8E-B6A7-4E2F-8CA1-A1A21907725A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B109BB8E-B6A7-4E2F-8CA1-A1A21907725A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B109BB8E-B6A7-4E2F-8CA1-A1A21907725A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B109BB8E-B6A7-4E2F-8CA1-A1A21907725A}.Debug|x64.Build.0 = Debug|Any CPU
+		{B109BB8E-B6A7-4E2F-8CA1-A1A21907725A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B109BB8E-B6A7-4E2F-8CA1-A1A21907725A}.Debug|x86.Build.0 = Debug|Any CPU
+		{B109BB8E-B6A7-4E2F-8CA1-A1A21907725A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B109BB8E-B6A7-4E2F-8CA1-A1A21907725A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B109BB8E-B6A7-4E2F-8CA1-A1A21907725A}.Release|x64.ActiveCfg = Release|Any CPU
+		{B109BB8E-B6A7-4E2F-8CA1-A1A21907725A}.Release|x64.Build.0 = Release|Any CPU
+		{B109BB8E-B6A7-4E2F-8CA1-A1A21907725A}.Release|x86.ActiveCfg = Release|Any CPU
+		{B109BB8E-B6A7-4E2F-8CA1-A1A21907725A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -316,6 +330,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{87FAD3EA-2C2A-41A9-813C-F5B46A82077F} = {78294233-A140-45B6-B7F2-BB3AF58BA7C8}
 		{CC06C629-BFC9-4021-9542-35C1C47F8339} = {78294233-A140-45B6-B7F2-BB3AF58BA7C8}
+		{B109BB8E-B6A7-4E2F-8CA1-A1A21907725A} = {78294233-A140-45B6-B7F2-BB3AF58BA7C8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AD9969E2-9893-4F97-8D8E-8656C4E9CC98}
